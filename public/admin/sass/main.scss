@@ -1,0 +1,49 @@
+$navbar_color:red;
+$site_primary_color:#3FBBC0;
+$site_secondary_color:rgb(56, 166, 170);
+$site_font_color:rgb(255, 255, 255);
+$ff:#222d32;
+
+.logo{
+    background: $site_secondary_color !important;
+}
+
+
+.navbar{
+   
+    background: $site_primary_color !important;
+    .user-menu{        
+        .user-header{
+            background-color: $site_primary_color !important;
+        }
+    }
+}
+
+/*Sidebar*/
+.skin-blue .sidebar-menu > li > a {
+    border-left: 3px solid transparent;
+  }
+  .skin-blue .sidebar-menu > li:hover > a,
+  .skin-blue .sidebar-menu > li.active > a {
+    color: #ffffff;
+    background: #1e282c;
+    border-left-color: $site_secondary_color;
+  }
+  .skin-blue .sidebar-menu > li > .treeview-menu {
+    margin: 0 1px;
+    background: #2c3b41;
+  }
+
+  .skin-blue .main-header .navbar .sidebar-toggle {
+    color: #ffffff;
+  }
+  .skin-blue .main-header .navbar .sidebar-toggle:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .skin-blue .main-header .navbar .sidebar-toggle {
+    color: #fff;
+  }
+  .skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: $site_secondary_color;
+  }
