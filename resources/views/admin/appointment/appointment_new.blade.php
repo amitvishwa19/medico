@@ -3,43 +3,28 @@
 @section('title', ' | Edit Appointment ')
 
 
-@section('currentuser',$current_user->firstname)
-@section('appointment_id','/'.$appointment->id)
-@section('family_id',$appointment->family_id)
-@section('visit_type',$appointment->visit_type)
-@section('symptoms',$appointment->symptoms)
-@section('visit_comment',$appointment->visit_comment)
-@section('prescription',$appointment->prescription)
-@section('billing_status',$appointment->billing_status)
-@section('billing_paid',$appointment->billing_paid)
-@section('reffered_to',$appointment->reffered_to)
-@section('appointment_date',$appointment->appointment_date)
-@section('visit_date',$appointment->visit_date)
-@section('next_visit_date',$appointment->next_visit_date)
-
-
-
 @section('content')
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Edit Appointment
-        <small>Edit appointment details</small>
+        New Appointment
+        <small>Create new appointment</small>
     </h1>   
 </section>
 
 
 <!-- Main content -->
 <section class="content">
-        <!-- Small boxes (Stat box) -->
-        
-        
-        <div class="row">         
-            <!--Content-->
-            <div class="col-md-12">
+    <!-- Small boxes (Stat box) -->
+    
+    
+    <div class="row">
 
-                <div class="box box-warning">
+        <!--Content-->
+        <div class="col-md-12">
+
+            <div class="box box-warning">
                     <div class="box-header with-border">
                       <!--h3 class="box-title">@yield('currentuser')</h3-->
                         <div class="pull-right">
@@ -48,10 +33,11 @@
                     </div>
                     <!-- /.box-header -->
 
+                    
                     <!--Form area-->
                     <div class="box-body">
-                        <form role="form" action="{{ url('/appointment') }}@yield('appointment_id')" method="post">
-                            {{method_field('PUT')}}
+                        <form role="form" action="{{action('Admin\AppointmentController@store')}}" method="post">
+                            
                             {{csrf_field()}}
 
                             <div class="form-group col-md-4"><!--Family head-->
@@ -141,10 +127,10 @@
                         </form>
                     </div><!--Form area-->
                 <!-- /.box-body -->
-                </div>               
-            </div><!--Content-->
-                         
-        </div><!-- /.row -->   
+                </div>        
+        <!-- /.box-body -->
+        </div>
+    </div><!-- /.row -->   
         
 </section>
 <!-- /.content -->

@@ -46,10 +46,18 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{url('/admin/appointment/today')}}"><i class="fa fa-circle-o"></i> Today's Appointment</a></li>
-            <li><a href="{{url('/admin/appointment')}}"><i class="fa fa-circle-o"></i> All Appointments</a></li>            
+            <li class="{{current_page('appointment/create') ? 'active' : '' }}"><a href="{{url('/admin/appointment/create')}}"><i class="fa fa-circle-o"></i> New Appointment</a></li>
+            <li class="{{current_page('appointment/today') ? 'active' : '' }}"><a href="{{url('/admin/appointment/today')}}"><i class="fa fa-circle-o"></i> Today's Appointment</a></li>
+            <li class="{{current_page('appointment/all') ? 'active' : '' }}"><a href="{{url('/admin/appointment/all')}}"><i class="fa fa-circle-o"></i> All Appointments</a></li>            
           </ul>
         </li><!--Appointment-->
+
+        <!--Calander-->
+        <li class="{{current_page('calender') ? 'active' : '' }}">
+          <a href="{{url('/admin/setting')}}">
+            <i class="fa fa-calendar"></i> <span>Calender</span>
+          </a>
+        </li><!--Calander-->
 
         <!--Patient-->
         <li class="{{current_page('patient') ? 'active' : '' }} treeview">
@@ -81,13 +89,6 @@
             <i class="fa fa-book"></i> <span>Billing</span>
           </a>
         </li><!--Billing-->
-
-        <!--Calander-->
-        <li class="{{current_page('calender') ? 'active' : '' }}">
-          <a href="{{url('/admin/setting')}}">
-            <i class="fa fa-calendar"></i> <span>Calender</span>
-          </a>
-        </li><!--Calander-->
                
         <!--Options-->
         <li class="{{current_page('option') ? 'active' : '' }} treeview">

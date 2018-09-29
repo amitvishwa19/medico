@@ -26,8 +26,9 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/dashboard', 'Admin\AdminController@dashboard');
 
     //Appointment
-    Route::get('/appointment', 'Admin\AppointmentController@index');
+    Route::get('/appointment/all', 'Admin\AppointmentController@index');
     Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
+    Route::get('/appointment/create', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Patient

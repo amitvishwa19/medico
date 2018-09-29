@@ -33,26 +33,53 @@ class AppointmentController extends Controller
     public function today_appointment(){
         return view('admin/appointment/appointment_today');
     }
+
+    public function new_appointment(){
+        return view('admin/appointment/appointment_new');
+    }
    
     public function create() {
-        //
+
+        $users = user::orderby('id','desc')->orderby('id','desc')->get();
+
+        $symptoms = option::where('type','=','Dropdown')
+                    -> where('name','=','symptoms')
+                    ->orderby('id','desc')->get();
+
+        $visittypes = option::where('type','=','Dropdown')
+                              -> where('name','=','visit_type')
+                              ->orderby('id','desc')->get();
+
+        $billingcharges = option::where('type','=','Dropdown')
+                        -> where('name','=','billing_status')
+                        ->orderby('id','desc')->get();
+
+        $reffered = option::where('type','=','Dropdown')
+                            ->where('name','=','reffered_to')
+                            ->orderby('id','desc')->get();
+
+        return view('admin/appointment/appointment_new',compact('appointment','users','symptoms','visittypes','billingcharges','reffered','current_user'));
     }
 
     
     public function store(Request $request){
+
+        //return $request->all();
+
         $obj = new Appointment;
-        $obj->user_id = $request->id;
+        $obj->user_id = 6;
         $obj->appointment_date = $request->appointment_date;        
         $is_saved = $obj->save();
         if($is_saved){
             session()->flash('patientmessage','New Appointment created, Please complete appointment details by clicking edit field');
-            return redirect('admin\appointment');
+            return redirect('admin\appointment\all');
         }else{
             session()->flash('patientmessage','Data Not Saved');
-            return redirect('admin\appointment');
+            return redirect('admin\appointment\all');
         }
     }
 
+    
     
     public function show($id){
         //
@@ -125,7 +152,7 @@ class AppointmentController extends Controller
         $is_deleted=$appointment->delete();
         if($is_deleted){
             session()->flash('patientmessage','Appointment deleted successfully');
-            return redirect('admin/appointment');
+            return redirect('admin/appointment/all');
         }
 
         return $id;

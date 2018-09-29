@@ -24,10 +24,11 @@ class AdminController extends Controller
 
     public function dashboard(){
 
-        $fresh_appointment=Appointment::where('visit_type','=','Fresh Case')->where('appointment_date','=',date("Y/m/d"))->get();
+        $fresh_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))->get();
         $fresh_count= $fresh_appointment->count();
 
-       
+        //$fresh_appointment=Appointment::where('visit_type','=','Fresh Case')->where('appointment_date','=',date("Y/m/d"))->get();
+        //$fresh_count= $fresh_appointment->count();
 
         return view('admin/dashboard',compact('fresh_count'));
     }
