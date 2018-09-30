@@ -27,11 +27,7 @@
               
             </a>
           </li>
-          <li><!--Back to Clinic home-->
-            <a href="{{url('/medi')}}" >
-              <i class="fa fa-futbol-o"></i>
-            </a>
-          </li>
+         
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>

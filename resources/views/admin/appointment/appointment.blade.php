@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div class="content-wrapper">
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -95,7 +97,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix no-border">
-                    <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#add-patient"><i class="fa fa-plus"></i> New Appointment</button>
+                    <button type="button" class="btn bg-olive btn-flat margin pull-right" data-toggle="modal" data-target="#add-patient"><i class="fa fa-plus"></i> New Appointment</button>
                     </div>
                 </div>
                 <!-- Appoinment table -->
@@ -137,8 +139,8 @@
                             </div>
 
                             <div class="modal-footer">
-                                <a href="{{URL::to('/newuser')}}" class="btn btn-default pull-left">New User</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <a href="{{URL::to('/newuser')}}" class="btn bg-olive btn-flat margin pull-left">New User</a>
+                                <button type="button" class="btn bg-orange btn-flat margin" data-dismiss="modal">Close</button>
                             </div>
 
                         </div>
@@ -158,5 +160,5 @@
 <!-- /.content -->
 
 
-
+</div>
 @endsection    

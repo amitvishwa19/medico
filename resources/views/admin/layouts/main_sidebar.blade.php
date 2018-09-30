@@ -52,13 +52,6 @@
           </ul>
         </li><!--Appointment-->
 
-        <!--Calander-->
-        <li class="{{current_page('calender') ? 'active' : '' }}">
-          <a href="{{url('/admin/setting')}}">
-            <i class="fa fa-calendar"></i> <span>Calender</span>
-          </a>
-        </li><!--Calander-->
-
         <!--Patient-->
         <li class="{{current_page('patient') ? 'active' : '' }} treeview">
 
@@ -74,13 +67,6 @@
             <li><a href=""><i class="fa fa-circle-o"></i> All Patients</a></li>
             <li><a href="{{url('admin/patient/new')}}"><i class="fa fa-circle-o"></i> New Patients</a></li>
           </ul>
-        </li><!--Patient-->
-
-        <!--Reports-->
-        <li class="{{current_page('report') ? 'active' : '' }}">
-          <a href="{{url('/admin/billing')}}">
-            <i class="fa fa-list-alt"></i> <span>Reports</span>
-          </a>
         </li><!--Patient-->
 
         <!--Billing-->
@@ -100,36 +86,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="{{url('/admin/symptom')}}"><i class="fa fa-circle-o"></i> Symptoms</a></li>
             <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Visit Type</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Symptoms</a></li>
             <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Billing Charge</a></li>
             <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Reffered</a></li>
           </ul>
         </li><!--Options-->
 
-        <!--Site Option-->
-        <li class="{{current_page('site-option') ? 'active' : '' }}">
-          <a href="{{url('/admin/setting')}}">
-            <i class="fa fa-optin-monster"></i> <span>Site Option</span>
-          </a>
-        </li><!--Site Option-->
-
-        <!--Profile-->
-        <li class="{{current_page('profile') ? 'active' : '' }}">
-          <a href="{{url('/admin/setting')}}">
-            <i class="fa fa-user"></i> <span>Profile</span>
-          </a>
-        </li><!--Profile-->
-
-        <!--Setting-->
-        <li class="{{current_page('setting') ? 'active' : '' }}">
-          <a href="{{url('/admin/setting')}}">
-            <i class="fa fa-cog"></i> <span>Setting</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li><!--Setting-->
         
       </ul>
     </section>

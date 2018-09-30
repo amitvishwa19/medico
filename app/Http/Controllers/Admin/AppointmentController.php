@@ -67,7 +67,7 @@ class AppointmentController extends Controller
         //return $request->all();
 
         $obj = new Appointment;
-        $obj->user_id = 6;
+        $obj->user_id = $request->id;
         $obj->appointment_date = $request->appointment_date;        
         $is_saved = $obj->save();
         if($is_saved){
@@ -113,12 +113,11 @@ class AppointmentController extends Controller
 
         //dd($appointment);
         return view('admin/appointment/appointment_edit',compact('appointment','users','symptoms','visittypes','billingcharges','reffered','current_user'));
-        return 'Edit';
+       
     }
 
   
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $appointment=Appointment::find($id);
         $appointment->family_id = $request->familyid;     
         $appointment->visit_type = $request->visittype;
@@ -134,7 +133,7 @@ class AppointmentController extends Controller
         $is_saved = $appointment->save();
         if($is_saved){
                 session()->flash('patientmessage','Appointment Updated successfully');
-                return redirect('admin/appointment/');
+                return redirect('admin/appointment/all');
         }{
                 session()->flash('patientmessage','Data Not Saved');
                 return redirect('appointment/'.$id.'/edit');
@@ -144,10 +143,8 @@ class AppointmentController extends Controller
     }
 
    
-    public function destroy($id)
-    {
-       
-       
+    public function destroy($id){
+             
         $appointment = appointment::find($id);
         $is_deleted=$appointment->delete();
         if($is_deleted){
@@ -155,8 +152,6 @@ class AppointmentController extends Controller
             return redirect('admin/appointment/all');
         }
 
-        return $id;
-
-        
+         
     }
 }

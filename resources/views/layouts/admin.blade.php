@@ -41,12 +41,10 @@
   <!--Custom Style Sheet-->
   <link rel="stylesheet" href="{{asset('public/admin/css/main.css')}}">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  @section('HeaderSection')
+
+  @show
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -60,11 +58,11 @@
       @include('admin.layouts.main_sidebar')
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <!--div class="content-wrapper"-->
 
          @yield('content')
 
-      </div>
+      <!--/div-->
       
       <!--footer-->
       @include('admin.layouts.footer')
@@ -120,5 +118,10 @@
 <!--script src="{{asset('public/admin/js/demo.js')}}"></script-->
 <!-- Custom JS -->
 <script src="{{asset('public/admin/js/main.js')}}"></script>
+
+@section('FooterSection')
+
+@endsection
+
 </body>
 </html>

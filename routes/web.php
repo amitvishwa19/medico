@@ -10,7 +10,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::resource('patient','PatientController');
 Route::resource('appointment','Admin\AppointmentController');
 Route::resource('patient','Admin\PatientController');
 //Route::resource('newuser','NewUserController');
@@ -23,16 +22,23 @@ Route::resource('patient','Admin\PatientController');
 
 //Admin Route Group
 Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
-    Route::get('/dashboard', 'Admin\AdminController@dashboard');
+
+    Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.home');
 
     //Appointment
     Route::get('/appointment/all', 'Admin\AppointmentController@index');
     Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
-    Route::get('/appointment/create', 'Admin\AppointmentController@create');
+    Route::get('/appointment/creat', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Patient
-    Route::get('/patient/new', 'Admin\PatientController@index');
+    Route::get('/patient', 'Admin\PatientController@index');
+
+    //Symptoms
+    Route::resource('/symptom','Admin\Symptom\SymptomController');
+
+    //Billing
+    Route::resource('/billing','Admin\Billing\BillingController');
 
     Route::get('/billing', 'Admin\AdminController@billing');
     Route::get('/setting', 'Admin\AdminController@setting');

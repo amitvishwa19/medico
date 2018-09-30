@@ -1,0 +1,42 @@
+help.txtcreate model :: goto project folder->php artisan make:model model-name
+
+No application encryption key :: php artisan key:generate
+
+create migration:php artisan make :: migration create_test_table --create=tests
+create table from migration :: php artisan migrate //will create table from migration files
+create table from migration :: php artisan migrate:rollback //will will delete the tables
+create table from migration :: php artisan migrate:rollback --step=3 //will will delete the tables as pe execution number
+create table from migration :: php artisan migrate:reset //will drop all table
+create table from migration :: php artisan migrate:refresh //will will delete the tables and create new as per migration file
+
+
+
+
+//creating model and migration file
+php artisan make:model patient -m
+
+
+
+//font awsome
+npm install font-awesome --save-dev
+resources/assets/sass/app.scss file = @import "~font-awesome/scss/font-awesome";
+npm run dev
+
+
+
+//Same for addition and edit
+@extends('patient.new_patient')
+
+@section('title','Edit Patient | MediCMS')
+
+//Installation command
+composer create-project --prefer-dist laravel/laravel "Folder name"
+composer create-project --prefer-dist laravel/laravel blog "5.4.*"
+composer create-project --prefer-dist laravel/laravel blog "5.5.*"
+
+//ssh command
+$ ssh -p 65002 u572845961@31.220.104.153
+
+
+//to add app.js and app.css
+{{asset(public/css/app.css}}

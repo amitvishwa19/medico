@@ -4,6 +4,9 @@
 
 @section('content')
 
+
+<div class="content-wrapper">
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -57,13 +60,13 @@
                         ?> 
                         @foreach($pendingbills as $pendingbill)
                         <?php 
-                            $totalbill += $pendingbill->billing_charge ;
+                            $totalbill += $pendingbill->billing_paid ;
                             $count += 1;
                         ?>
                         <tr id="{{$pendingbill-> id}}" class="">
                         <td><?php echo $count; ?> </td>
                         <td >{{$pendingbill->firstname}},{{$pendingbill->lastname}}</td>                             
-                                <td >{{$pendingbill->billing_charge}}</td>
+                                <td >{{$pendingbill->billing_paid}}</td>
                                 <td >{{$pendingbill->billing_status}}</td>
                                 <td >{{$pendingbill->appointment_date}}</td>   
                         </tr>
@@ -94,6 +97,6 @@
 </section>
 <!-- /.content -->
 
-
+</div>
 
 @endsection    
