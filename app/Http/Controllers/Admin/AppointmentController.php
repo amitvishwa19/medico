@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Option;
+use App\Models\Billing;
 use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
@@ -21,12 +22,18 @@ class AppointmentController extends Controller
 
 
     public function index(){
-        $users = user::orderby('id','desc')->orderby('id','desc')->get();
-        $appointments = DB::table('appointments')->orderby('id','desc')
-                        ->leftjoin('users','users.id','=','appointments.user_id')
-                        ->select('appointments.*', 'users.firstname', 'users.lastname')
-                        ->get();
 
+        //$appointment = appointment::with('user')->get();
+        //return $appointment;
+        //dd($appointment);
+
+        $users = user::orderby('id','desc')->orderby('id','desc')->get();
+        //$appointments = DB::table('appointments')->orderby('id','desc')
+                        //->leftjoin('users','users.id','=','appointments.user_id')
+                        //->select('appointments.*', 'users.firstname', 'users.lastname')
+                        //->get();
+        $appointments = appointment::with('user','billing')->orderby('id','desc')->get();
+        //dd($appointments);
         return view('admin/appointment/appointment',compact('users','appointments'));
     }
 
@@ -39,6 +46,8 @@ class AppointmentController extends Controller
     }
    
     public function create() {
+
+        return 'Edit appointment';
 
         $users = user::orderby('id','desc')->orderby('id','desc')->get();
 
@@ -65,13 +74,23 @@ class AppointmentController extends Controller
     public function store(Request $request){
 
         //return $request->all();
+        $bill =new Billing;
+        $bill->user_id = $request->id;
+        $bill->appointment_date = $request->appointment_date;
+        $bill->save();
 
         $obj = new Appointment;
         $obj->user_id = $request->id;
+        $obj->billing_id = $bill->id;
         $obj->appointment_date = $request->appointment_date;        
         $is_saved = $obj->save();
         if($is_saved){
             session()->flash('patientmessage','New Appointment created, Please complete appointment details by clicking edit field');
+
+            $e_bill = Billing::find($bill->id);
+            $e_bill->appointment_id=$obj->id;
+            $e_bill->save();
+
             return redirect('admin\appointment\all');
         }else{
             session()->flash('patientmessage','Data Not Saved');
@@ -109,8 +128,9 @@ class AppointmentController extends Controller
                             ->orderby('id','desc')->get();
 
         $current_user = User::find(1);
-        $appointment = Appointment::find($id);
-
+        //$appointment = Appointment::find($id);
+        $appointment = appointment::with('user','billing')->find($id);//->with('user');
+        //$appointment = appointment::find($id)->user;
         //dd($appointment);
         return view('admin/appointment/appointment_edit',compact('appointment','users','symptoms','visittypes','billingcharges','reffered','current_user'));
        
@@ -118,18 +138,26 @@ class AppointmentController extends Controller
 
   
     public function update(Request $request, $id){
-        $appointment=Appointment::find($id);
+
+        //return $request->all();
+
+        $billing = Billing::find($request->billing_id);
+        $billing->appointment_id = $request->appointment_id;
+        $billing->bill_status = $request->billing_status;
+        $billing->bill_paid = $request->billing_paid;
+        $billing->save();
+
+        $appointment = Appointment::find($id);
         $appointment->family_id = $request->familyid;     
         $appointment->visit_type = $request->visittype;
         $appointment->symptoms = $request->symptoms;
         $appointment->visit_comment = $request->visit_comment;
         $appointment->prescription = $request->prescription;      
-        $appointment->billing_status = $request->billing_status;
-        $appointment->billing_paid = $request->billing_paid;
+        //$appointment->billing_status = $request->billing_status;
+        //$appointment->billing_paid = $request->billing_paid;
         $appointment->reffered_to = $request->reffered_to;
         $appointment->appointment_date = $request->appointment_date;
-        $appointment->next_visit_date = $request->next_visit_date   ;
-        
+        $appointment->next_visit_date = $request->next_visit_date;
         $is_saved = $appointment->save();
         if($is_saved){
                 session()->flash('patientmessage','Appointment Updated successfully');

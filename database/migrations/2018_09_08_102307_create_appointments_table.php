@@ -17,6 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('family_id')->nullable();
+            $table->integer('billing_id')->unsigned();
             $table->string('visit_type')->nullable();   
             $table->string('symptoms')->nullable();
             $table->text('visit_comment')->nullable();

@@ -19,6 +19,7 @@ class AdminController extends Controller
 
     public function index(){
 
+        return 'admin';
         return view('admin/dashboard');
     }
 
@@ -30,7 +31,7 @@ class AdminController extends Controller
         //$fresh_appointment=Appointment::where('visit_type','=','Fresh Case')->where('appointment_date','=',date("Y/m/d"))->get();
         //$fresh_count= $fresh_appointment->count();
 
-        return view('admin/dashbodashboard',compact('fresh_count'));
+        return view('admin/dashboard/dashboard',compact('fresh_count'));
     }
 
     public function appointment(){
@@ -38,6 +39,8 @@ class AdminController extends Controller
     }
 
     public function billing(){
+
+        return 'Billing';
          //$patients = patient::limit(5)->orderby('id','desc')->get() ;
         //return view('home',compact('patients'));
         

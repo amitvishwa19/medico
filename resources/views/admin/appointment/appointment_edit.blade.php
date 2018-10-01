@@ -5,13 +5,16 @@
 
 @section('currentuser',$current_user->firstname)
 @section('appointment_id','/'.$appointment->id)
+@section('firstname',$appointment->user->firstname)
+@section('lastname',$appointment->user->lastname)
 @section('family_id',$appointment->family_id)
 @section('visit_type',$appointment->visit_type)
 @section('symptoms',$appointment->symptoms)
 @section('visit_comment',$appointment->visit_comment)
 @section('prescription',$appointment->prescription)
-@section('billing_status',$appointment->billing_status)
-@section('billing_paid',$appointment->billing_paid)
+@section('billing_status',$appointment->billing->bill_status)
+@section('billing_paid',$appointment->billing->bill_paid)
+@section('billing_id',$appointment->billing_id)
 @section('reffered_to',$appointment->reffered_to)
 @section('appointment_date',$appointment->appointment_date)
 @section('visit_date',$appointment->visit_date)
@@ -42,7 +45,7 @@
 
                     <div class="box box-warning">
                         <div class="box-header with-border">
-                          <!--h3 class="box-title">@yield('currentuser')</h3-->
+                          <h3 class="box-title">@yield('firstname'),@yield('lastname')</h3>
                             <div class="pull-right">
                                 <a href="{{ url()->previous() }}" class="btn bg-orange btn-flat margin">Back</a>
                             </div>
@@ -57,17 +60,7 @@
                                 {{csrf_field()}}
 
                                 <div class="left-sides col-md-6">
-
-                                    <div class="form-group col-md-12"><!--Family head-->
-                                        <label for="username" >Patient Name<span class="text-danger">*</span></label>                           
-                                        <select class="form-control input-sm" id="username" name="username" required>
-                                            <option value="">Select</option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user-> user_id}}">{{$user-> user_id}}</option>
-                                            @endforeach                                     
-                                            <option value="@yield('user_id')" selected="" class="active">@yield('user_id')</option>
-                                        </select>                           
-                                    </div> 
+                             
                                     
                                     <div class="form-group col-md-12"><!--Family head-->
                                         <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
@@ -101,6 +94,7 @@
                                             <option value="@yield('symptoms')" selected="" class="active">@yield('symptoms')</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group col-md-6"><!--billing_status-->
                                         <label for="billing_charge" ">Billing Status<span class="text-danger">*</span></label>
                                         <select class="form-control input-sm" id="billing_status" name="billing_status" required>
@@ -115,6 +109,16 @@
                                     <div class="form-group col-md-6"><!--billing_Charge-->
                                       <label>Billing Charge<span class="text-danger">*</span></label>
                                       <input type="text" class="form-control input-sm" placeholder="Enter paid Amount" value="@yield('billing_paid')" name="billing_paid" required="Enter billing amount">
+                                    </div>
+
+                                    <!--Sending request for billing_ID-->
+                                    <div class="form-group col-md-6" style="display: none;"><!--billing_ID-->
+                                      <input type="hidden"  value="@yield('billing_id')" name="billing_id">
+                                    </div>
+
+                                    <!--Sending request for appointment_ID-->
+                                    <div class="form-group col-md-6" style="display: none;"><!--billing_ID-->
+                                      <input type="hidden"  value="{{$appointment->id}}" name="appointment_id">
                                     </div>
 
                                     <div class="form-group col-md-6"><!--Reffered-->
@@ -139,28 +143,18 @@
                                 </div>
 
                                 <div class="right-sides col-md-6">
-                                    
-                                    <div class="form-group col-md-12"><!--VisitvComments-->
-                                        <label for="visit_comment" >Visit Comments</label>               
-                                        <textarea class="form-control input-sm" name="visit_comment" id="visit_comment" rows="9" >@yield('visit_comment')</textarea>                          
-                                    </div>
 
                                     <div class="form-group col-md-12"><!--Priscription-->
                                         <label for="prescription">Prescription</label>                
-                                        <textarea class="form-control input-sm" name="prescription" id="prescription" rows="9" >@yield('prescription')</textarea>                          
+                                        <textarea class="form-control input-sm" name="prescription" id="prescription" rows="7" >@yield('prescription')</textarea>                          
+                                    </div>
+
+                                    <div class="form-group col-md-12"><!--VisitvComments-->
+                                        <label for="visit_comment" >Visit Comments</label>               
+                                        <textarea class="form-control input-sm" name="visit_comment" id="visit_comment" rows="7" >@yield('visit_comment')</textarea>                          
                                     </div>
 
                                 </div>
-
-                                
-
-                                
-
-                                
-
-                                
-                                
-                               
 
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
@@ -170,6 +164,7 @@
 
                             </form>
                         </div><!--Form area-->
+
                     <!-- /.box-body -->
                     </div>               
                 </div><!--Content-->

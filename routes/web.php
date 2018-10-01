@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Billing
     Route::resource('/billing','Admin\Billing\BillingController');
 
-    Route::get('/billing', 'Admin\AdminController@billing');
+  
     Route::get('/setting', 'Admin\AdminController@setting');
     Route::get('/option', 'Admin\OptionController@index');
     Route::get('/user', 'Admin\UserController@index');
