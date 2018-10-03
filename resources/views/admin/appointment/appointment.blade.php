@@ -14,6 +14,7 @@
         </h1>   
     </section>
 
+   <router-view></router-view>
 
     <!-- Main content -->
     <section class="content">
@@ -84,14 +85,14 @@
 
                                 <!--Appointment -->
                                 <div class="tools pull-right">
-                                        <a href="{{url('/appointment/' .$appointment->id. '/edit')}}" class="btn btn-warning btn-xs" style="margin-right:5px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-    									
-                                        <form action="{{action('Admin\AppointmentController@store')}}/{{$appointment->id}}" class="pull-right" method="post">
-                                            {{csrf_field()}}
-                                            {{method_field('DELETE')}}
-                                            <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
+                                    <a href="{{url('/appointment/' .$appointment->id. '/edit')}}" class="btn btn-warning btn-xs" style="margin-right:5px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									
+                                    <form action="{{action('Admin\AppointmentController@store')}}/{{$appointment->id}}" class="pull-right" method="post">
+                                        {{csrf_field()}}
+                                        {{method_field('DELETE')}}
+                                        <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    </form>
+                                </div>
 
                             </li>
 
@@ -149,20 +150,19 @@
 
                             </div>
                         </div>
-                    </div>
-
-
-                    
-
-                   
+                    </div>     
                 </div><!--Content-->
               
                     
-            </div><!-- /.row -->   
-            
+            </div><!-- /.row -->              
     </section>
     <!-- /.content -->
 
 
 </div>
+
+
+
+
+
 @endsection    

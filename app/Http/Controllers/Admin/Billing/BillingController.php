@@ -26,8 +26,8 @@ class BillingController extends Controller
                         //->simplePaginate(10);
 
         $billing = Billing::with('user','appointment')->orderby('id','desc')->get();
-        dd($billing);                
-        return view('admin/billing/billing',compact('clearbills','pendingbills'));
+        //dd($billing);                
+        return view('admin/billing/billing',compact('billing'));
         //return view('admin/billing',compact('pendingbills'));
     }
     

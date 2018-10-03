@@ -31,6 +31,9 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/appointment/creat', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
+    //Appointment vue
+    Route::resource('/appointment', 'Admin\Appointment\AppointmentController');
+
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');
 
@@ -40,7 +43,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Billing
     Route::resource('/billing','Admin\Billing\BillingController');
 
-  
+    Route::get('/appointment', 'Admin\AdminController@appointment');
     Route::get('/setting', 'Admin\AdminController@setting');
     Route::get('/option', 'Admin\OptionController@index');
     Route::get('/user', 'Admin\UserController@index');

@@ -35,7 +35,7 @@ class AdminController extends Controller
     }
 
     public function appointment(){
-        return view('admin/appointment/appointment');
+        return view('admin/appointment/vueappointment');
     }
 
     public function billing(){

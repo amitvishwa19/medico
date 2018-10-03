@@ -45,33 +45,36 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                        <table class="table table-bordered">
-                            <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Name</th>
-                            <th>Billing Amount</th>
-                            <th>Billing Status</th>
-                            <th >Appointment Date</th>
-                            </tr>
+                            <table class="table table-bordered">
+                                <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Name</th>
+                                <th>Billing Status</th>
+                                <th>Bill Charge</th>
+                                <th>Bill paid</th>
+                                <th>Appointment date</th>
+                                </tr>
 
-                            <?php
-                                $totalbill=0;
-                                $count=0 ;
-                            ?> 
-                            @foreach($pendingbills as $pendingbill)
-                            <?php 
-                                $totalbill += $pendingbill->billing_paid ;
-                                $count += 1;
-                            ?>
-                            <tr id="{{$pendingbill-> id}}" class="">
-                            <td><?php echo $count; ?> </td>
-                            <td >{{$pendingbill->firstname}},{{$pendingbill->lastname}}</td>                             
-                                    <td >{{$pendingbill->billing_paid}}</td>
-                                    <td >{{$pendingbill->billing_status}}</td>
-                                    <td >{{$pendingbill->appointment_date}}</td>   
-                            </tr>
-                            @endforeach
-                        </table>
+                                <?php
+                                    $totalbill=0;
+                                    $count=0 ;
+                                ?> 
+                                @foreach($billing as $bill)
+                                <?php 
+                                    $totalbill += $bill->bill_paid ;
+                                    $count += 1;
+                                ?>
+                                <tr id="{{$bill-> id}}" class="">
+                                <td><?php echo $count; ?> </td>
+                                <td >{{$bill->user->firstname}},{{$bill->user->lastname}}</td>
+                                        <td >{{$bill->bill_status}}</td>
+                                        <td >{{$bill->bill_charge}}</td>                             
+                                        <td >{{$bill->bill_paid}}</td>
+                                        
+                                        <td >{{$bill->appointment_date}}</td>   
+                                </tr>
+                                @endforeach
+                            </table>
                         </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
