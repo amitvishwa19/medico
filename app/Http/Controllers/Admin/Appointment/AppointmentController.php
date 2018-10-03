@@ -26,9 +26,11 @@ class AppointmentController extends Controller
 
     public function getAllAppointment(){
         
-        $appointments =Appointment::with('user','billing')->get();
+        $appointments =Appointment::with('user','billing')->paginate(10);
+        //return request()->json(200,$appointments);
+        //$appointments =Appointment::paginate(2);
+        //return $appointments;
         return request()->json(200,$appointments);
-
     }
    
     public function create()

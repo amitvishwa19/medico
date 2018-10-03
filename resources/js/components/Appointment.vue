@@ -20,7 +20,7 @@
             <!--Box Body-->
             <div class="box-body">            	
             	<ul class="todo-list">
-            		<li v-for="app in appointments">
+            		<li v-for="app in appointments.data">
             			<a href=""><i class="fa fa-eye"></i></a>
 
             			<span class="handle">        
@@ -29,9 +29,9 @@
 	                    </span>
 
 	                    <!--User details-->
-                        <span class="text">Name : {{app.user.firstname}},{{app.user.lastname}}</span>
+                        <span class="text">{{app.user.firstname}} : </span>
                         <!-- Date -->
-                        <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
+                        <small class="label label-warning"><i class="fa fa-calendar"></i> Date</small>
 
                         <div class="tools pull-right">
 	                        <a href=""><i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i></a>
@@ -45,13 +45,11 @@
             </div><!--Box Body-->
 
             <div class="box-footer">
-            	<ul class="pagination pagination-sm inline pull">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                 </ul>
+                <pagination :data="appointments" @pagination-change-page="getResults"></pagination>
+                <!--pagination :data="appointments"@pagination-change-page="getResults">>
+					<span slot="prev-nav">&lt; Previous</span>
+					<span slot="next-nav">Next &gt;</span>
+				</pagination-->
             </div>
 
 
@@ -61,6 +59,7 @@
 </template>
 
 <script type="text/javascript">
+Vue.component('pagination', require('laravel-vue-pagination'));
 	export default{
 		data(){
 			return{
@@ -68,7 +67,14 @@
 			}
 		},
 		methods:{
-
+			getResults(page) {
+				if (typeof page === 'undefined'){
+					page=1;
+				}	
+				axios.get('getallappointment?page=' + page)
+					.then(response => this.appointments = response.data)
+					.catch(error => console.log(error));
+			}
 		},
 		created(){
 			axios.get('getallappointment')
