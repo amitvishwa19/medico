@@ -35,6 +35,7 @@ class AdminController extends Controller
     }
 
     public function appointment(){
+        //return 'VueAppointment';
         return view('admin/appointment/vueappointment');
     }
 

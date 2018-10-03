@@ -21,7 +21,6 @@ const routes = [
 ];
 
 
-
 const router = new VueRouter({
 	mode: 'history',
 	routes:[]
@@ -30,9 +29,9 @@ const router = new VueRouter({
 
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('appointment', require('./components/AppointmentComponent.vue'));
+Vue.component('appointment', require('./components/Appointment.vue'));
 
 const app = new Vue({
-    el: '#app',
-    router,
+    el: '#appointment'
+
 });

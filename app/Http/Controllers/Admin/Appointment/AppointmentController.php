@@ -16,13 +16,20 @@ class AppointmentController extends Controller
     
     public function index()
     {
+        return 'ok';
         //$appointments = Appointment::with('user','billing')->get();
-        $appointments = Appointment::all();
+        //$appointments = Appointment::all();
         //dd($appointments);
-        return request()-json(200,$appointments);
-        
+        //return request()-json(200,$appointments);
+        //return view('admin\appointment\vueappointment');
     }
 
+    public function getAllAppointment(){
+        
+        $appointments =Appointment::with('user','billing')->get();
+        return request()->json(200,$appointments);
+
+    }
    
     public function create()
     {

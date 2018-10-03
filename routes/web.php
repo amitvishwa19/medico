@@ -9,9 +9,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('appointment','Admin\AppointmentController');
-Route::resource('patient','Admin\PatientController');
+Route::get('/admin/appointment','Admin\AdminController@appointment');
+//Route::resource('appointment','Admin\AppointmentController');
+//Route::resource('patient','Admin\PatientController');
 //Route::resource('newuser','NewUserController');
 //Route::resource('newuserappointment','AppntNewUserController');
 //Route::resource('report','ReportController');
@@ -26,13 +26,14 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.home');
 
     //Appointment
-    Route::get('/appointment/all', 'Admin\AppointmentController@index');
-    Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
-    Route::get('/appointment/creat', 'Admin\AppointmentController@create');
+    //Route::get('/appointment/all', 'Admin\AppointmentController@index');
+    //Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
+    //Route::get('/appointment/creat', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Appointment vue
-    Route::resource('/appointment', 'Admin\Appointment\AppointmentController');
+    //Route::resource('/appointment', 'Admin\Appointment\AppointmentController');
+    Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
 
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');
@@ -43,11 +44,11 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Billing
     Route::resource('/billing','Admin\Billing\BillingController');
 
-    Route::get('/appointment', 'Admin\AdminController@appointment');
-    Route::get('/setting', 'Admin\AdminController@setting');
-    Route::get('/option', 'Admin\OptionController@index');
-    Route::get('/user', 'Admin\UserController@index');
-    Route::get('/activate', 'Admin\UserController@activate');
+    //Route::get('/appointment', 'Admin\AdminController@appointment');
+    //Route::get('/setting', 'Admin\AdminController@setting');
+    //Route::get('/option', 'Admin\OptionController@index');
+    //Route::get('/user', 'Admin\UserController@index');
+    //Route::get('/activate', 'Admin\UserController@activate');
 
     Route::group(['prefix' => 'user'],function(){
         Route::get('/activate', 'Admin\UserController@activate');

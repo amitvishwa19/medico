@@ -39,7 +39,7 @@
 
         <!--Appointment-->
         <li class="{{current_page('appointment') ? 'active' : '' }} treeview">          
-          <a href="#">
+          <a href="{{url('/admin/appointment/all')}}">
             <i class="fa fa-envelope"></i> <span>Appointment</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -94,17 +94,17 @@
         </li><!--Options-->
 
         <!--Vue test-->
-        <li class="{{current_page('veu') ? 'active' : '' }}">
+        <!--li class="{{current_page('veu') ? 'active' : '' }}">
           <router-link to="example">
           <a href="">
             <i class="fa fa-book"></i> <span> Vue Load</span>
           </a>
           </router-link>
-        </li><!--vue test-->
+        </li--><!--vue test-->
 
 
          <!--Appointment-->
-        <li class="{{current_page('appointment') ? 'active' : '' }} treeview">          
+        <li class="{{current_page('appointmentvue') ? 'active' : '' }} treeview">          
           <a href="#">
             <i class="fa fa-envelope"></i> <span>Vue Example</span>
             <span class="pull-right-container">
@@ -113,9 +113,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/appointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>
-            <li class="{{current_page('appointment/create') ? 'active' : '' }}"><router-link to="example"><a href=""><i class="fa fa-circle-o"></i> Example Component</a></router-link></li>
-            <li class="{{current_page('appointment/today') ? 'active' : '' }}"><router-link to="sample"><a href=""><i class="fa fa-circle-o"></i> Sample Component</a></router-link></li>
-            <li class="{{current_page('appointment/all') ? 'active' : '' }}"><a href=""><i class="fa fa-circle-o"></i> New Component</a></li>            
+                       
           </ul>
         </li><!--Appointment-->
 

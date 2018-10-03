@@ -49,7 +49,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
-  <div class="wrapper" id="app">
+  <div class="wrapper">
 
       <!--Mani Top Navbar-->  
       @include('admin.layouts.top_nav')

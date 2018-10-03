@@ -12,13 +12,7 @@
 
                 <!--Pagination-->
                 <div class="box-tools pull-right">
-                    <ul class="pagination pagination-sm inline">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                    </ul>
+                   <a href="" class="btn bg-olive btn-flat margin" style="margin-top:.5px;" onclick="event.preventDeafult();">New Appointment</a>
                 </div><!--Pagination-->   
             </div><!-- /.box-header -->
 
@@ -26,7 +20,7 @@
             <!--Box Body-->
             <div class="box-body">            	
             	<ul class="todo-list">
-            		<li >
+            		<li v-for="app in appointments">
             			<a href=""><i class="fa fa-eye"></i></a>
 
             			<span class="handle">        
@@ -35,9 +29,9 @@
 	                    </span>
 
 	                    <!--User details-->
-                        <span class="text">firstname,Last name</span>
+                        <span class="text">Name : {{app.user.firstname}},{{app.user.lastname}}</span>
                         <!-- Date -->
-                        <small class="label label-warning"><i class="fa fa-calendar"></i> Date</small>
+                        <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
 
                         <div class="tools pull-right">
 	                        <a href=""><i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i></a>
@@ -50,11 +44,19 @@
             	</ul>
             </div><!--Box Body-->
 
+            <div class="box-footer">
+            	<ul class="pagination pagination-sm inline pull">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                 </ul>
+            </div>
+
 
 	 	</div>
 	</section>
-
-
 
 </template>
 
@@ -69,10 +71,10 @@
 
 		},
 		created(){
-			axios.get('/admin/appointment')
-			.then((response)=>console.log(response.data))
+			axios.get('getallappointment')
+			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			console.log('Appointment component loaded')
+			console.log('Appointment component loaded............')
 		}
 	};
 </script>
