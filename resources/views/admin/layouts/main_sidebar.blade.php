@@ -112,7 +112,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/appointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>
+            <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/vueappointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>
                        
           </ul>
         </li><!--Appointment-->

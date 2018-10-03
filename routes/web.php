@@ -9,8 +9,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin/appointment','Admin\AdminController@appointment');
-//Route::resource('appointment','Admin\AppointmentController');
+Route::get('/admin/vueappointment','Admin\AdminController@appointment');
+Route::resource('appointment','Admin\AppointmentController');
 //Route::resource('patient','Admin\PatientController');
 //Route::resource('newuser','NewUserController');
 //Route::resource('newuserappointment','AppntNewUserController');
@@ -26,9 +26,9 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.home');
 
     //Appointment
-    //Route::get('/appointment/all', 'Admin\AppointmentController@index');
+    Route::get('/appointment/all', 'Admin\AppointmentController@index');
     //Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
-    //Route::get('/appointment/creat', 'Admin\AppointmentController@create');
+    //Route::get('/appointment/create', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Appointment vue

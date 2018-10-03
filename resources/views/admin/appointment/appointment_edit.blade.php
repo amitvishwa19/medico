@@ -3,7 +3,7 @@
 @section('title', ' | Edit Appointment ')
 
 
-@section('currentuser',$current_user->firstname)
+@section('currentuser',$appointment->user->firstname)
 @section('appointment_id','/'.$appointment->id)
 @section('firstname',$appointment->user->firstname)
 @section('lastname',$appointment->user->lastname)

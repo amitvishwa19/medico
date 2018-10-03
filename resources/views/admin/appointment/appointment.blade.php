@@ -124,20 +124,20 @@
                                 <ul class="list-group" id="myList">
                                     
                                     @foreach($users as $user) 
-                                    <li id="{{$user-> id}}" class="list-group-item">
-                                        test
-                                        <i class="fa fa-address-card" aria-hidden="true"></i> {{$user-> id}}
-                                        <i class="fa fa-user" aria-hidden="true"></i> {{$user-> firstname}},{{$user-> lastname}} 
-                                        <i class="fa fa-envelope-o" aria-hidden="true"></i> {{$user-> email}} 
-                                        <i class="fa fa-phone" aria-hidden="true"></i> {{$user-> mobile}}
-                                        <!--a href="{{url('appointment/' .$user->id. '/edit')}}" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus" aria-hidden="true"></i></a-->
-                                        <form action="{{action('Admin\AppointmentController@store')}}" class="pull-right" method="post">
-                                            {{csrf_field()}}               
-                                            <input type="hidden" name="id" value="{{$user-> id}}">
-                                            <input type="hidden" name="appointment_date" value="{{ date('Y-m-d') }}">    
-                                        <button class="btn btn-success btn-xs pull-right" type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                        </form>   
-                                    </li>
+                                        <li id="{{$user-> id}}" class="list-group-item">
+                                            test
+                                            <i class="fa fa-address-card" aria-hidden="true"></i> {{$user-> id}}
+                                            <i class="fa fa-user" aria-hidden="true"></i> {{$user-> firstname}},{{$user-> lastname}} 
+                                            <i class="fa fa-envelope-o" aria-hidden="true"></i> {{$user-> email}} 
+                                            <i class="fa fa-phone" aria-hidden="true"></i> {{$user-> mobile}}
+                                            <!--a href="{{url('appointment/' .$user->id. '/edit')}}" class="btn btn-success btn-xs pull-right"><i class="fa fa-plus" aria-hidden="true"></i></a-->
+                                            <form action="{{action('Admin\AppointmentController@store')}}" class="pull-right" method="post">
+                                                {{csrf_field()}}               
+                                                <input type="hidden" name="id" value="{{$user-> id}}">
+                                                <input type="hidden" name="appointment_date" value="{{ date('Y-m-d') }}">    
+                                            <button class="btn btn-success btn-xs pull-right" type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                            </form>   
+                                        </li>
                                     @endforeach   
                                 </ul> 
                                     
@@ -151,6 +151,8 @@
                             </div>
                         </div>
                     </div>     
+
+                    
                 </div><!--Content-->
               
                     
