@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Option;
 use App\Models\Billing;
+use App\Models\Symptom;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,20 +18,38 @@ class AppointmentController extends Controller
     public function index()
     {
         return 'ok';
-        //$appointments = Appointment::with('user','billing')->get();
-        //$appointments = Appointment::all();
-        //dd($appointments);
-        //return request()-json(200,$appointments);
-        //return view('admin\appointment\vueappointment');
     }
 
     public function getAllAppointment(){
         
-        $appointments =Appointment::with('user','billing')->paginate(10);
-        //return request()->json(200,$appointments);
-        //$appointments =Appointment::paginate(2);
-        //return $appointments;
+        $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
+    }
+
+    public function newAppointmentDropdowns(){
+
+        $symptoms=Symptom::get();
+
+        $users=User::get();
+
+        $visittypes = option::where('type','=','Dropdown')
+                              -> where('name','=','visit_type')
+                              ->orderby('id','desc')->get();
+
+        $billingstatus = option::where('type','=','Dropdown')
+                        -> where('name','=','billing_status')
+                        ->orderby('id','desc')->get();
+
+        $billingcharge = option::where('type','=','Dropdown')
+                        ->where('name','=','billing_charge')
+                        ->orderby('id','desc')->get();
+
+        $reffered = option::where('type','=','Dropdown')
+                    ->where('name','=','reffered_to')
+                    ->orderby('id','desc')->get();
+
+
+        return request()->json(200,['symptom'=>$symptoms,'user'=>$users,'visittype'=>$visittypes,'billingstatus'=>$billingstatus,'reffered'=>$reffered,'billingcharge'=>$billingcharge]);
     }
    
     public function create()
@@ -39,9 +58,19 @@ class AppointmentController extends Controller
     }
 
    
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        
+
+        
+        $appointment = new Appointment;
+        $appointment->user_id=$request->userid;
+        $appointment->family_id=$request->familyhead;
+        $appointment->billing_id= 60;
+        $appointment->prescription= $request->prescription;
+        $appointment->visit_comment = $request->visitcomment;
+        $appointment->save();
+        //$appointment = Appointment::create($request->all());
+        
     }
 
   

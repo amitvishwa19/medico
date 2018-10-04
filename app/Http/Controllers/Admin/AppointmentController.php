@@ -47,7 +47,7 @@ class AppointmentController extends Controller
    
     public function create() {
 
-        return 'Edit appointment';
+       
 
         $users = user::orderby('id','desc')->orderby('id','desc')->get();
 

@@ -12,7 +12,7 @@
 
                 <!--Pagination-->
                 <div class="box-tools pull-right">
-                   <button type="button" class="btn bg-olive btn-flat margin" data-toggle="modal" data-target="#myModal" style="margin-top:.5px;" >New Appointment</button>
+                   <a href="" class="btn bg-olive btn-flat margin" style="margin-top:.5px;" onclick="event.preventDeafult();">New Appointment</a>
                 </div><!--Pagination-->   
             </div><!-- /.box-header -->
 
@@ -52,12 +52,6 @@
 				</pagination-->
             </div>
 	 	</div>
-
-	 	<div id="mymodal">
-	 		<addappointment>,</addappointment>
-	 	</div>
-	 	
-
 	</section>
 
 	

@@ -28,12 +28,14 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Appointment
     Route::get('/appointment/all', 'Admin\AppointmentController@index');
     //Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
-    //Route::get('/appointment/create', 'Admin\AppointmentController@create');
+    Route::get('/appointment/create', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Appointment vue
     //Route::resource('/appointment', 'Admin\Appointment\AppointmentController');
     Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
+    Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
+    Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
 
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');

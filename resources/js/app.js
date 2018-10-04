@@ -31,6 +31,7 @@ const router = new VueRouter({
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('appointment', require('./components/Appointment.vue'));
 
+
 const app = new Vue({
     el: '#appointment'
 
