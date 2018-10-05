@@ -18,10 +18,26 @@
 
 
             <!--Box Body-->
-            <div class="box-body">            	
+            <div class="box-body">
+
+            	<form>
+				  	<div class="input-group">
+				    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery">
+					    <div class="input-group-btn">
+					      <button class="btn btn-default" type="submit">
+					        <i class="glyphicon glyphicon-search"></i>
+					      </button>
+					    </div>
+				  	</div>
+				</form>
+				
+				<hr>    
+
             	<ul class="todo-list">
             		<li v-for="app in appointments.data">
-            			<a href=""><i class="fa fa-eye"></i></a>
+            			{{app.id}}<span style="margin-right:5px;"></span>
+
+            			<a href="" data-toggle="tooltip" data-placement="top" title="Hooray!"><i class="fa fa-eye"></i></a>
 
             			<span class="handle">        
 	                        <i class="fa fa-ellipsis-v"></i>
@@ -29,7 +45,7 @@
 	                    </span>
 
 	                    <!--User details-->
-                        <span class="text">{{app.user.firstname}} : </span>
+                        <span class="text">{{app.user.firstname}},{{app.user.lastname}} : </span>
                         <!-- Date -->
                         <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
 
@@ -38,10 +54,11 @@
 							<a href=""><i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i></a>	                        
 	                    </div>
 
-            		</li>
-            		
-            		
+            		</li>	
             	</ul>
+
+
+
             </div><!--Box Body-->
 
             <div class="box-footer">
@@ -71,7 +88,20 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 	export default{
 		data(){
 			return{
-				appointments:{}
+				appointments:{},
+				errors:{},
+				searchQuery:''
+			}
+		},
+		watch:{
+			searchQuery(){
+				
+				if(this.searchQuery.length > 0){
+					console.log(this.searchQuery)
+					//this.appointments.filter((item) => {
+
+					//});
+				}
 			}
 		},
 		methods:{
@@ -94,9 +124,29 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 			console.log('Appointment component loaded............')
 		}
 	};
+
+	
 </script>
 
 <style type="text/css" scoped>
 	
+	.pagination > li > a:focus,
+	.pagination > li > a:hover,
+	.pagination > li > span:focus,
+	.pagination > li > span:hover {
+    z-index: 3;
+    color: #23527c;
+    background-color: purple;
+    border-color: #ddd;
+}
 
+table th{
+	text-align: center;
+}
+table td{
+	text-align: center;
+}
+.form-control{
+	border-radius: 2px;
+}
 </style>

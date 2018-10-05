@@ -64,8 +64,11 @@ class AppointmentController extends Controller
         
         $appointment = new Appointment;
         $appointment->user_id=$request->userid;
-        $appointment->family_id=$request->familyhead;
+        $appointment->family_id=$request->familyid;
         $appointment->billing_id= 60;
+        $appointment->visit_type= $request->visittype;
+        $appointment->symptoms= $request->symptom;
+        $appointment->reffered_to= $request->reffered;
         $appointment->prescription= $request->prescription;
         $appointment->visit_comment = $request->visitcomment;
         $is_saved=$appointment->save();

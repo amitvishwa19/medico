@@ -14,12 +14,13 @@
               	<div class="row">
                   <p class="alert alert-success" v-if="success.length > 0">{{ success }}</p>
               		<form role="form" @submit.prevent="processForm">
-              		
+              			
+              			<!--Left column-->
 	              		<div class="left-sides col-md-6">
 
 	              			<div class="form-group col-md-6"><!--Patient Name-->
 		                        <label for="familyid" >Patient Name<span class="text-danger">*</span></label>                           
-		                        <select class="form-control input-sm" id="familyid" v-model="userid">
+		                        <select class="form-control input-sm"  v-model="userid">
 		                            <option value="">Select</option>		                           
 		                            <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
 		                        </select>
@@ -27,15 +28,15 @@
 
 		              		<div class="form-group col-md-6"><!--Family head-->
 		                        <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
-		                        <select class="form-control input-sm" id="familyid" v-model="familyid">
+		                        <select class="form-control input-sm"  v-model="familyid">
 		                            <option value="">Select</option>		                           
-		                            <option v-bind:value="232323" >111</option>
+		                            <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
 		                        </select>
 		                    </div><!--Family head-->
 
 		                    <div class="form-group col-md-12"><!--Visit Type-->
                                 <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" id="visittype" name="visittype" required>
+                                <select class="form-control input-sm" v-model="visittype">
                                     <option value="">Select</option>
                                     <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
                                 </select>                         
@@ -43,7 +44,7 @@
 
                             <div class="form-group col-md-12"><!--Symptom and diagnosis-->
                                 <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" id="symptoms" name="symptoms" required>
+                                <select class="form-control input-sm"  v-model="symptom">
                                     <option value="">Select</option>
                                     <option v-for="s in dropdowns.symptom" v-bind:value="s.symptom">{{s.symptom}}</option>
                                 </select>
@@ -51,7 +52,7 @@
 
                             <div class="form-group col-md-6"><!--billing charge-->
                                 <label for="symptoms" >Billing Charge<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" id="billingcharge" name="billingcharge" required>
+                                <select class="form-control input-sm" v-model="billingcharge">
                                     <option value="">Select</option>
                                     <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
                                 </select>
@@ -59,7 +60,7 @@
 
                             <div class="form-group col-md-6"><!--billing_status-->
                                 <label for="billing_charge" >Billing Status<span class="text-danger">*</span></label>
-                                <select class="form-control input-sm" id="billing_status" name="billing_status" required>
+                                <select class="form-control input-sm" v-model="billingstatus">
                                     <option value="">Select</option>                                 
                                     <option v-for="b in dropdowns.billingstatus" v-bind:value="b.value">{{b.value}}</option>
                                 </select>
@@ -67,7 +68,7 @@
 
                             <div class="form-group col-md-6"><!--billing_paid-->
                               <label>Billing Paid<span class="text-danger">*</span></label>
-                              <input type="text" class="form-control input-sm" placeholder="Enter paid Amount" value="" name="billing_paid" required="Enter billing amount">
+                              <input type="text" class="form-control input-sm" placeholder="Enter paid Amount" v-model="billingpaid" >
                             </div>
 
                             
@@ -83,14 +84,15 @@
 
                             <div class="form-group col-md-6"><!--Reffered-->
                                 <label for="reffered_to">Reffered to<span class="text-danger">*</span></label>
-                                <select class="form-control input-sm" id="reffered_to" name="reffered_to" required>
+                                <select class="form-control input-sm" v-model="reffered">
                                     <option value="">Select</option>
                                     <option v-for="r in dropdowns.reffered" v-bind:value="r.value">{{r.value}}</option>
                                 </select>
                             </div>
 
-	                    </div>
+	                    </div><!--Left column-->
 
+	                    <!--Left column-->
 	                    <div class="left-sides col-md-6">
 	                    	<div class="form-group col-md-12"><!--Priscription-->
                                 <label for="prescription">Prescription</label>                
@@ -122,9 +124,15 @@
 		data(){
 			return{
 				dropdowns:{},
-        success:'',
+        		success:'',
 				userid:'',
 				familyid:'',
+				visittype:'',
+				symptom:'',
+				billingcharge:'',
+				billingstatus:'',
+				billingpaid:'',
+				reffered:'',
 				prescription:'',
 				visitcomment:'',
 			}
@@ -133,18 +141,33 @@
 			addRecord(){
 				axios.post('saveappointment',{
 					'userid':this.userid,
-					'familyhead':this.familyid,
+					'familyid':this.familyid,
+					'visittype':this.visittype,
+					'symptom':this.symptom,
+					'billingcharge':this.billingcharge,
+					'billingstatus':this.billingstatus,
+					'billingpaid':this.billingpaid,
+					'reffered':this.reffered,
 					'prescription':this.prescription,
 					'visitcomment':this.visitcomment,
 				})
 				.then(data=>{
-          this.$emit('appadded',data);
-          this.success = "Appointment added successfully!!"; 
-        })
+        			this.$emit('appadded',data);
+        			this.success = "Appointment added successfully!!"; 
+        		})
 				.catch(error => console.log(error))
-        this.prescription='',
-        this.userid='',
-        this.visitcomment=''; 
+				
+        			this.prescription='',
+        			this.userid='',
+        			this.familyid='',
+        			this.visittype='',
+        			this.symptom='',
+        			this.billingcharge='';
+        			this.billingstatus='',
+        			this.billingpaid='',
+        			this.reffered='',
+        			this.prescription='',
+        			this.visitcomment=''; 
 			}
 		},
 		created(){
@@ -160,5 +183,9 @@
 	
 .alert{
   margin: 20px 50px;
+}
+
+.form-control{
+	border-radius: 2px;
 }
 </style>
