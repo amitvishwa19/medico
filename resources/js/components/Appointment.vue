@@ -54,7 +54,7 @@
 	 	</div>
 
 	 	<div id="mymodal">
-	 		<addappointment>,</addappointment>
+	 		<addappointment @appadded="refreshRecord">,</addappointment>
 	 	</div>
 	 	
 
@@ -82,6 +82,9 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 				axios.get('getallappointment?page=' + page)
 					.then(response => this.appointments = response.data)
 					.catch(error => console.log(error));
+			},
+			refreshRecord(record){
+				this.appointments=record.data
 			}
 		},
 		created(){

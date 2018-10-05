@@ -12,6 +12,7 @@
               <div class="modal-body">
                 
               	<div class="row">
+                  <p class="alert alert-success" v-if="success.length > 0">{{ success }}</p>
               		<form role="form" @submit.prevent="processForm">
               		
 	              		<div class="left-sides col-md-6">
@@ -121,6 +122,7 @@
 		data(){
 			return{
 				dropdowns:{},
+        success:'',
 				userid:'',
 				familyid:'',
 				prescription:'',
@@ -135,8 +137,14 @@
 					'prescription':this.prescription,
 					'visitcomment':this.visitcomment,
 				})
-				.then(data=>console.log(data))
+				.then(data=>{
+          this.$emit('appadded',data);
+          this.success = "Appointment added successfully!!"; 
+        })
 				.catch(error => console.log(error))
+        this.prescription='',
+        this.userid='',
+        this.visitcomment=''; 
 			}
 		},
 		created(){
@@ -150,5 +158,7 @@
 
 <style type="text/css" scoped>
 	
-
+.alert{
+  margin: 20px 50px;
+}
 </style>

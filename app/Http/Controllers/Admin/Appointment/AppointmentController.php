@@ -68,9 +68,12 @@ class AppointmentController extends Controller
         $appointment->billing_id= 60;
         $appointment->prescription= $request->prescription;
         $appointment->visit_comment = $request->visitcomment;
-        $appointment->save();
-        //$appointment = Appointment::create($request->all());
+        $is_saved=$appointment->save();
         
+        if($is_saved){
+            $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
+            return request()->json(200,$appointments);
+        }
     }
 
   
