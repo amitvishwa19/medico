@@ -50603,7 +50603,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.alert[data-v-9ee50cec]{\r\n  margin: 20px 50px;\n}\n.form-control[data-v-9ee50cec]{\r\n\tborder-radius: 2px;\n}\r\n", ""]);
+exports.push([module.i, "\n.alert[data-v-9ee50cec]{\r\n  margin: 20px 50px;\n}\n.form-control[data-v-9ee50cec]{\r\n  border-radius: 2px;\n}\r\n", ""]);
 
 // exports
 
@@ -50737,59 +50737,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			dropdowns: {},
-			success: '',
-			userid: '',
-			familyid: '',
-			visittype: '',
-			symptom: '',
-			billingcharge: '',
-			billingstatus: '',
-			billingpaid: '',
-			reffered: '',
-			prescription: '',
-			visitcomment: ''
-		};
-	},
+  data: function data() {
+    return {
+      dropdowns: {},
+      success: '',
+      list: {
+        userid: '',
+        familyid: '',
+        visittype: '',
+        symptom: '',
+        billingcharge: '',
+        billingstatus: '',
+        billingpaid: '',
+        reffered: '',
+        prescription: '',
+        visitcomment: ''
+      }
+    };
+  },
 
-	methods: {
-		addRecord: function addRecord() {
-			var _this = this;
+  methods: {
+    addRecord: function addRecord() {
+      axios.post('saveappointment', this.list).then(function (response) {
+        return console.log(response);
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    }
+  },
+  created: function created() {
+    var _this = this;
 
-			axios.post('saveappointment', {
-				'userid': this.userid,
-				'familyid': this.familyid,
-				'visittype': this.visittype,
-				'symptom': this.symptom,
-				'billingcharge': this.billingcharge,
-				'billingstatus': this.billingstatus,
-				'billingpaid': this.billingpaid,
-				'reffered': this.reffered,
-				'prescription': this.prescription,
-				'visitcomment': this.visitcomment
-			}).then(function (data) {
-				_this.$emit('appadded', data);
-				_this.success = "Appointment added successfully!!";
-			}).catch(function (error) {
-				return console.log(error);
-			});
-
-			this.prescription = '', this.userid = '', this.familyid = '', this.visittype = '', this.symptom = '', this.billingcharge = '';
-			this.billingstatus = '', this.billingpaid = '', this.reffered = '', this.prescription = '', this.visitcomment = '';
-		}
-	},
-	created: function created() {
-		var _this2 = this;
-
-		axios.get('newappointmentdropdowns').then(function (response) {
-			return _this2.dropdowns = response.data;
-		}).catch(function (error) {
-			return console.log(error);
-		});
-		console.log('New Appointment component loaded............');
-	}
+    axios.get('newappointmentdropdowns').then(function (response) {
+      return _this.dropdowns = response.data;
+    }).catch(function (error) {
+      return console.log(error);
+    });
+    console.log('New Appointment component loaded............');
+  }
 });
 
 /***/ }),
@@ -50836,8 +50821,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.userid,
-                            expression: "userid"
+                            value: _vm.list.userid,
+                            expression: "list.userid"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -50851,9 +50836,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.userid = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "userid",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -50884,8 +50873,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.familyid,
-                            expression: "familyid"
+                            value: _vm.list.familyid,
+                            expression: "list.familyid"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -50899,9 +50888,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.familyid = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "familyid",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -50932,8 +50925,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.visittype,
-                            expression: "visittype"
+                            value: _vm.list.visittype,
+                            expression: "list.visittype"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -50947,9 +50940,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.visittype = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "visittype",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -50980,8 +50977,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.symptom,
-                            expression: "symptom"
+                            value: _vm.list.symptom,
+                            expression: "list.symptom"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -50995,9 +50992,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.symptom = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "symptom",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -51009,8 +51010,8 @@ var render = function() {
                         _vm._l(_vm.dropdowns.symptom, function(s) {
                           return _c(
                             "option",
-                            { domProps: { value: s.symptom } },
-                            [_vm._v(_vm._s(s.symptom))]
+                            { domProps: { value: s.value } },
+                            [_vm._v(_vm._s(s.value))]
                           )
                         })
                       ],
@@ -51028,8 +51029,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.billingcharge,
-                            expression: "billingcharge"
+                            value: _vm.list.billingcharge,
+                            expression: "list.billingcharge"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -51043,9 +51044,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.billingcharge = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "billingcharge",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -51076,8 +51081,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.billingstatus,
-                            expression: "billingstatus"
+                            value: _vm.list.billingstatus,
+                            expression: "list.billingstatus"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -51091,9 +51096,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.billingstatus = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "billingstatus",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -51122,19 +51131,19 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.billingpaid,
-                          expression: "billingpaid"
+                          value: _vm.list.billingpaid,
+                          expression: "list.billingpaid"
                         }
                       ],
                       staticClass: "form-control input-sm",
                       attrs: { type: "text", placeholder: "Enter paid Amount" },
-                      domProps: { value: _vm.billingpaid },
+                      domProps: { value: _vm.list.billingpaid },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.billingpaid = $event.target.value
+                          _vm.$set(_vm.list, "billingpaid", $event.target.value)
                         }
                       }
                     })
@@ -51154,8 +51163,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.reffered,
-                            expression: "reffered"
+                            value: _vm.list.reffered,
+                            expression: "list.reffered"
                           }
                         ],
                         staticClass: "form-control input-sm",
@@ -51169,9 +51178,13 @@ var render = function() {
                                 var val = "_value" in o ? o._value : o.value
                                 return val
                               })
-                            _vm.reffered = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
+                            _vm.$set(
+                              _vm.list,
+                              "reffered",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           }
                         }
                       },
@@ -51204,19 +51217,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.prescription,
-                          expression: "prescription"
+                          value: _vm.list.prescription,
+                          expression: "list.prescription"
                         }
                       ],
                       staticClass: "form-control input-sm",
                       attrs: { rows: "7" },
-                      domProps: { value: _vm.prescription },
+                      domProps: { value: _vm.list.prescription },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.prescription = $event.target.value
+                          _vm.$set(
+                            _vm.list,
+                            "prescription",
+                            $event.target.value
+                          )
                         }
                       }
                     })
@@ -51232,19 +51249,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.visitcomment,
-                          expression: "visitcomment"
+                          value: _vm.list.visitcomment,
+                          expression: "list.visitcomment"
                         }
                       ],
                       staticClass: "form-control input-sm",
                       attrs: { rows: "7" },
-                      domProps: { value: _vm.visitcomment },
+                      domProps: { value: _vm.list.visitcomment },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.visitcomment = $event.target.value
+                          _vm.$set(
+                            _vm.list,
+                            "visitcomment",
+                            $event.target.value
+                          )
                         }
                       }
                     })

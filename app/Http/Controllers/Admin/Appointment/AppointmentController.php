@@ -28,9 +28,11 @@ class AppointmentController extends Controller
 
     public function newAppointmentDropdowns(){
 
-        $symptoms=Symptom::get();
-
         $users=User::get();
+
+        $symptoms=option::where('type','=','Dropdown')
+                            -> where('name','=','symptom')
+                            ->orderby('id','desc')->get();
 
         $visittypes = option::where('type','=','Dropdown')
                               -> where('name','=','visit_type')
@@ -60,8 +62,16 @@ class AppointmentController extends Controller
    
     public function store(Request $request){
         
+        //return $request->all();
+        $bill =new Billing;
+        $bill->user_id = $request->userid;
+        //$bill->appointment_date = $request->appointment_date;
+        $bill->bill_status = $request->billingstatus;
+        $bill->bill_charge = $request->billingcharge;
+        $bill->bill_paid = $request->billingpaid;
+        //$bill->bill_pending = $request->appointment_date;
+        $bill->save();
 
-        
         $appointment = new Appointment;
         $appointment->user_id=$request->userid;
         $appointment->family_id=$request->familyid;
@@ -74,6 +84,12 @@ class AppointmentController extends Controller
         $is_saved=$appointment->save();
         
         if($is_saved){
+
+            $e_bill = Billing::find($bill->id);
+            $e_bill->appointment_id=$appointment->id;
+            $e_bill->save();
+
+            
             $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
         }
