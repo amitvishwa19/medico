@@ -11,22 +11,27 @@
               </div>
               <div class="modal-body">
                 
+                <!--Error Messege-->
+                <div class="callout callout-info" v-if="errorslist.length > 0">
+                  <h4><i class="fa fa-info"></i> Note:</h4>
+                </div>
+
                 <div class="row">
-                  <p class="alert alert-success" v-if="success.length > 0">{{ success }}</p>
-                  <form role="form" @submit.prevent="processForm">
-                    
+                  
+                  <form role="form" @submit.prevent="processForm">       
                     <!--Left column-->
                     <div class="left-sides col-md-6">
 
-                      <div class="form-group col-md-6"><!--Patient Name-->
+                        <div class="form-group col-md-6"><!--Patient Name-->
                             <label for="familyid" >Patient Name<span class="text-danger">*</span></label>                           
                             <select class="form-control input-sm"  v-model="list.userid">
                                 <option value="">Select</option>                               
                                 <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
                             </select>
+                            <small class="warning-text" v-if="errorslist.userid" >Please select Patient name</small>
                         </div><!--Patient Name-->
 
-                      <div class="form-group col-md-6"><!--Family head-->
+                        <div class="form-group col-md-6"><!--Family head-->
                             <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
                             <select class="form-control input-sm"  v-model="list.familyid">
                                 <option value="">Select</option>                               
@@ -136,13 +141,17 @@
           reffered:'',
           prescription:'',
           visitcomment:'',
-        }
+        },
+        errorslist:{},
       }
     },
     methods:{
       addRecord(){
-        axios.post('saveappointment',this.list) .then((response)=>console.log(response))
-             .catch((error) => console.log(error));
+        axios.post('saveappointment',this.list)
+          .then((response)=>function(){
+              this.success="asdsdasd";
+              })
+          .catch((error) => this.errorslist = error.response.data.errors);
       }
     },
     created(){
@@ -162,5 +171,15 @@
 
 .form-control{
   border-radius: 2px;
+}
+
+
+.callout-info{
+  margin: 0 10px;
+  margin-bottom: 20px;
+}
+
+.warning-text{
+  color: red;
 }
 </style>

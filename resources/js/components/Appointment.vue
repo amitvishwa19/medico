@@ -12,7 +12,11 @@
 
                 <!--Pagination-->
                 <div class="box-tools pull-right">
-                   <button type="button" class="btn bg-olive btn-flat margin" data-toggle="modal" data-target="#myModal" style="margin-top:.5px;" >New Appointment</button>
+                  
+                   <div class="btn-group" style="margin-top:.5px;">
+                      <button type="button" class="btn bg-orange">Quick Appointment</button>
+                      <button type="button" class="btn bg-olive" data-toggle="modal" data-target="#myModal">New Appointment</button>          
+                    </div>
                 </div><!--Pagination-->   
             </div><!-- /.box-header -->
 
@@ -34,10 +38,10 @@
 				<hr>    
 
             	<ul class="todo-list">
-            		<li v-for="app in appointments.data">
+            		<li v-for="app,key in appointments.data">
             			{{app.id}}<span style="margin-right:5px;"></span>
 
-            			<a href="" data-toggle="tooltip" data-placement="top" title="Hooray!"><i class="fa fa-eye"></i></a>
+            			<a href="" v-on:click.prevent="" @click="openShow"><i class="fa fa-eye"></i></a>
 
             			<span class="handle">        
 	                        <i class="fa fa-ellipsis-v"></i>
@@ -105,6 +109,7 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 			}
 		},
 		methods:{
+			//Pagination
 			getResults(page) {
 				if (typeof page === 'undefined'){
 					page=1;
@@ -113,9 +118,14 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 					.then(response => this.appointments = response.data)
 					.catch(error => console.log(error));
 			},
+			//reftrsh data
 			refreshRecord(record){
 				this.appointments=record.data
+			},
+			openShow(){
+				console.log('Eye icon clicked');
 			}
+
 		},
 		created(){
 			axios.get('getallappointment')

@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Http\Requests\Appointment\NewAppointment;
+
 class AppointmentController extends Controller
 {
     
@@ -60,12 +62,11 @@ class AppointmentController extends Controller
     }
 
    
-    public function store(Request $request){
+    public function store(NewAppointment $request){
         
         //return $request->all();
         $bill =new Billing;
         $bill->user_id = $request->userid;
-        //$bill->appointment_date = $request->appointment_date;
         $bill->bill_status = $request->billingstatus;
         $bill->bill_charge = $request->billingcharge;
         $bill->bill_paid = $request->billingpaid;
@@ -93,6 +94,8 @@ class AppointmentController extends Controller
             $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
         }
+
+
     }
 
   

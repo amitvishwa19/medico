@@ -49189,6 +49189,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 Vue.component('pagination', __webpack_require__(68));
 Vue.component('addappointment', __webpack_require__(69));
@@ -49213,6 +49217,7 @@ Vue.component('addappointment', __webpack_require__(69));
 		}
 	},
 	methods: {
+		//Pagination
 		getResults: function getResults(page) {
 			var _this = this;
 
@@ -49225,8 +49230,13 @@ Vue.component('addappointment', __webpack_require__(69));
 				return console.log(error);
 			});
 		},
+
+		//reftrsh data
 		refreshRecord: function refreshRecord(record) {
 			this.appointments = record.data;
+		},
+		openShow: function openShow() {
+			console.log('Eye icon clicked');
 		}
 	},
 	created: function created() {
@@ -50603,7 +50613,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.alert[data-v-9ee50cec]{\r\n  margin: 20px 50px;\n}\n.form-control[data-v-9ee50cec]{\r\n  border-radius: 2px;\n}\r\n", ""]);
+exports.push([module.i, "\n.alert[data-v-9ee50cec]{\r\n  margin: 20px 50px;\n}\n.form-control[data-v-9ee50cec]{\r\n  border-radius: 2px;\n}\n.callout-info[data-v-9ee50cec]{\r\n  margin: 0 10px;\r\n  margin-bottom: 20px;\n}\n.warning-text[data-v-9ee50cec]{\r\n  color: red;\n}\r\n", ""]);
 
 // exports
 
@@ -50614,6 +50624,11 @@ exports.push([module.i, "\n.alert[data-v-9ee50cec]{\r\n  margin: 20px 50px;\n}\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50752,24 +50767,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         reffered: '',
         prescription: '',
         visitcomment: ''
-      }
+      },
+      errorslist: {}
     };
   },
 
   methods: {
     addRecord: function addRecord() {
+      var _this = this;
+
       axios.post('saveappointment', this.list).then(function (response) {
-        return console.log(response);
+        return function () {
+          this.success = "asdsdasd";
+        };
       }).catch(function (error) {
-        return console.log(error);
+        return _this.errorslist = error.response.data.errors;
       });
     }
   },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
     axios.get('newappointmentdropdowns').then(function (response) {
-      return _this.dropdowns = response.data;
+      return _this2.dropdowns = response.data;
     }).catch(function (error) {
       return console.log(error);
     });
@@ -50791,13 +50811,11 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "modal-body" }, [
+          _vm.errorslist.length > 0
+            ? _c("div", { staticClass: "callout callout-info" }, [_vm._m(1)])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm.success.length > 0
-              ? _c("p", { staticClass: "alert alert-success" }, [
-                  _vm._v(_vm._s(_vm.success))
-                ])
-              : _vm._e(),
-            _vm._v(" "),
             _c(
               "form",
               {
@@ -50812,7 +50830,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "left-sides col-md-6" }, [
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(1),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50860,11 +50878,17 @@ var render = function() {
                         })
                       ],
                       2
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errorslist.userid
+                      ? _c("small", { staticClass: "warning-text" }, [
+                          _vm._v("Please select Patient name")
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(2),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50916,7 +50940,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
-                    _vm._m(3),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50968,7 +50992,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
-                    _vm._m(4),
+                    _vm._m(5),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51020,7 +51044,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(5),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51072,7 +51096,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(6),
+                    _vm._m(7),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51124,7 +51148,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(7),
+                    _vm._m(8),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -51149,12 +51173,12 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(8),
-                  _vm._v(" "),
                   _vm._m(9),
                   _vm._v(" "),
+                  _vm._m(10),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(10),
+                    _vm._m(11),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51326,6 +51350,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h4", [_c("i", { staticClass: "fa fa-info" }), _vm._v(" Note:")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "familyid" } }, [
       _vm._v("Patient Name"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
@@ -51478,14 +51508,28 @@ var render = function() {
         _c(
           "ul",
           { staticClass: "todo-list" },
-          _vm._l(_vm.appointments.data, function(app) {
+          _vm._l(_vm.appointments.data, function(app, key) {
             return _c("li", [
               _vm._v("\n            \t\t\t" + _vm._s(app.id)),
               _c("span", { staticStyle: { "margin-right": "5px" } }),
               _vm._v(" "),
-              _vm._m(2, true),
+              _c(
+                "a",
+                {
+                  attrs: { href: "" },
+                  on: {
+                    click: [
+                      function($event) {
+                        $event.preventDefault()
+                      },
+                      _vm.openShow
+                    ]
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-eye" })]
+              ),
               _vm._v(" "),
-              _vm._m(3, true),
+              _vm._m(2, true),
               _vm._v(" "),
               _c("span", { staticClass: "text" }, [
                 _vm._v(
@@ -51501,7 +51545,7 @@ var render = function() {
                 _vm._v(" " + _vm._s(app.appointment_date))
               ]),
               _vm._v(" "),
-              _vm._m(4, true)
+              _vm._m(3, true)
             ])
           })
         )
@@ -51544,17 +51588,28 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "box-tools pull-right" }, [
         _c(
-          "button",
-          {
-            staticClass: "btn bg-olive btn-flat margin",
-            staticStyle: { "margin-top": ".5px" },
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#myModal"
-            }
-          },
-          [_vm._v("New Appointment")]
+          "div",
+          { staticClass: "btn-group", staticStyle: { "margin-top": ".5px" } },
+          [
+            _c(
+              "button",
+              { staticClass: "btn bg-orange", attrs: { type: "button" } },
+              [_vm._v("Quick Appointment")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn bg-olive",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#myModal"
+                }
+              },
+              [_vm._v("New Appointment")]
+            )
+          ]
         )
       ])
     ])
@@ -51570,23 +51625,6 @@ var staticRenderFns = [
         [_c("i", { staticClass: "glyphicon glyphicon-search" })]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        attrs: {
-          href: "",
-          "data-toggle": "tooltip",
-          "data-placement": "top",
-          title: "Hooray!"
-        }
-      },
-      [_c("i", { staticClass: "fa fa-eye" })]
-    )
   },
   function() {
     var _vm = this
