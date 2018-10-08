@@ -1,6 +1,6 @@
 
 require('./bootstrap');
-
+import moment from 'moment'
 
 
 
@@ -34,6 +34,8 @@ const router = new VueRouter({
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('appointment', require('./components/Appointment.vue'));
+Vue.component('billing', require('./components/billing/Billing.vue'));
+
 
 
 const app = new Vue({

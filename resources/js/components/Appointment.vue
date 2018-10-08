@@ -6,9 +6,9 @@
 
 	 		<!--Box header-->
 	 		<div class="box-header">
-                <i class="ion ion-clipboard"></i>
+                <i class="ion ion-clipboard "></i>
 
-                <h3 class="box-title" hidden-xs>All Appointments</h3>
+                <h3 class="box-title hidden-xs" >All Appointments</h3>
 
                 <!--Pagination-->
                 <div class="box-tools pull-right">
@@ -42,22 +42,21 @@
             			{{app.id}}<span style="margin-right:5px;"></span>
 
             			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-eye"></i></a>
-
-            			<span class="handle">        
-	                        <i class="fa fa-ellipsis-v"></i>
-	                        <i class="fa fa-ellipsis-v"></i>
-	                    </span>
+            			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-newspaper-o"></i></a>
+            			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-user"></i></a>
+            			
 
 	                    <!--User details-->
                         <span class="text">{{app.user.firstname}},{{app.user.lastname}} : </span>
                         <!-- Date -->
                         <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
+                       
 
                         <div class="tools pull-right">
 	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id)">
 	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>
 	                        </a>
-							<a href="">
+							<a href="" v-on:click.prevent @click="deleterecord(app.id)">
 								<i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i>
 							</a>	                        
 	                    </div>
@@ -82,7 +81,7 @@
 	 	<div id="modal">
 	 		<addappointment @recordadded="refreshRecord"></addappointment>
 	 		<quickapointment></quickapointment>
-	 		<editapointment :recrd="apntupdate"></editapointment>
+	 		<editapointment :recrd="apntupdate" @hide="closemodal"></editapointment>
 	 		<viewapointment></viewapointment>
 	 	</div>
 	
@@ -96,16 +95,16 @@
 
 <script type="text/javascript">
 Vue.component('pagination', require('laravel-vue-pagination'));
-Vue.component('addappointment', require('./NewAppointment.vue'));
-Vue.component('quickapointment', require('./QuickAppointment.vue'));
-Vue.component('editapointment', require('./EditAppointment.vue'));
-Vue.component('viewapointment', require('./ViewAppointment.vue'));
+Vue.component('addappointment', require('./appointment/NewAppointment.vue'));
+Vue.component('quickapointment', require('./appointment/QuickAppointment.vue'));
+Vue.component('editapointment', require('./appointment/EditAppointment.vue'));
+Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 	export default{
 
 		data(){
 			return{
 				appointments:{},
-				apntupdate:{},
+				apntupdate:[],
 				errors:[],
 				searchQuery:''
 			}
@@ -144,7 +143,15 @@ Vue.component('viewapointment', require('./ViewAppointment.vue'));
 				axios.get('saveappointment/'+id+'/edit')
 				.then(response => this.apntupdate = response.data)
 				.catch(error => this.errors=error.response.data.errors);
-				console.log(this.apntupdate);
+				console.log(this.apntupdate); //need to be commented on production  this.apntupdate)
+				this.$children[3].list=this.apntupdate
+			},
+			closemodal(){
+				console.log('closemodal click')
+			},
+			deleterecord(id){
+				axios.delete('saveappointment/'+id)
+				.then(response => this.appointments=response.data)
 			}
 
 		},
@@ -159,25 +166,21 @@ Vue.component('viewapointment', require('./ViewAppointment.vue'));
 	
 </script>
 
-<style type="text/css" scoped>
-	
-	.pagination > li > a:focus,
-	.pagination > li > a:hover,
-	.pagination > li > span:focus,
-	.pagination > li > span:hover {
-    z-index: 3;
-    color: #23527c;
-    background-color: purple;
-    border-color: #ddd;
-}
+	<style type="text/css" scoped>
+		
+		
+	table th{
+		text-align: center;
+	}
+	table td{
+		text-align: center;
+	}
+	.form-control{
+		border-radius: 2px;
+	}
 
-table th{
-	text-align: center;
-}
-table td{
-	text-align: center;
-}
-.form-control{
-	border-radius: 2px;
-}
+	.fa{
+		margin-right: 5px;
+	}
+
 </style>

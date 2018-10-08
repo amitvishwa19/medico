@@ -1,54 +1,40 @@
 <template>
-  
-    
-    <div class="modal fade" id="myModal">
+	
+		
+		<div class="modal fade" id="myModal">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" @click="modalclose" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">New Appointment</h4>
               </div>
               <div class="modal-body">
                 
-                <!--Success Messege-->
-                <div class="callout callout-success" v-if="success.length > 0">
-                  <h5><i class="fa fa-info"></i> Note : {{success}}</h5>
-                </div>
+              	<div class="row">
+                  <p class="alert alert-success" v-if="success.length > 0">{{ success }}</p>
+              		<form role="form" @submit.prevent="processForm">
+              			
+              			<!--Left column-->
+	              		<div class="left-sides col-md-6">
 
-                <!--Error Messege-->
-                <div class="callout callout-warning" v-if="errors.length > 0">
-                  <i class="fa fa-info"></i>
-                  <ul >
-                      <li>  error</li>
-                  </ul>
-                </div>
+	              			<div class="form-group col-md-6"><!--Patient Name-->
+		                        <label for="familyid" >Patient Name<span class="text-danger">*</span></label>                           
+		                        <select class="form-control input-sm"  v-model="list.userid">
+		                            <option value="">Select</option>		                           
+		                            <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
+		                        </select>
+		                    </div><!--Patient Name-->
 
+		              		<div class="form-group col-md-6"><!--Family head-->
+		                        <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
+		                        <select class="form-control input-sm"  v-model="list.familyid">
+		                            <option value="">Select</option>		                           
+		                            <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
+		                        </select>
+		                    </div><!--Family head-->
 
-                <div class="row">
-                  
-                  <form role="form" @submit.prevent="processForm">       
-                    <!--Left column-->
-                    <div class="left-sides col-md-6">
-
-                        <div class="form-group col-md-6"><!--Patient Name-->
-                            <label for="familyid" >Patient Name<span class="text-danger">*</span></label>                           
-                            <select class="form-control input-sm"  v-model="list.userid">
-                                <option value="">Select</option>                               
-                                <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
-                            </select>
-                            <small class="warning-text" v-if="errors.userid" >Please select Patient name</small>
-                        </div><!--Patient Name-->
-
-                        <div class="form-group col-md-6"><!--Family head-->
-                            <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
-                            <select class="form-control input-sm"  v-model="list.familyid">
-                                <option value="">Select</option>                               
-                                <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
-                            </select>
-                        </div><!--Family head-->
-
-                        <div class="form-group col-md-12"><!--Visit Type-->
+		                    <div class="form-group col-md-12"><!--Visit Type-->
                                 <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
                                 <select class="form-control input-sm" v-model="list.visittype">
                                     <option value="">Select</option>
@@ -60,7 +46,7 @@
                                 <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
                                 <select class="form-control input-sm"  v-model="list.symptom">
                                     <option value="">Select</option>
-                                    <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
+                                    <option v-for="s in dropdowns.symptom" v-bind:value="s.symptom">{{s.symptom}}</option>
                                 </select>
                             </div><!--Symptom and diagnosis-->
 
@@ -88,12 +74,12 @@
                             
                             <!--Sending request for billing_ID-->
                             <div class="form-group col-md-6" style="display: none;"><!--billing_ID-->
-                                <input type="hidden"  value="" name="billing_id">
+                              	<input type="hidden"  value="" name="billing_id">
                             </div>
 
                             <!--Sending request for appointment_ID-->
                             <div class="form-group col-md-6" style="display: none;"><!--billing_ID-->
-                                <input type="hidden"  value="" name="appointment_id">
+                              	<input type="hidden"  value="" name="appointment_id">
                             </div>
 
                             <div class="form-group col-md-6"><!--Reffered-->
@@ -104,11 +90,11 @@
                                 </select>
                             </div>
 
-                      </div><!--Left column-->
+	                    </div><!--Left column-->
 
-                      <!--Left column-->
-                      <div class="left-sides col-md-6">
-                        <div class="form-group col-md-12"><!--Priscription-->
+	                    <!--Left column-->
+	                    <div class="left-sides col-md-6">
+	                    	<div class="form-group col-md-12"><!--Priscription-->
                                 <label for="prescription">Prescription</label>                
                                 <textarea class="form-control input-sm"  rows="7" v-model="list.prescription" ></textarea>                          
                             </div>
@@ -116,9 +102,9 @@
                                 <label for="visit_comment" >Visit Comments</label>               
                                 <textarea class="form-control input-sm"  rows="7" v-model="list.visitcomment"></textarea>
                             </div>
-                      </div>
-                  </form>
-                </div>
+	                    </div>
+	              	</form>
+              	</div>
 
               </div>
               <div class="modal-footer">
@@ -134,73 +120,47 @@
 </template>
 
 <script type="text/javascript">
-  export default{
-    data(){
-      return{
-        dropdowns:{},
+	export default{
+		data(){
+			return{
+				dropdowns:{},
         success:'',
-        list:{
-          userid:'',
-          familyid:'',
-          visittype:'',
-          symptom:'',
-          billingcharge:'',
-          billingstatus:'',
-          billingpaid:'',
-          reffered:'',
-          prescription:'',
-          visitcomment:'',
-        },
-        errors:{},
-      }
-    },
-    methods:{
-      addRecord(){
-        axios.post('saveappointment',this.list)
-          .then(data=>{
-            this.$emit('recordadded',data),
-            this.success='Appointment added successfully'
-            //this.list.prescription=''
-            //this.list.userid=''
-            this.list={}
-          }) // recordadded can be catched in component
-          .catch((error) => {
-            this.errors=error.response.data.errors;
-            console.log(this.errors.length)
-          });
-          
-      },
-      modalclose(){
-        console.log('modal close clicked')
-        this.list.usserid=''
-      }
-    },
-    created(){
-      axios.get('newappointmentdropdowns')
-      .then((response) => this.dropdowns=response.data)
-      .catch((error) => console.log(error))
-      console.log('New Appointment component loaded............')
-    }
-  };
+				list:{
+					userid:'',
+					familyid:'',
+					visittype:'',
+					symptom:'',
+					billingcharge:'',
+					billingstatus:'',
+					billingpaid:'',
+					reffered:'',
+					prescription:'',
+					visitcomment:'',
+				}
+			}
+		},
+		methods:{
+			addRecord(){
+				axios.post('saveappointment',this.list) .then((response)=>this.close())
+				  	 .catch((error) => console.log(error));
+			}
+		},
+		created(){
+			axios.get('newappointmentdropdowns')
+			.then((response) => this.dropdowns=response.data)
+			.catch((error) => console.log(error))
+			console.log('New Appointment component loaded............')
+		}
+	};
 </script>
 
 <style type="text/css" scoped>
-  
+	
 .alert{
   margin: 20px 50px;
 }
 
 .form-control{
-  border-radius: 2px;
-}
-
-
-.callout-info{
-  margin: 0 10px;
-  margin-bottom: 20px;
-}
-
-.warning-text{
-  color: red;
+	border-radius: 2px;
 }
 </style>

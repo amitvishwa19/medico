@@ -10,6 +10,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/vueappointment','Admin\AdminController@appointment');
+Route::get('/admin/vuebilling','Admin\AdminController@billing');
+
+
 Route::resource('appointment','Admin\AppointmentController');
 //Route::resource('patient','Admin\PatientController');
 //Route::resource('newuser','NewUserController');
@@ -32,10 +35,12 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Route::resource('newappointment','NewAppointmentController');
 
     //Appointment vue
-    //Route::resource('/appointment', 'Admin\Appointment\AppointmentController');
     Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
     Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
+
+    //Billing vue
+
 
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');

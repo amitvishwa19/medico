@@ -1,13 +1,13 @@
 <template>
   
     
-    <div class="modal fade" id="myModal">
+    <div class="modal fade" id="editAppointment">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" @click="modalclose" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">New Appointment</h4>
+                <h4 class="modal-title" v-model="recrd.id"><b>Edit Appointment : {{recrd.id}}</b></h4>
               </div>
               <div class="modal-body">
                 
@@ -31,63 +31,60 @@
                     <!--Left column-->
                     <div class="left-sides col-md-6">
 
-                        <div class="form-group col-md-6"><!--Patient Name-->
-                            <label for="familyid" >Patient Name<span class="text-danger">*</span></label>                           
-                            <select class="form-control input-sm"  v-model="list.userid">
-                                <option value="">Select</option>                               
-                                <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
-                            </select>
-                            <small class="warning-text" v-if="errors.userid" >Please select Patient name</small>
-                        </div><!--Patient Name-->
-
-                        <div class="form-group col-md-6"><!--Family head-->
-                            <label for="familyid" >Family Head<span class="text-danger">*</span></label>                           
-                            <select class="form-control input-sm"  v-model="list.familyid">
-                                <option value="">Select</option>                               
-                                <option v-for="usr in dropdowns.user" v-bind:value="usr.id" >{{usr.firstname}},{{usr.lastname}}</option>
-                            </select>
-                        </div><!--Family head-->
-
                         <div class="form-group col-md-12"><!--Visit Type-->
                                 <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" v-model="list.visittype">
+                                <select class="form-control input-sm" v-model="recrd.visit_type">
                                     <option value="">Select</option>
                                     <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
+                                    <option  >{{recrd.visit_type}}</option>
                                 </select>                         
                             </div>
 
                             <div class="form-group col-md-12"><!--Symptom and diagnosis-->
                                 <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm"  v-model="list.symptom">
+                                <select class="form-control input-sm"  v-model="recrd.symptoms">
                                     <option value="">Select</option>
                                     <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
+                                    <option  >{{recrd.symptoms}}</option>
                                 </select>
                             </div><!--Symptom and diagnosis-->
 
-                            <div class="form-group col-md-12"><!--billing charge-->
-                                <label for="symptoms" >Billing Charge<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" v-model="list.billingcharge">
+                          
+
+                            <div class="form-group col-md-12"><!--Reffered-->
+                                <label for="reffered_to">Reffered to<span class="text-danger">*</span></label>
+                                <select class="form-control input-sm" v-model="recrd.reffered_to">
                                     <option value="">Select</option>
-                                    <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
+                                    <option v-for="r in dropdowns.reffered" v-bind:value="r.value">{{r.value}}</option>
+                                    <option  >{{recrd.reffered_to}}</option>
                                 </select>
-                            </div><!--billing charge-->
+                            </div>
 
                       </div><!--Left column-->
 
                       <!--Left column-->
                       <div class="left-sides col-md-6">
-                        <div class="form-group col-md-12"><!--VisitvComments-->
-                            <label for="visit_comment" >Visit Comments</label>               
-                            <textarea class="form-control input-sm"  rows="13" v-model="list.visitcomment"></textarea>
-                        </div>
+                            
+                            <div class="form-group col-md-12"><!--VisitvComments-->
+                                <label for="visit_comment" >Visit Comments</label>               
+                                <textarea class="form-control input-sm"  rows="9" v-model="recrd.visit_comment"></textarea>
+                            </div>
+
+                           
+
                       </div>
+
+                       <div class="form-group col-md-12"><!--Priscription-->
+                                <label for="prescription">Prescription</label>                
+                                <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                          
+                            </div>
                   </form>
                 </div>
 
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" @click= "addRecord">Save Appointment</button>
+                <button type="button" class="btn btn-primary" @click= "updateRecord">Update Appointment</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -99,33 +96,23 @@
 
 <script type="text/javascript">
   export default{
+    props:['recrd'],
     data(){
       return{
         dropdowns:{},
         success:'',
-        list:{
-          userid:'',
-          familyid:'',
-          visittype:'',
-          symptom:'',
-          billingcharge:'',
-          billingstatus:'',
-          billingpaid:'',
-          reffered:'',
-          prescription:'',
-          visitcomment:'',
-        },
+        list:[],
         errors:{},
       }
     },
     methods:{
-      addRecord(){
-        axios.post('saveappointment',this.list)
+      updateRecord(){
+        axios.patch('saveappointment/'+this.recrd.id,this.recrd)
           .then(data=>{
-            this.$emit('recordadded',data),
-            this.success='Appointment added successfully'
-            this.list={}
-          }) // recordadded can be catched in component
+            response=>console.log(response.data)
+            this.success='Appointment Updated successfully'
+          }) //data=>this.$emit('recordadded',data)
+
           .catch((error) => {
             this.errors=error.response.data.errors;
             console.log(this.errors.length)
@@ -133,17 +120,23 @@
           
       },
       modalclose(){
-        console.log('modal close clicked')
-        this.list.usserid=''
+        //console.log('modal close clicked');
+        //$('#editAppointment').modal('hide');
+        //this.$emit('hide');
         this.success=''
-      }
+      },
+      chkvalue(){
+        console.log(this.recrd.user.firstname);
+       }
+
     },
     created(){
       axios.get('newappointmentdropdowns')
       .then((response) => this.dropdowns=response.data)
       .catch((error) => console.log(error))
-      console.log('New Appointment component loaded............')
+      console.log('Update Appointment component loaded...')
     }
+
   };
 </script>
 

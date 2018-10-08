@@ -24,7 +24,7 @@ class AppointmentController extends Controller
 
     public function getAllAppointment(){
         
-        $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
     }
 
@@ -74,13 +74,13 @@ class AppointmentController extends Controller
         $bill->save();
 
         $appointment = new Appointment;
-        $appointment->user_id=$request->userid;
-        $appointment->family_id=$request->familyid;
-        $appointment->billing_id= 60;
-        $appointment->visit_type= $request->visittype;
-        $appointment->symptoms= $request->symptom;
-        $appointment->reffered_to= $request->reffered;
-        $appointment->prescription= $request->prescription;
+        $appointment->user_id = $request->userid;
+        $appointment->family_id =$request->familyid;
+        $appointment->billing_id = $bill->id;
+        $appointment->visit_type = $request->visittype;
+        $appointment->symptoms = $request->symptom;
+        $appointment->reffered_to = $request->reffered;
+        $appointment->prescription = $request->prescription;
         $appointment->visit_comment = $request->visitcomment;
         $is_saved=$appointment->save();
         
@@ -114,13 +114,28 @@ class AppointmentController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        //return $request->all();
+        $appointment = Appointment::find($id);   
+        $appointment->visit_type = $request->visit_type;
+        $appointment->symptoms = $request->symptoms;
+        $appointment->visit_comment = $request->visit_comment;
+        $appointment->prescription = $request->prescription;      
+        $appointment->reffered_to = $request->reffered_to;
+        //$appointment->appointment_date = $request->appointment_date;
+        //$appointment->next_visit_date = $request->next_visit_date;
+        $is_saved = $appointment->save();
+
     }
 
    
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+
+        $appointment = appointment::find($id);
+        $is_deleted=$appointment->delete();
+        if($is_deleted){
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+            return request()->json(200,$appointments);
+        }
     }
 
 }
