@@ -8,13 +8,13 @@
 	 		<div class="box-header">
                 <i class="ion ion-clipboard"></i>
 
-                <h3 class="box-title">All Appointments</h3>
+                <h3 class="box-title" hidden-xs>All Appointments</h3>
 
                 <!--Pagination-->
                 <div class="box-tools pull-right">
                   
                    <div class="btn-group" style="margin-top:.5px;">
-                      <button type="button" class="btn bg-orange">Quick Appointment</button>
+                      <button type="button" class="btn bg-orange" data-toggle="modal" data-target="#quickeditModal">Quick Appointment</button>
                       <button type="button" class="btn bg-olive" data-toggle="modal" data-target="#myModal">New Appointment</button>          
                     </div>
                 </div><!--Pagination-->   
@@ -41,7 +41,7 @@
             		<li v-for="app,key in appointments.data">
             			{{app.id}}<span style="margin-right:5px;"></span>
 
-            			<a href="" v-on:click.prevent="" @click="openShow"><i class="fa fa-eye"></i></a>
+            			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-eye"></i></a>
 
             			<span class="handle">        
 	                        <i class="fa fa-ellipsis-v"></i>
@@ -54,8 +54,12 @@
                         <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
 
                         <div class="tools pull-right">
-	                        <a href=""><i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i></a>
-							<a href=""><i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i></a>	                        
+	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id)">
+	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>
+	                        </a>
+							<a href="">
+								<i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i>
+							</a>	                        
 	                    </div>
 
             		</li>	
@@ -74,10 +78,14 @@
             </div>
 	 	</div>
 
-	 	<div id="mymodal">
-	 		<addappointment @appadded="refreshRecord">,</addappointment>
-	 	</div>
 	 	
+	 	<div id="modal">
+	 		<addappointment @recordadded="refreshRecord"></addappointment>
+	 		<quickapointment></quickapointment>
+	 		<editapointment :recrd="apntupdate"></editapointment>
+	 		<viewapointment></viewapointment>
+	 	</div>
+	
 
 	</section>
 
@@ -89,11 +97,16 @@
 <script type="text/javascript">
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('addappointment', require('./NewAppointment.vue'));
+Vue.component('quickapointment', require('./QuickAppointment.vue'));
+Vue.component('editapointment', require('./EditAppointment.vue'));
+Vue.component('viewapointment', require('./ViewAppointment.vue'));
 	export default{
+
 		data(){
 			return{
 				appointments:{},
-				errors:{},
+				apntupdate:{},
+				errors:[],
 				searchQuery:''
 			}
 		},
@@ -116,14 +129,22 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 				}	
 				axios.get('getallappointment?page=' + page)
 					.then(response => this.appointments = response.data)
-					.catch(error => console.log(error));
+					.catch(error => this.errors=error.response.data.errors);
 			},
 			//reftrsh data
 			refreshRecord(record){
 				this.appointments=record.data
+				//console.log(record)
 			},
+			//this will show the details of appointment when eye icon is clicked
 			openShow(){
 				console.log('Eye icon clicked');
+			},
+			editRecord(id){
+				axios.get('saveappointment/'+id+'/edit')
+				.then(response => this.apntupdate = response.data)
+				.catch(error => this.errors=error.response.data.errors);
+				console.log(this.apntupdate);
 			}
 
 		},
@@ -131,7 +152,7 @@ Vue.component('addappointment', require('./NewAppointment.vue'));
 			axios.get('getallappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			console.log('Appointment component loaded............')
+			console.log('Appointment component loaded............')  //need to be commented on production
 		}
 	};
 

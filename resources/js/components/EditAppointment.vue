@@ -1,13 +1,13 @@
 <template>
   
     
-    <div class="modal fade" id="myModal">
+    <div class="modal fade" id="editAppointment">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" @click="modalclose" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">New Appointment</h4>
+                <h4 class="modal-title">{{recrd.user_id}}Edit Appointment</h4>
               </div>
               <div class="modal-body">
                 
@@ -110,11 +110,11 @@
                       <div class="left-sides col-md-6">
                         <div class="form-group col-md-12"><!--Priscription-->
                                 <label for="prescription">Prescription</label>                
-                                <textarea class="form-control input-sm"  rows="7" v-model="list.prescription" ></textarea>                          
+                                <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                          
                             </div>
                             <div class="form-group col-md-12"><!--VisitvComments-->
                                 <label for="visit_comment" >Visit Comments</label>               
-                                <textarea class="form-control input-sm"  rows="7" v-model="list.visitcomment"></textarea>
+                                <textarea class="form-control input-sm"  rows="7" v-model="recrd.visit_comment"></textarea>
                             </div>
                       </div>
                   </form>
@@ -123,7 +123,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" @click= "addRecord">Save Appointment</button>
+                <button type="button" class="btn btn-primary" @click= "updateRecord">Save Appointment</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -135,35 +135,23 @@
 
 <script type="text/javascript">
   export default{
+    props:['recrd'],
     data(){
       return{
         dropdowns:{},
         success:'',
-        list:{
-          userid:'',
-          familyid:'',
-          visittype:'',
-          symptom:'',
-          billingcharge:'',
-          billingstatus:'',
-          billingpaid:'',
-          reffered:'',
-          prescription:'',
-          visitcomment:'',
-        },
+        list:'',
         errors:{},
       }
     },
     methods:{
-      addRecord(){
-        axios.post('saveappointment',this.list)
+      updateRecord(){
+        axios.post('saveappointment'+this.recrd.id,this.list)
           .then(data=>{
             this.$emit('recordadded',data),
-            this.success='Appointment added successfully'
-            //this.list.prescription=''
-            //this.list.userid=''
-            this.list={}
-          }) // recordadded can be catched in component
+            this.success='Appointment updated successfully'
+          })
+
           .catch((error) => {
             this.errors=error.response.data.errors;
             console.log(this.errors.length)
@@ -172,14 +160,13 @@
       },
       modalclose(){
         console.log('modal close clicked')
-        this.list.usserid=''
       }
     },
     created(){
       axios.get('newappointmentdropdowns')
       .then((response) => this.dropdowns=response.data)
       .catch((error) => console.log(error))
-      console.log('New Appointment component loaded............')
+      console.log('Update Appointment component loaded...')
     }
   };
 </script>

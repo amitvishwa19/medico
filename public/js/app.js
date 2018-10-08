@@ -49193,14 +49193,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 Vue.component('pagination', __webpack_require__(68));
 Vue.component('addappointment', __webpack_require__(69));
+Vue.component('quickapointment', __webpack_require__(79));
+Vue.component('editapointment', __webpack_require__(84));
+Vue.component('viewapointment', __webpack_require__(89));
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
 			appointments: {},
-			errors: {},
+			apntupdate: {},
+			errors: [],
 			searchQuery: ''
 		};
 	},
@@ -49227,27 +49239,40 @@ Vue.component('addappointment', __webpack_require__(69));
 			axios.get('getallappointment?page=' + page).then(function (response) {
 				return _this.appointments = response.data;
 			}).catch(function (error) {
-				return console.log(error);
+				return _this.errors = error.response.data.errors;
 			});
 		},
 
 		//reftrsh data
 		refreshRecord: function refreshRecord(record) {
 			this.appointments = record.data;
+			//console.log(record)
 		},
+
+		//this will show the details of appointment when eye icon is clicked
 		openShow: function openShow() {
 			console.log('Eye icon clicked');
+		},
+		editRecord: function editRecord(id) {
+			var _this2 = this;
+
+			axios.get('saveappointment/' + id + '/edit').then(function (response) {
+				return _this2.apntupdate = response.data;
+			}).catch(function (error) {
+				return _this2.errors = error.response.data.errors;
+			});
+			console.log(this.apntupdate);
 		}
 	},
 	created: function created() {
-		var _this2 = this;
+		var _this3 = this;
 
 		axios.get('getallappointment').then(function (response) {
-			return _this2.appointments = response.data;
+			return _this3.appointments = response.data;
 		}).catch(function (error) {
 			return console.log(error);
 		});
-		console.log('Appointment component loaded............');
+		console.log('Appointment component loaded............'); //need to be commented on production
 	}
 });
 
@@ -50750,6 +50775,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -50768,7 +50802,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prescription: '',
         visitcomment: ''
       },
-      errorslist: {}
+      errors: {}
     };
   },
 
@@ -50776,13 +50810,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addRecord: function addRecord() {
       var _this = this;
 
-      axios.post('saveappointment', this.list).then(function (response) {
-        return function () {
-          this.success = "asdsdasd";
-        };
-      }).catch(function (error) {
-        return _this.errorslist = error.response.data.errors;
+      axios.post('saveappointment', this.list).then(function (data) {
+        _this.$emit('recordadded', data), _this.success = 'Appointment added successfully';
+        //this.list.prescription=''
+        //this.list.userid=''
+        _this.list = {};
+      }) // recordadded can be catched in component
+      .catch(function (error) {
+        _this.errors = error.response.data.errors;
+        console.log(_this.errors.length);
       });
+    },
+    modalclose: function modalclose() {
+      console.log('modal close clicked');
+      this.list.usserid = '';
     }
   },
   created: function created() {
@@ -50808,11 +50849,40 @@ var render = function() {
   return _c("div", { staticClass: "modal fade", attrs: { id: "myModal" } }, [
     _c("div", { staticClass: "modal-dialog modal-lg" }, [
       _c("div", { staticClass: "modal-content" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "modal-header" }, [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: {
+                type: "button",
+                "data-dismiss": "modal",
+                "aria-label": "Close"
+              },
+              on: { click: _vm.modalclose }
+            },
+            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+          ),
+          _vm._v(" "),
+          _c("h4", { staticClass: "modal-title" }, [_vm._v("New Appointment")])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "modal-body" }, [
-          _vm.errorslist.length > 0
-            ? _c("div", { staticClass: "callout callout-info" }, [_vm._m(1)])
+          _vm.success.length > 0
+            ? _c("div", { staticClass: "callout callout-success" }, [
+                _c("h5", [
+                  _c("i", { staticClass: "fa fa-info" }),
+                  _vm._v(" Note : " + _vm._s(_vm.success))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors.length > 0
+            ? _c("div", { staticClass: "callout callout-warning" }, [
+                _c("i", { staticClass: "fa fa-info" }),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
@@ -50830,7 +50900,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "left-sides col-md-6" }, [
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50880,7 +50950,7 @@ var render = function() {
                       2
                     ),
                     _vm._v(" "),
-                    _vm.errorslist.userid
+                    _vm.errors.userid
                       ? _c("small", { staticClass: "warning-text" }, [
                           _vm._v("Please select Patient name")
                         ])
@@ -50888,7 +50958,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50940,7 +51010,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
-                    _vm._m(4),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -50992,7 +51062,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
-                    _vm._m(5),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51044,7 +51114,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(6),
+                    _vm._m(5),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51096,7 +51166,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(7),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51148,7 +51218,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(8),
+                    _vm._m(7),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -51173,12 +51243,12 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _vm._m(8),
+                  _vm._v(" "),
                   _vm._m(9),
                   _vm._v(" "),
-                  _vm._m(10),
-                  _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
-                    _vm._m(11),
+                    _vm._m(10),
                     _vm._v(" "),
                     _c(
                       "select",
@@ -51329,28 +51399,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("New Appointment")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [_c("i", { staticClass: "fa fa-info" }), _vm._v(" Note:")])
+    return _c("ul", [_c("li", [_vm._v("  error")])])
   },
   function() {
     var _vm = this
@@ -51516,15 +51565,8 @@ var render = function() {
               _c(
                 "a",
                 {
-                  attrs: { href: "" },
-                  on: {
-                    click: [
-                      function($event) {
-                        $event.preventDefault()
-                      },
-                      _vm.openShow
-                    ]
-                  }
+                  attrs: { href: "#viewModal", "data-toggle": "modal" },
+                  on: { click: _vm.openShow }
                 },
                 [_c("i", { staticClass: "fa fa-eye" })]
               ),
@@ -51545,7 +51587,28 @@ var render = function() {
                 _vm._v(" " + _vm._s(app.appointment_date))
               ]),
               _vm._v(" "),
-              _vm._m(3, true)
+              _c("div", { staticClass: "tools pull-right" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#editAppointment", "data-toggle": "modal" },
+                    on: {
+                      click: function($event) {
+                        _vm.editRecord(app.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil",
+                      staticStyle: { "margin-right": "10px" },
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(3, true)
+              ])
             ])
           })
         )
@@ -51566,11 +51629,15 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { attrs: { id: "mymodal" } },
+      { attrs: { id: "modal" } },
       [
-        _c("addappointment", { on: { appadded: _vm.refreshRecord } }, [
-          _vm._v(",")
-        ])
+        _c("addappointment", { on: { recordadded: _vm.refreshRecord } }),
+        _vm._v(" "),
+        _c("quickapointment"),
+        _vm._v(" "),
+        _c("editapointment", { attrs: { recrd: _vm.apntupdate } }),
+        _vm._v(" "),
+        _c("viewapointment")
       ],
       1
     )
@@ -51584,7 +51651,9 @@ var staticRenderFns = [
     return _c("div", { staticClass: "box-header" }, [
       _c("i", { staticClass: "ion ion-clipboard" }),
       _vm._v(" "),
-      _c("h3", { staticClass: "box-title" }, [_vm._v("All Appointments")]),
+      _c("h3", { staticClass: "box-title", attrs: { "hidden-xs": "" } }, [
+        _vm._v("All Appointments")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "box-tools pull-right" }, [
         _c(
@@ -51593,7 +51662,14 @@ var staticRenderFns = [
           [
             _c(
               "button",
-              { staticClass: "btn bg-orange", attrs: { type: "button" } },
+              {
+                staticClass: "btn bg-orange",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#quickeditModal"
+                }
+              },
               [_vm._v("Quick Appointment")]
             ),
             _vm._v(" "),
@@ -51640,22 +51716,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tools pull-right" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", {
-          staticClass: "fa fa-pencil",
-          staticStyle: { "margin-right": "10px" },
-          attrs: { "aria-hidden": "true" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", {
-          staticClass: "fa fa-trash",
-          staticStyle: { "margin-right": "10px" },
-          attrs: { "aria-hidden": "true" }
-        })
-      ])
+    return _c("a", { attrs: { href: "" } }, [
+      _c("i", {
+        staticClass: "fa fa-trash",
+        staticStyle: { "margin-right": "10px" },
+        attrs: { "aria-hidden": "true" }
+      })
     ])
   }
 ]
@@ -51673,6 +51739,1360 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(80)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(82)
+/* template */
+var __vue_template__ = __webpack_require__(83)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-05673e46"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/QuickAppointment.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05673e46", Component.options)
+  } else {
+    hotAPI.reload("data-v-05673e46", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(81);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("4d7cc00e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05673e46\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./QuickAppointment.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-05673e46\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./QuickAppointment.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nh2[data-v-05673e46]{\n\tcolor:green;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	mounted: function mounted() {
+		console.log('Quick appointment loaded...');
+	}
+});
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { id: "quickeditModal", role: "dialog" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h4", { staticClass: "modal-title" }, [_vm._v("Modal Header")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("p", [_vm._v("Some text in the modal.")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-05673e46", module.exports)
+  }
+}
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(85)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4dd8b51a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/EditAppointment.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4dd8b51a", Component.options)
+  } else {
+    hotAPI.reload("data-v-4dd8b51a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(86);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("688c3823", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4dd8b51a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditAppointment.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4dd8b51a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditAppointment.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.alert[data-v-4dd8b51a]{\r\n  margin: 20px 50px;\n}\n.form-control[data-v-4dd8b51a]{\r\n  border-radius: 2px;\n}\n.callout-info[data-v-4dd8b51a]{\r\n  margin: 0 10px;\r\n  margin-bottom: 20px;\n}\n.warning-text[data-v-4dd8b51a]{\r\n  color: red;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['recrd'],
+  data: function data() {
+    return {
+      dropdowns: {},
+      success: '',
+      list: '',
+      errors: {}
+    };
+  },
+
+  methods: {
+    updateRecord: function updateRecord() {
+      var _this = this;
+
+      axios.post('saveappointment' + this.recrd.id, this.list).then(function (data) {
+        _this.$emit('recordadded', data), _this.success = 'Appointment updated successfully';
+      }).catch(function (error) {
+        _this.errors = error.response.data.errors;
+        console.log(_this.errors.length);
+      });
+    },
+    modalclose: function modalclose() {
+      console.log('modal close clicked');
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    axios.get('newappointmentdropdowns').then(function (response) {
+      return _this2.dropdowns = response.data;
+    }).catch(function (error) {
+      return console.log(error);
+    });
+    console.log('Update Appointment component loaded...');
+  }
+});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "modal fade", attrs: { id: "editAppointment" } },
+    [
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                },
+                on: { click: _vm.modalclose }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            ),
+            _vm._v(" "),
+            _c("h4", { staticClass: "modal-title" }, [
+              _vm._v(_vm._s(_vm.recrd.user_id) + "Edit Appointment")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _vm.success.length > 0
+              ? _c("div", { staticClass: "callout callout-success" }, [
+                  _c("h5", [
+                    _c("i", { staticClass: "fa fa-info" }),
+                    _vm._v(" Note : " + _vm._s(_vm.success))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors.length > 0
+              ? _c("div", { staticClass: "callout callout-warning" }, [
+                  _c("i", { staticClass: "fa fa-info" }),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "form",
+                {
+                  attrs: { role: "form" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.processForm($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "left-sides col-md-6" }, [
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.userid,
+                              expression: "list.userid"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "userid",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.user, function(usr) {
+                            return _c(
+                              "option",
+                              { domProps: { value: usr.id } },
+                              [
+                                _vm._v(
+                                  _vm._s(usr.firstname) +
+                                    "," +
+                                    _vm._s(usr.lastname)
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.userid
+                        ? _c("small", { staticClass: "warning-text" }, [
+                            _vm._v("Please select Patient name")
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.familyid,
+                              expression: "list.familyid"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "familyid",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.user, function(usr) {
+                            return _c(
+                              "option",
+                              { domProps: { value: usr.id } },
+                              [
+                                _vm._v(
+                                  _vm._s(usr.firstname) +
+                                    "," +
+                                    _vm._s(usr.lastname)
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.visittype,
+                              expression: "list.visittype"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "visittype",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.visittype, function(v) {
+                            return _c(
+                              "option",
+                              { domProps: { value: v.value } },
+                              [_vm._v(_vm._s(v.value))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.symptom,
+                              expression: "list.symptom"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "symptom",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.symptom, function(s) {
+                            return _c(
+                              "option",
+                              { domProps: { value: s.value } },
+                              [_vm._v(_vm._s(s.value))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.billingcharge,
+                              expression: "list.billingcharge"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "billingcharge",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.billingcharge, function(bc) {
+                            return _c(
+                              "option",
+                              { domProps: { value: bc.value } },
+                              [_vm._v(_vm._s(bc.value))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.billingstatus,
+                              expression: "list.billingstatus"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "billingstatus",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.billingstatus, function(b) {
+                            return _c(
+                              "option",
+                              { domProps: { value: b.value } },
+                              [_vm._v(_vm._s(b.value))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.list.billingpaid,
+                            expression: "list.billingpaid"
+                          }
+                        ],
+                        staticClass: "form-control input-sm",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Enter paid Amount"
+                        },
+                        domProps: { value: _vm.list.billingpaid },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.list,
+                              "billingpaid",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(8),
+                    _vm._v(" "),
+                    _vm._m(9),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _vm._m(10),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.list.reffered,
+                              expression: "list.reffered"
+                            }
+                          ],
+                          staticClass: "form-control input-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.list,
+                                "reffered",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Select")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.dropdowns.reffered, function(r) {
+                            return _c(
+                              "option",
+                              { domProps: { value: r.value } },
+                              [_vm._v(_vm._s(r.value))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "left-sides col-md-6" }, [
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _c("label", { attrs: { for: "prescription" } }, [
+                        _vm._v("Prescription")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.recrd.prescription,
+                            expression: "recrd.prescription"
+                          }
+                        ],
+                        staticClass: "form-control input-sm",
+                        attrs: { rows: "7" },
+                        domProps: { value: _vm.recrd.prescription },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.recrd,
+                              "prescription",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _c("label", { attrs: { for: "visit_comment" } }, [
+                        _vm._v("Visit Comments")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.recrd.visit_comment,
+                            expression: "recrd.visit_comment"
+                          }
+                        ],
+                        staticClass: "form-control input-sm",
+                        attrs: { rows: "7" },
+                        domProps: { value: _vm.recrd.visit_comment },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.recrd,
+                              "visit_comment",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default pull-left",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Close")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.updateRecord }
+              },
+              [_vm._v("Save Appointment")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [_c("li", [_vm._v("  error")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "familyid" } }, [
+      _vm._v("Patient Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "familyid" } }, [
+      _vm._v("Family Head"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "visittype" } }, [
+      _vm._v("Visit Type"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "symptoms" } }, [
+      _vm._v("Symptom"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "symptoms" } }, [
+      _vm._v("Billing Charge"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "billing_charge" } }, [
+      _vm._v("Billing Status"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v("Billing Paid"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group col-md-6", staticStyle: { display: "none" } },
+      [
+        _c("input", {
+          attrs: { type: "hidden", value: "", name: "billing_id" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group col-md-6", staticStyle: { display: "none" } },
+      [
+        _c("input", {
+          attrs: { type: "hidden", value: "", name: "appointment_id" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "reffered_to" } }, [
+      _vm._v("Reffered to"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4dd8b51a", module.exports)
+  }
+}
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(90)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(92)
+/* template */
+var __vue_template__ = __webpack_require__(93)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-2f10bf1f"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/ViewAppointment.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2f10bf1f", Component.options)
+  } else {
+    hotAPI.reload("data-v-2f10bf1f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(91);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("512758f0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2f10bf1f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ViewAppointment.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2f10bf1f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ViewAppointment.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nh2[data-v-2f10bf1f]{\n\tcolor:green;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['rec'],
+	mounted: function mounted() {
+		console.log('Quick appointment loaded...');
+	}
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "viewModal", role: "dialog" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("h4", { staticClass: "modal-title" }, [_vm._v("Modal Header")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("p", [_vm._v("Some text in the modal.")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2f10bf1f", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
