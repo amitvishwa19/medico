@@ -17,13 +17,21 @@ use App\Http\Requests\Appointment\NewAppointment;
 class AppointmentController extends Controller
 {
     
-    public function index()
+    public function index($term=null)
     {
         return 'ok';
     }
 
-    public function getAllAppointment(){
+    public function getAllAppointment($term=null){
         
+        if($term != null){
+            $appointments['data'] =Appointment::where('id','like', '%'.$term.'%')
+                                    ->orWhere('visit_type','like', '%'.$term.'%')
+                                    ->with('user','billing')
+                                    ->get();
+            return request()->json(200,$appointments);
+        }
+
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
     }

@@ -110,13 +110,12 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 			}
 		},
 		watch:{
-			searchQuery(){
-				
-				if(this.searchQuery.length > 0){
-					console.log(this.searchQuery)
-					//this.appointments.filter((item) => {
+			searchQuery(){				
+				if(this.searchQuery.length >= 0){
+					axios.get('searchappointment/'+ this.searchQuery)
+					.then(response => this.appointments = response.data)
+					.catch(error => console.log(error))
 
-					//});
 				}
 			}
 		},
@@ -150,8 +149,12 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 				console.log('closemodal click')
 			},
 			deleterecord(id){
-				axios.delete('saveappointment/'+id)
+				const rply = confirm('Do you want to delete the appointment')
+				if(rply){
+					axios.delete('saveappointment/'+id)
 				.then(response => this.appointments=response.data)
+				}
+				
 			}
 
 		},

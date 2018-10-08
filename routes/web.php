@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Appointment vue
     Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
+    Route::get('/searchappointment/{term?}','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
 
     //Billing vue
