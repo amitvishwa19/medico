@@ -40,6 +40,12 @@ class AdminController extends Controller
     }
 
     public function billing(){
+       // return 'vuebilling';
+        return view('admin/billing/vuebilling');
+
+    }
+
+    public function delbilling(){
 
         return 'Billing';
          //$patients = patient::limit(5)->orderby('id','desc')->get() ;

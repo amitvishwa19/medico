@@ -149,21 +149,21 @@
 
 <style type="text/css" scoped>
   
-  .alert{
-    margin: 20px 50px;
-  }
+.alert{
+  margin: 20px 50px;
+}
 
-  .form-control{
-    border-radius: 2px;
-  }
+.form-control{
+  border-radius: 2px;
+}
 
 
-  .callout-info{
-    margin: 0 10px;
-    margin-bottom: 20px;
-  }
+.callout-info{
+  margin: 0 10px;
+  margin-bottom: 20px;
+}
 
-  .warning-text{
-    color: red;
-  }
+.warning-text{
+  color: red;
+}
 </style>

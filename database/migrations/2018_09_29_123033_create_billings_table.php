@@ -18,7 +18,7 @@ class CreateBillingsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('appointment_id')->nullable();
             $table->date('appointment_date')->nullable();
-            $table->string('bill_status')->default('pending');
+            $table->string('bill_status')->nullable()->default('pending');
             $table->string('bill_charge')->nullable(); 
             $table->string('bill_paid')->nullable();
             $table->string('bill_pending')->nullable();    
