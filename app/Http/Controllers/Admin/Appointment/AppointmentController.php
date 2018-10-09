@@ -22,11 +22,11 @@ class AppointmentController extends Controller
         return 'ok';
     }
 
-    public function getAllAppointment($term=null){
+    public function getAllAppointment($term1=null){
         
-        if($term != null){
-            $appointments['data'] =Appointment::where('id','like', '%'.$term.'%')
-                                    ->orWhere('visit_type','like', '%'.$term.'%')
+        if($term1 != null){
+            $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
+                                    ->orWhere('visit_type','like', '%'.$term1.'%')
                                     ->with('user','billing')
                                     ->get();
             return request()->json(200,$appointments);
