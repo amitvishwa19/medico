@@ -23,7 +23,7 @@
 <script type="text/javascript">
 	export default{
 		mounted(){
-			console.log('Quick appointment loaded...')
+			//console.log('Quick appointment loaded...')
 		}
 	};
 	

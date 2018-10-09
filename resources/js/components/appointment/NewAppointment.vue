@@ -49,28 +49,28 @@
                         </div><!--Family head-->
 
                         <div class="form-group col-md-12"><!--Visit Type-->
-                                <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" v-model="list.visittype">
-                                    <option value="">Select</option>
-                                    <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
-                                </select>                         
-                            </div>
+                            <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
+                            <select class="form-control input-sm" v-model="list.visittype">
+                                <option value="">Select</option>
+                                <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
+                            </select>                         
+                        </div>
 
-                            <div class="form-group col-md-12"><!--Symptom and diagnosis-->
-                                <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm"  v-model="list.symptom">
-                                    <option value="">Select</option>
-                                    <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
-                                </select>
-                            </div><!--Symptom and diagnosis-->
+                        <div class="form-group col-md-12"><!--Symptom and diagnosis-->
+                            <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
+                            <select class="form-control input-sm"  v-model="list.symptom">
+                                <option value="">Select</option>
+                                <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
+                            </select>
+                        </div><!--Symptom and diagnosis-->
 
-                            <div class="form-group col-md-12"><!--billing charge-->
-                                <label for="symptoms" >Billing Charge<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" v-model="list.billingcharge">
-                                    <option value="">Select</option>
-                                    <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
-                                </select>
-                            </div><!--billing charge-->
+                        <div class="form-group col-md-12"><!--billing charge-->
+                            <label for="symptoms" >Billing Charge<span class="text-danger">*</span></label>                           
+                            <select class="form-control input-sm" v-model="list.billingcharge">
+                                <option value="">Select</option>
+                                <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
+                            </select>
+                        </div><!--billing charge-->
 
                       </div><!--Left column-->
 
@@ -142,7 +142,7 @@
       axios.get('newappointmentdropdowns')
       .then((response) => this.dropdowns=response.data)
       .catch((error) => console.log(error))
-      console.log('New Appointment component loaded............')
+      //console.log('New Appointment component loaded............')
     }
   };
 </script>

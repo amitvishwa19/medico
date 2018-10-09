@@ -24,7 +24,7 @@
 	export default{
     props:['rec'],
 		mounted(){
-			console.log('Quick appointment loaded...')
+			//console.log('Quick appointment loaded...')
 		}
 	};
 	

@@ -99,7 +99,7 @@ class AppointmentController extends Controller
             $e_bill->save();
 
             
-            $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
         }
 

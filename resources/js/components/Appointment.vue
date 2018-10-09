@@ -6,18 +6,19 @@
 
 	 		<!--Box header-->
 	 		<div class="box-header">
-                <i class="ion ion-clipboard "></i>
+                
+         	
+                	<div class="col-md-6 col-xs-12 group-buttons">
+                		<div class="box-tools">                
+		                   <div class="btn-group" style="margin-top:.5px;">
+		                      <button type="button" class="btn bg-orange" data-toggle="modal" data-target="#quickeditModal">Quick Appointment</button>
+		                      <button type="button" class="btn bg-olive" data-toggle="modal" data-target="#myModal">New Appointment</button>          
+		                    </div>
+		                </div>
+                	</div>
 
-                <h3 class="box-title hidden-xs" >All Appointments</h3>
 
-                <!--Pagination-->
-                <div class="box-tools pull-right">
-                  
-                   <div class="btn-group" style="margin-top:.5px;">
-                      <button type="button" class="btn bg-orange" data-toggle="modal" data-target="#quickeditModal">Quick Appointment</button>
-                      <button type="button" class="btn bg-olive" data-toggle="modal" data-target="#myModal">New Appointment</button>          
-                    </div>
-                </div><!--Pagination-->   
+               
             </div><!-- /.box-header -->
 
 
@@ -26,15 +27,30 @@
 
             	<form>
 				  	<div class="input-group">
-				    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery">
+				  		
+				  		<input type="text" class="hiddens" id="sdate" name="" v-model="startdate">
+                		<input type="text" class="hiddens" id="edate" name="" v-model="enddate" v-on:blur="update()">
+				    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery" >
 					    <div class="input-group-btn">
-					      <button class="btn btn-default" type="submit">
+					      <button class="btn btn-default" type="submit" v-on:click.prevent @click="onSearchClick">
 					        <i class="glyphicon glyphicon-search"></i>
 					      </button>
+					      <button type="button" class="btn btn-default" id="daterange-btn">
+		                    <span>Select Date</span>
+		                    <i class="fa fa-caret-down"></i>
+		                  </button>
 					    </div>
 				  	</div>
 				</form>
-				
+
+				<div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="reservation" @onclick="onchange">
+                </div>
+
+				<vue-ctk-date-time-picker></vue-ctk-date-time-picker>
 				<hr>    
 
             	<ul class="todo-list">
@@ -49,7 +65,10 @@
 	                    <!--User details-->
                         <span class="text">{{app.user.firstname}},{{app.user.lastname}} : </span>
                         <!-- Date -->
-                        <small class="label label-warning"><i class="fa fa-calendar"></i> {{app.appointment_date}}</small>
+                        <small class="label label-warning">
+                        	<i class="fa fa-calendar"></i>
+                        	 {{moment(app.created_at).utcOffset('IST').fromNow()}}
+                        </small>
                        
 
                         <div class="tools pull-right">
@@ -99,6 +118,7 @@ Vue.component('addappointment', require('./appointment/NewAppointment.vue'));
 Vue.component('quickapointment', require('./appointment/QuickAppointment.vue'));
 Vue.component('editapointment', require('./appointment/EditAppointment.vue'));
 Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
+var moment = require('moment')
 	export default{
 
 		data(){
@@ -106,7 +126,11 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 				appointments:{},
 				apntupdate:[],
 				errors:[],
-				searchQuery:''
+				searchQuery:'',
+				startdate:'',
+				enddate:'',
+				date: null,
+				moment:moment, 
 			}
 		},
 		watch:{
@@ -117,6 +141,12 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 					.catch(error => console.log(error))
 
 				}
+			},
+			startdate(){
+				console.log(this.startdate)
+			},
+			enddate(){
+				//console.log(this.enddate)
 			}
 		},
 		methods:{
@@ -153,17 +183,29 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 				if(rply){
 					axios.delete('saveappointment/'+id)
 				.then(response => this.appointments=response.data)
-				}
-				
-			}
+				}	
+			},
+			onSearchClick(){
+				console.log(this.startdate)
+				console.log(this.enddate)
+			},
+			update(event){
+				console.log('blur triggred')
 
+
+			},
+			onchange(){
+				console.log('On change')
+			}
+		
 		},
 		created(){
 			axios.get('getallappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			console.log('Appointment component loaded............')  //need to be commented on production
+			//console.log('Appointment component loaded............')  //need to be commented on production
 		}
+
 	};
 
 	
@@ -185,5 +227,7 @@ Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
 	.fa{
 		margin-right: 5px;
 	}
-
+	.group-buttons{
+		margin-left: -15px;
+	}
 </style>

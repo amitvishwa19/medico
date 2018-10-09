@@ -1,7 +1,8 @@
 
 require('./bootstrap');
 import moment from 'moment'
-
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css';
 
 
 
@@ -35,10 +36,13 @@ const router = new VueRouter({
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('appointment', require('./components/Appointment.vue'));
 Vue.component('billing', require('./components/billing/Billing.vue'));
-
+Vue.component('vue-ctk-date-time-picker', VueCtkDateTimePicker);
 
 
 const app = new Vue({
     el: '#appointment'
 
 });
+
+
+
