@@ -103,7 +103,7 @@
 
 @section('FooterSection')
 
-@endsection
+@show
 
 </body>
 </html>

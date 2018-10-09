@@ -104,7 +104,7 @@
 
 
          <!--Appointment-->
-        <li class="{{current_page('appointmentvue') ? 'active' : '' }} treeview">          
+        <li class="{{current_page('vue') ? 'active' : '' }} treeview">          
           <a href="#">
             <i class="fa fa-envelope"></i> <span>Vue Example</span>
             <span class="pull-right-container">
@@ -112,8 +112,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/vueappointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>
-                       
+            <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/vueappointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>           
+          </ul>
+          <ul class="treeview-menu">
+            <li class="{{current_page('vuebilling') ? 'active' : '' }}"><a href="{{url('/admin/vuebilling')}}"><i class="fa fa-circle-o"></i> Billing</a></li>           
           </ul>
         </li><!--Appointment-->
 

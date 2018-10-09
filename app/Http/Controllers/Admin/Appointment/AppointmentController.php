@@ -12,17 +12,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Http\Requests\Appointment\NewAppointment;
+
 class AppointmentController extends Controller
 {
     
-    public function index()
+    public function index($term=null)
     {
         return 'ok';
     }
 
-    public function getAllAppointment(){
+    public function getAllAppointment($term1=null){
         
-        $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
+        if($term1 != null){
+            $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
+                                    ->orWhere('visit_type','like', '%'.$term1.'%')
+                                    ->with('user','billing')
+                                    ->get();
+            return request()->json(200,$appointments);
+        }
+
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
     }
 
@@ -60,12 +70,11 @@ class AppointmentController extends Controller
     }
 
    
-    public function store(Request $request){
+    public function store(NewAppointment $request){
         
         //return $request->all();
         $bill =new Billing;
         $bill->user_id = $request->userid;
-        //$bill->appointment_date = $request->appointment_date;
         $bill->bill_status = $request->billingstatus;
         $bill->bill_charge = $request->billingcharge;
         $bill->bill_paid = $request->billingpaid;
@@ -73,13 +82,13 @@ class AppointmentController extends Controller
         $bill->save();
 
         $appointment = new Appointment;
-        $appointment->user_id=$request->userid;
-        $appointment->family_id=$request->familyid;
-        $appointment->billing_id= 60;
-        $appointment->visit_type= $request->visittype;
-        $appointment->symptoms= $request->symptom;
-        $appointment->reffered_to= $request->reffered;
-        $appointment->prescription= $request->prescription;
+        $appointment->user_id = $request->userid;
+        $appointment->family_id =$request->familyid;
+        $appointment->billing_id = $bill->id;
+        $appointment->visit_type = $request->visittype;
+        $appointment->symptoms = $request->symptom;
+        $appointment->reffered_to = $request->reffered;
+        $appointment->prescription = $request->prescription;
         $appointment->visit_comment = $request->visitcomment;
         $is_saved=$appointment->save();
         
@@ -90,9 +99,11 @@ class AppointmentController extends Controller
             $e_bill->save();
 
             
-            $appointments =Appointment::orderBy('created_at','desc')->with('user','billing')->paginate(5);
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
         }
+
+
     }
 
   
@@ -104,19 +115,35 @@ class AppointmentController extends Controller
    
     public function edit($id)
     {
-        //
+        return $appointment = appointment::with('user','billing')->find($id);
+        return 'edit called';
     }
 
     
     public function update(Request $request, $id)
     {
-        //
+        //return $request->all();
+        $appointment = Appointment::find($id);   
+        $appointment->visit_type = $request->visit_type;
+        $appointment->symptoms = $request->symptoms;
+        $appointment->visit_comment = $request->visit_comment;
+        $appointment->prescription = $request->prescription;      
+        $appointment->reffered_to = $request->reffered_to;
+        //$appointment->appointment_date = $request->appointment_date;
+        //$appointment->next_visit_date = $request->next_visit_date;
+        $is_saved = $appointment->save();
+
     }
 
    
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+
+        $appointment = appointment::find($id);
+        $is_deleted=$appointment->delete();
+        if($is_deleted){
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+            return request()->json(200,$appointments);
+        }
     }
 
 }
