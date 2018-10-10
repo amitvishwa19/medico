@@ -17,7 +17,7 @@
 		                </div>
                 	</div>
 
-
+                	
                
             </div><!-- /.box-header -->
 
@@ -26,31 +26,24 @@
             <div class="box-body">
 
             	<form>
-				  	<div class="input-group">
-				  		
-				  		<input type="text" class="hiddens" id="sdate" name="" v-model="startdate">
-                		<input type="text" class="hiddens" id="edate" name="" v-model="enddate" v-on:blur="update()">
+            		
+				  	<div class="input-group col-md-2">	
 				    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery" >
 					    <div class="input-group-btn">
-					      <button class="btn btn-default" type="submit" v-on:click.prevent @click="onSearchClick">
+					      <button class="btn btn-default" type="submit" v-on:click.prevent @click="onSearchClick" >
 					        <i class="glyphicon glyphicon-search"></i>
 					      </button>
-					      <button type="button" class="btn btn-default" id="daterange-btn">
-		                    <span>Select Date</span>
-		                    <i class="fa fa-caret-down"></i>
-		                  </button>
 					    </div>
+					   
 				  	</div>
+
 				</form>
 
-				<div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="reservation" @onclick="onchange">
-                </div>
-
-				<vue-ctk-date-time-picker></vue-ctk-date-time-picker>
+				
+				<date-picker v-model="date"/>
+    			<br/>
+    			<alert type="info" v-show="date">You selected <b>{{date}}</b>.</alert>
+				
 				<hr>    
 
             	<ul class="todo-list">
@@ -122,6 +115,7 @@ var moment = require('moment')
 	export default{
 
 		data(){
+
 			return{
 				appointments:{},
 				apntupdate:[],
@@ -142,11 +136,11 @@ var moment = require('moment')
 
 				}
 			},
-			startdate(){
+			date(){
 				console.log(this.startdate)
 			},
 			enddate(){
-				//console.log(this.enddate)
+				console.log(this.enddate)
 			}
 		},
 		methods:{
@@ -196,7 +190,13 @@ var moment = require('moment')
 			},
 			onchange(){
 				console.log('On change')
-			}
+			},
+			notify () {
+		        this.$notify('This is a simple notify msg.', () => {
+		          // callback after dismissed
+		          console.log('dismissed')
+		        })
+		      },
 		
 		},
 		created(){

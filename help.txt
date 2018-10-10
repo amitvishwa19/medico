@@ -40,3 +40,6 @@ $ ssh -p 65002 u572845961@31.220.104.153
 
 //to add app.js and app.css
 {{asset(public/css/app.css}}
+
+
+https://uiv.wxsm.space/alert
