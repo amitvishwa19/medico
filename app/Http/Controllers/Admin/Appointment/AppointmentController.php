@@ -17,9 +17,21 @@ use App\Http\Requests\Appointment\NewAppointment;
 class AppointmentController extends Controller
 {
     
-    public function index($term=null)
-    {
+    public function index($term=null){
         return 'ok';
+    }
+
+     public function allAppointment($term=null){
+        if($term1 != null){
+            $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
+                                    ->orWhere('visit_type','like', '%'.$term1.'%')
+                                    ->with('user','billing')
+                                    ->get();
+            return request()->json(200,$appointments);
+        }
+
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+        return request()->json(200,$appointments);
     }
 
     public function getAllAppointment($term1=null){
@@ -34,7 +46,7 @@ class AppointmentController extends Controller
 
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
-    }
+    }//need to delete after new menu works
 
     public function newAppointmentDropdowns(){
 
@@ -64,12 +76,12 @@ class AppointmentController extends Controller
         return request()->json(200,['symptom'=>$symptoms,'user'=>$users,'visittype'=>$visittypes,'billingstatus'=>$billingstatus,'reffered'=>$reffered,'billingcharge'=>$billingcharge]);
     }
    
-    public function create()
-    {
+    public function create(){
         //
+
+
     }
 
-   
     public function store(NewAppointment $request){
         
         //return $request->all();
@@ -107,14 +119,12 @@ class AppointmentController extends Controller
     }
 
   
-    public function show($id)
-    {
+    public function show($id){
         //
     }
 
    
-    public function edit($id)
-    {
+    public function edit($id){
         return $appointment = appointment::with('user','billing')->find($id);
         return 'edit called';
     }

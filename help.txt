@@ -43,3 +43,4 @@ $ ssh -p 65002 u572845961@31.220.104.153
 
 
 https://uiv.wxsm.space/alert
+http://radixtouch.in/templates/admin/redstar/source/light/book_appointment.html

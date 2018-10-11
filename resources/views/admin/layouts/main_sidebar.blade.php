@@ -38,9 +38,9 @@
         </li><!--Dashboard-->
 
         <!--Appointment-->
-        <li class="{{current_page('appointment') ? 'active' : '' }} treeview">          
+        <li class=" treeview">          
           <a href="{{url('/admin/appointment/all')}}">
-            <i class="fa fa-envelope"></i> <span>Appointment</span>
+            <i class="fa fa-envelope"></i> <span>App</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -103,7 +103,7 @@
         </li--><!--vue test-->
 
 
-         <!--Appointment-->
+        <!--Appointment-->
         <li class="{{current_page('vue') ? 'active' : '' }} treeview">          
           <a href="#">
             <i class="fa fa-envelope"></i> <span>Vue Example</span>
@@ -116,6 +116,30 @@
           </ul>
           <ul class="treeview-menu">
             <li class="{{current_page('vuebilling') ? 'active' : '' }}"><a href="{{url('/admin/vuebilling')}}"><i class="fa fa-circle-o"></i> Billing</a></li>           
+          </ul>
+        </li><!--Appointment-->
+
+        <!--New Vue Appointment -->
+        <li class="{{current_page('/appointment') ? 'active' : '' }} treeview">          
+          <a href="{{url('/admin/appointment/all')}}">
+            <i class="fa fa-envelope"></i> <span>Appointment</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{current_page('appointment/create') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/create')}}"><i class="fa fa-circle-o"></i> Doctor Schedule</a>
+            </li>
+
+            <li class="{{current_page('appointment/new') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/new')}}"><i class="fa fa-circle-o"></i>Book Appointment</a>
+            </li>
+
+            <li class="{{current_page('appointment/all') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/all')}}"><i class="fa fa-circle-o"></i> All Appointments</a>
+            </li> 
+
           </ul>
         </li><!--Appointment-->
 

@@ -35,6 +35,10 @@
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{asset('public/admin/plugins/datepicker/datepicker3.css')}}">
   <!-- Daterange picker -->
+
+  
+
+
   <link rel="stylesheet" href="{{asset('public/admin/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('public/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
@@ -49,8 +53,8 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
-  <div class="wrapper">
-
+  <div class="wrapper" id="app">
+    
       <!--Mani Top Navbar-->  
       @include('admin.layouts.top_nav')
 
@@ -73,11 +77,14 @@
       {{--
       @include('admin.layouts.control_sidebar')
       --}}
+      
+      
 
       <!-- Add the sidebar's background. This div must be placed
           immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
-    </div>
+
+  </div>
 <!-- ./wrapper -->
 <script src="{{asset('public/js/app.js')}}"></script>
 <script src="{{asset('public/admin/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>

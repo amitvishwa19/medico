@@ -132,10 +132,9 @@
     },
     created(){
       axios.get('newappointmentdropdowns')
-      //.then((response) => console.log(response.data))
       .then((response) => this.dropdowns=response.data)
       .catch((error) => console.log(error))
-      //console.log(this.dropdowns)
+      //console.log('Update Appointment component loaded...')
     }
 
   };

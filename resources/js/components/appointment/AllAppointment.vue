@@ -99,10 +99,10 @@
 
 	 	
 	 	<div id="modal">
-	 		<addappointment @recordadded="refreshRecord"></addappointment>
-	 		<quickapointment></quickapointment>
+	 		<!--addappointment @recordadded="refreshRecord"></addappointment-->
+	 		<!--quickapointment></quickapointment-->
 	 		<editapointment :recrd="apntupdate" @hide="closemodal"></editapointment>
-	 		<viewapointment></viewapointment>
+	 		<!--viewapointment></viewapointment-->
 	 	</div>
 	
 
@@ -115,10 +115,10 @@
 
 <script type="text/javascript">
 Vue.component('pagination', require('laravel-vue-pagination'));
-Vue.component('addappointment', require('./appointment/NewAppointment.vue'));
-Vue.component('quickapointment', require('./appointment/QuickAppointment.vue'));
-Vue.component('editapointment', require('./appointment/EditAppointment.vue'));
-Vue.component('viewapointment', require('./appointment/ViewAppointment.vue'));
+//Vue.component('addappointment', require('./NewAppointment.vue'));
+//Vue.component('quickapointment', require('./QuickAppointment.vue'));
+Vue.component('editapointment', require('./EditAppointment.vue'));
+//Vue.component('viewapointment', require('./ViewAppointment.vue'));
 var moment = require('moment')
 	export default{
 
@@ -157,15 +157,17 @@ var moment = require('moment')
 				if (typeof page === 'undefined'){
 					page=1;
 				}	
-				axios.get('getallappointment?page=' + page)
+				axios.get('allappointment?page=' + page)
 					.then(response => this.appointments = response.data)
 					.catch(error => this.errors=error.response.data.errors);
 			},
+
 			//reftrsh data
 			refreshRecord(record){
 				this.appointments=record.data
 				//console.log(record)
 			},
+
 			//this will show the details of appointment when eye icon is clicked
 			openShow(){
 				console.log('Eye icon clicked');
@@ -175,7 +177,7 @@ var moment = require('moment')
 				.then(response => this.apntupdate = response.data)
 				.catch(error => this.errors=error.response.data.errors);
 				console.log(this.apntupdate); //need to be commented on production  this.apntupdate)
-				this.$children[3].list=this.apntupdate
+				//this.$children[3].list=this.apntupdate
 			},
 			closemodal(){
 				console.log('closemodal click')
@@ -208,10 +210,10 @@ var moment = require('moment')
 		
 		},
 		created(){
-			axios.get('getallappointment')
+			axios.get('allappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			//console.log('Appointment component loaded............')  //need to be commented on production
+			console.log('Appointment component loaded............')  //need to be commented on production
 		}
 
 	};

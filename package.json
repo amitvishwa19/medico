@@ -25,6 +25,7 @@
         "moment-timezone": "^0.5.21",
         "uiv": "^0.27.0",
         "vue-moments-ago": "^0.1.3",
-        "vue-router": "^3.0.1"
+        "vue-router": "^3.0.1",
+        "vuetify": "^1.2.8"
     }
 }
