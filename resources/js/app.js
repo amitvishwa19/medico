@@ -10,12 +10,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 Vue.use(Vuetify)
 
-const example = require('./components/ExampleComponent.vue');
-const sample = require('./components/SampleComponent.vue');
+//const example = require('./components/ExampleComponent.vue');
+//const sample = require('./components/SampleComponent.vue');
 
 const routes = [
-	{ path: '/example',component: example},
-	{ path: '/sample',component: sample}
+	
 ];
 
 
@@ -27,8 +26,9 @@ const router = new VueRouter({
 
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('appointment', require('./components/Appointment.vue'));
+//Vue.component('appointment', require('./components/Appointment.vue'));
 Vue.component('allappointment', require('./components/appointment/AllAppointment.vue'));
+Vue.component('bookappointment', require('./components/appointment/BookAppointment.vue'));
 Vue.component('billing', require('./components/billing/Billing.vue'));
 
 

@@ -21,7 +21,7 @@ class AppointmentController extends Controller
         return 'ok';
     }
 
-     public function allAppointment($term=null){
+    public function allAppointment($term=null){
         if($term1 != null){
             $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
                                     ->orWhere('visit_type','like', '%'.$term1.'%')
@@ -30,7 +30,7 @@ class AppointmentController extends Controller
             return request()->json(200,$appointments);
         }
 
-        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
         return request()->json(200,$appointments);
     }
 
@@ -44,7 +44,7 @@ class AppointmentController extends Controller
             return request()->json(200,$appointments);
         }
 
-        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
         return request()->json(200,$appointments);
     }//need to delete after new menu works
 

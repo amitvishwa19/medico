@@ -2,98 +2,101 @@
 	
 	<section class="content">
 	 	
-	 	<div class="box box-warning">
-
+	 	<div class="box box-warning">			
 	 		<!--Box header-->
-	 		<div class="box-header">
-                	
-                	<div class="col-md-12">
-                		<div class="col-md-4">
-                			<form>           		
-			   				  	<div class="input-group">	
-							    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery" >
-								    <div class="input-group-btn">
-								      <button class="btn btn-default" type="submit" v-on:click.prevent @click="onSearchClick" >
-								        <i class="glyphicon glyphicon-search"></i>
-								      </button>
-								    </div>					   
-							  	</div>			  	
-							</form>
-                		</div>
-                		<div class="col-md-4">
-                			<form>           		
-			   				  	<div class="input-group">	
-							    	<input type="text" class="form-control" placeholder="Search" v-model="searchQuery" >
-								    <div class="input-group-btn">
-								      <button class="btn btn-default" type="submit" v-on:click.prevent @click="onSearchClick" >
-								        Select Date
-								      </button>
-								    </div>					   
-							  	</div>			  	
-							</form>
-                		</div>
-                		<div class="col-md-4">
-                			<div class=" group-buttons pull-right">
-		                		<div class="box-tools">                
-				                   <div class="btn-group" style="margin-top:.5px;">
-				                      <button type="button" class="btn bg-orange" data-toggle="modal" data-target="#quickeditModal">Quick Appointment</button>
-				                      <button type="button" class="btn bg-olive" data-toggle="modal" data-target="#myModal">New Appointment</button>          
-				                    </div>
-				                </div>
-		                	</div>
-                		</div>
-                	</div>
-         			
-                	
+	 		<div class="box-header">             	
+				<form role="form" @submit.prevent="processForm">       
+                    <div class="form-group col-md-4"><!--Patient Name-->
+                    	           
+                        <input type="text" name="" class="form-control input-sm" placeholder="Appointment id or Visit type" v-model="searchQuery" id="searchbox">   
+                    </div><!--Patient Name-->
 
-                	
-               
+					<div class="form-group col-md-4"><!--Patient Name-->                       
+                        <div class="input-group">
+						    <input type="date" class="form-control input-sm" placeholder="Search" v-model="startdate">
+						    <div class="input-group-btn">
+						      <button class="btn btn-default btn-sm" type="submit" @click="clearstartdate">
+						        <i class="fa fa-times" aria-hidden="true"></i>
+						      </button>
+						    </div>
+						</div>       
+                    </div><!--Patient Name-->
+
+					<div class="form-group col-md-4"><!--Patient Name-->                              
+                        <div class="input-group">
+						    <input type="date" class="form-control input-sm" placeholder="Search" v-model="enddate">
+						    <div class="input-group-btn">
+						      <button class="btn btn-default btn-sm" type="submit" @click="clearenddate">
+						        <i class="fa fa-times" aria-hidden="true"></i>
+						      </button>
+						    </div>
+						</div>    
+                    </div>                                   
+                </form>              
             </div><!-- /.box-header -->
-
 
             <!--Box Body-->
             <div class="box-body"> 
 
             	<ul class="todo-list danger">
             		<li v-for="app,key in appointments.data">
-            			{{app.id}}<span style="margin-right:5px;"></span>
+
+            			<a href="#viewModal"  v-if="app.visit_type == 'Emergency'" data-toggle="modal" @click="openShow">
+            				<i class="fa fa-bullhorn" ></i>
+            			</a>
+            			<a href="#viewModal"  v-if="app.visit_type == 'Fresh Case'" data-toggle="modal" @click="openShow">
+            				<i class="fa fa-plus-circle" ></i>
+            			</a>
+            			<a href="#viewModal"  v-if="app.visit_type == 'Follow up'" data-toggle="modal" @click="openShow">
+            				<i class="fa fa-repeat" ></i>
+            			</a>
+
+            			
 
             			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-eye" ></i></a>
             			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-newspaper-o"></i></a>
             			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-user" ></i></a>
-            			
-
+           		
 	                    <!--User details-->
-                        <span class="text" >{{app.user.firstname}},{{app.user.lastname}} : </span>
-                        <!-- Date -->
+                        <span class="text" >{{app.user.firstname}},{{app.user.lastname}}</span>
+
                         <small class="label label-warning">
-                        	<i class="fa fa-calendar"></i>
+                        	<i class="fa fa-calendar hidden-xs"></i>
                         	 {{moment(app.created_at).utcOffset('IST').fromNow()}}
                         </small>
                        
-
                         <div class=" pull-right">
-	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id)">
-	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>
+	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id,)">
+	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>	                        	
 	                        </a>
+	                    
 							<a href="" v-on:click.prevent @click="deleterecord(app.id)">
-								<i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i>
-							</a>	                        
+								<i class="fa fa-trash" aria-hidden="true" style="margin-right:10px;"></i>							
+							</a>
+
+
 	                    </div>
 
             		</li>	
             	</ul>
 
-
-
             </div><!--Box Body-->
 
             <div class="box-footer">
-                <pagination :data="appointments" @pagination-change-page="getResults"></pagination>
-                <!--pagination :data="appointments"@pagination-change-page="getResults">>
-					<span slot="prev-nav">&lt; Previous</span>
-					<span slot="next-nav">Next &gt;</span>
-				</pagination-->
+                <div class="col-md-12">
+                	<pagination :data="appointments" @pagination-change-page="getResults"></pagination>
+	                <!--pagination :data="appointments"@pagination-change-page="getResults">>
+						<span slot="prev-nav">&lt; Previous</span>
+						<span slot="next-nav">Next &gt;</span>
+					</pagination-->
+                </div>
+                <div class="col-md-12">
+                	
+            		<small class="infoicon"><i class="fa fa-bullhorn" ></i> Emergency Case</small>
+            		<small class="infoicon"><i class="fa fa-plus-circle" ></i> New Case</small>	
+            		<small class="infoicon"><i class="fa fa fa-repeat" ></i> Follow Up</small>
+            		
+                </div>
             </div>
 	 	</div>
 
@@ -114,14 +117,16 @@
 </template>
 
 <script type="text/javascript">
-Vue.component('pagination', require('laravel-vue-pagination'));
-//Vue.component('addappointment', require('./NewAppointment.vue'));
-//Vue.component('quickapointment', require('./QuickAppointment.vue'));
-Vue.component('editapointment', require('./EditAppointment.vue'));
-//Vue.component('viewapointment', require('./ViewAppointment.vue'));
-var moment = require('moment')
-	export default{
+	Vue.component('pagination', require('laravel-vue-pagination'));
+	Vue.component('editapointment', require('./EditAppointment.vue'));
 
+	//Vue.component('addappointment', require('./NewAppointment.vue'));
+	//Vue.component('quickapointment', require('./QuickAppointment.vue'));
+	//Vue.component('viewapointment', require('./ViewAppointment.vue'));
+
+	var moment = require('moment')
+	export default{
+		
 		data(){
 
 			return{
@@ -132,7 +137,8 @@ var moment = require('moment')
 				startdate:'',
 				enddate:'',
 				date: null,
-				moment:moment, 
+				moment:moment,
+				user:'', 
 			}
 		},
 		watch:{
@@ -141,14 +147,17 @@ var moment = require('moment')
 					axios.get('searchappointment/'+ this.searchQuery)
 					.then(response => this.appointments = response.data)
 					.catch(error => console.log(error))
-
+					//console.log(this.searchQuery)
 				}
 			},
-			date(){
+			startdate(){
 				console.log(this.startdate)
 			},
 			enddate(){
 				console.log(this.enddate)
+			},
+			input(){
+				console.log('input')
 			}
 		},
 		methods:{
@@ -188,32 +197,31 @@ var moment = require('moment')
 					axios.delete('saveappointment/'+id)
 				.then(response => this.appointments=response.data)
 				}	
-			},
-			onSearchClick(){
-				console.log(this.startdate)
-				console.log(this.enddate)
-			},
-			update(event){
-				console.log('blur triggred')
-
-
-			},
-			onchange(){
-				console.log('On change')
-			},
+			},		
 			notify () {
 		        this.$notify('This is a simple notify msg.', () => {
 		          // callback after dismissed
 		          console.log('dismissed')
 		        })
-		      },
-		
+		    },
+			input(){
+				console.log('input')
+			},
+			processForm(){
+
+			},
+			clearstartdate(){
+				this.startdate=''
+			},
+			clearenddate(){
+				this.enddate=''
+			}
 		},
 		created(){
 			axios.get('allappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			console.log('Appointment component loaded............')  //need to be commented on production
+			console.log(this.appointments)  //need to be commented on production
 		}
 
 	};
@@ -221,7 +229,7 @@ var moment = require('moment')
 	
 </script>
 
-	<style type="text/css" scoped>
+<style type="text/css" scoped>
 		
 		
 	table th{
@@ -251,4 +259,26 @@ var moment = require('moment')
 	.body{
 		font-size: 12px !important;
 	}
+
+	.todo-list li{
+		border-left: 2px solid $site_primary_color;
+		border-right: 2px solid $site_primary_color;
+	}
+	
+	.emergency .fa-repeat{
+		display: none;
+	}
+	.fa-plus-circle{
+		color: green;
+	}
+	.fa-bullhorn{
+		color: #dd4b39;
+	}
+	.infoicon{
+		margin-right: 10px;
+	}
+	.modal-content{
+		border-radius: 0px !important;
+	}
+
 </style>

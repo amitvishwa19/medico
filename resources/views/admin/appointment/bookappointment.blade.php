@@ -15,7 +15,7 @@
 
 
      <!-- Main content -->
-     <appointment></appointment>
+     <bookappointment></bookappointment>
     
 
     

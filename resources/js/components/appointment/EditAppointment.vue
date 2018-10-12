@@ -32,52 +32,46 @@
                     <div class="left-sides col-md-6">
 
                         <div class="form-group col-md-12"><!--Visit Type-->
-                                <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm" v-model="recrd.visit_type">
-                                    <option value="">Select</option>
-                                    <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
-                                    <option  >{{recrd.visit_type}}</option>
-                                </select>                         
-                            </div>
+                            <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
+                            <select class="form-control input-sm" v-model="recrd.visit_type">
+                                <option value="">Select</option>
+                                <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
+                                <option  >{{recrd.visit_type}}</option>
+                            </select>                         
+                        </div>
 
-                            <div class="form-group col-md-12"><!--Symptom and diagnosis-->
-                                <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
-                                <select class="form-control input-sm"  v-model="recrd.symptoms">
-                                    <option value="">Select</option>
-                                    <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
-                                    <option  >{{recrd.symptoms}}</option>
-                                </select>
-                            </div><!--Symptom and diagnosis-->
+                        <div class="form-group col-md-12"><!--Symptom and diagnosis-->
+                            <label for="symptoms" >Symptom<span class="text-danger">*</span></label>                           
+                            <select class="form-control input-sm"  v-model="recrd.symptoms">
+                                <option value="">Select</option>
+                                <option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
+                                <option  >{{recrd.symptoms}}</option>
+                            </select>
+                        </div><!--Symptom and diagnosis-->
 
-                          
-
-                            <div class="form-group col-md-12"><!--Reffered-->
-                                <label for="reffered_to">Reffered to<span class="text-danger">*</span></label>
-                                <select class="form-control input-sm" v-model="recrd.reffered_to">
-                                    <option value="">Select</option>
-                                    <option v-for="r in dropdowns.reffered" v-bind:value="r.value">{{r.value}}</option>
-                                    <option  >{{recrd.reffered_to}}</option>
-                                </select>
-                            </div>
+                        <div class="form-group col-md-12"><!--Reffered-->
+                            <label for="reffered_to">Reffered to<span class="text-danger">*</span></label>
+                            <select class="form-control input-sm" v-model="recrd.reffered_to">
+                                <option value="">Select</option>
+                                <option v-for="r in dropdowns.reffered" v-bind:value="r.value">{{r.value}}</option>
+                                <option  >{{recrd.reffered_to}}</option>
+                            </select>
+                        </div>
 
                       </div><!--Left column-->
 
                       <!--Left column-->
-                      <div class="left-sides col-md-6">
-                            
-                            <div class="form-group col-md-12"><!--VisitvComments-->
-                                <label for="visit_comment" >Visit Comments</label>               
-                                <textarea class="form-control input-sm"  rows="9" v-model="recrd.visit_comment"></textarea>
-                            </div>
-
-                           
-
+                      <div class="left-sides col-md-6">                       
+                        <div class="form-group col-md-12"><!--VisitvComments-->
+                            <label for="visit_comment" >Visit Comments</label>               
+                            <textarea class="form-control input-sm"  rows="9" v-model="recrd.visit_comment"></textarea>
+                        </div>
                       </div>
 
-                       <div class="form-group col-md-12"><!--Priscription-->
-                                <label for="prescription">Prescription</label>                
-                                <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                          
-                            </div>
+                      <div class="col-md-12"><!--Priscription-->
+                        <label for="prescription">Prescription</label>                
+                        <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                     
+                      </div>
                   </form>
                 </div>
 

@@ -25,8 +25,8 @@
 
 @section('FooterSection')
 	<script type="text/javascript">
-		
-		//Date range picker
+    
+    //Date range picker
     $('#reservation').daterangepicker();
     //Date range picker with time picker
     $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
@@ -46,13 +46,15 @@
         },
         function (start, end) {
           $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-          $('#sdate').data(start.format('YYYY-MM-DD'));
+          //$('#searchbox').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+          $('#sdate').val(start.format('YYYY-MM-DD'));
           $('#edate').data(end.format('YYYY-MM-DD'));
+          app.startDate="asdadads";
         }
     );
 
 
-	</script>
+  </script>
 @endsection
 
 

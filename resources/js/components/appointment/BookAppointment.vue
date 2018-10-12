@@ -12,6 +12,10 @@
 
 
 	 		</div>
+
+	 		 <div class="box-body">
+	 		 	body
+	 		 </div> 
 	 	</div>
 	</section> 			
 
