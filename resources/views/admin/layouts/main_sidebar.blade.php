@@ -1,5 +1,5 @@
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar">
+<aside class="main-sidebar" style="background-color: ">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
@@ -14,17 +14,7 @@
         </div>
       </div>
       
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
+     
 
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
@@ -38,9 +28,9 @@
         </li><!--Dashboard-->
 
         <!--Appointment-->
-        <li class="{{current_page('appointment') ? 'active' : '' }} treeview">          
+        <li class=" treeview">          
           <a href="{{url('/admin/appointment/all')}}">
-            <i class="fa fa-envelope"></i> <span>Appointment</span>
+            <i class="fa fa-envelope"></i> <span>App</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -103,7 +93,7 @@
         </li--><!--vue test-->
 
 
-         <!--Appointment-->
+        <!--Appointment-->
         <li class="{{current_page('vue') ? 'active' : '' }} treeview">          
           <a href="#">
             <i class="fa fa-envelope"></i> <span>Vue Example</span>
@@ -116,6 +106,33 @@
           </ul>
           <ul class="treeview-menu">
             <li class="{{current_page('vuebilling') ? 'active' : '' }}"><a href="{{url('/admin/vuebilling')}}"><i class="fa fa-circle-o"></i> Billing</a></li>           
+          </ul>
+        </li><!--Appointment-->
+
+        <!--New Vue Appointment -->
+        <li class="{{current_page('/appointment') ? 'active' : '' }} treeview">          
+          <a href="{{url('/admin/appointment/all')}}">
+            <i class="fa fa-envelope"></i> <span>Appointment</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li class="{{current_page('appointment/all') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/all')}}"><i class="fa fa-circle-o"></i> All Appointments</a>
+            </li> 
+            
+            <li class="{{current_page('appointment/new') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/new')}}"><i class="fa fa-circle-o"></i>Book Appointment</a>
+            </li>
+
+            <li class="{{current_page('appointment/create') ? 'active' : '' }}">
+              <a href="{{url('/admin/appointment/create')}}"><i class="fa fa-circle-o"></i> Doctor Schedule</a>
+            </li>
+
+
+
           </ul>
         </li><!--Appointment-->
 

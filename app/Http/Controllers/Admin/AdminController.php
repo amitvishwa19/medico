@@ -34,9 +34,19 @@ class AdminController extends Controller
         return view('admin/dashboard/dashboard',compact('fresh_count'));
     }
 
+
+    //Appointments
+
     public function appointment(){
         //return 'VueAppointment';
         return view('admin/appointment/vueappointment');
+    }
+    public function allappointment(){
+        //return 'VueAppointment';
+        return view('admin/appointment/appointment_all');
+    }
+    public function bookAppointment(){
+        return view('admin/appointment/bookappointment');
     }
 
     public function billing(){

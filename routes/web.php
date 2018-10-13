@@ -9,8 +9,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin/vueappointment','Admin\AdminController@appointment');
+
 Route::get('/admin/vuebilling','Admin\AdminController@billing');
+
+
+//Appointment
+Route::get('/admin/vueappointment','Admin\AdminController@appointment');
+Route::get('/admin/appointment/new','Admin\AdminController@bookAppointment');
 
 
 Route::resource('appointment','Admin\AppointmentController');
@@ -29,12 +34,28 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.home');
 
     //Appointment
-    Route::get('/appointment/all', 'Admin\AppointmentController@index');
+    //Route::get('/appointment/all', 'Admin\AppointmentController@index');
     //Route::get('/appointment/today', 'Admin\AppointmentController@today_appointment');
-    Route::get('/appointment/create', 'Admin\AppointmentController@create');
+    //Route::get('/appointment/create', 'Admin\AppointmentController@create');
     //Route::resource('newappointment','NewAppointmentController');
 
     //Appointment vue
+    Route::get('/appointment/all','Admin\AdminController@allappointment');
+    Route::get('/appointment/allappointment','Admin\Appointment\AppointmentController@getAllAppointment'); //Controller for all appointment
+    Route::get('/appointment/searchappointment/{term1?}/{term2?}','Admin\Appointment\AppointmentController@getAllAppointment'); //Controller for all 
+    Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController'); // for edit and delete appointment
+    Route::get('/appointment/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');//dropdowns for all 
+
+
+
+
+    Route::get('/appointment/booknew','Admin\AdminController@bookAppointment');
+
+
+
+
+
+
     Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
     Route::get('/searchappointment/{term1?}','Admin\Appointment\AppointmentController@getAllAppointment');
@@ -52,11 +73,6 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Billing
     Route::resource('/billing','Admin\Billing\BillingController');
 
-    //Route::get('/appointment', 'Admin\AdminController@appointment');
-    //Route::get('/setting', 'Admin\AdminController@setting');
-    //Route::get('/option', 'Admin\OptionController@index');
-    //Route::get('/user', 'Admin\UserController@index');
-    //Route::get('/activate', 'Admin\UserController@activate');
 
     Route::group(['prefix' => 'user'],function(){
         Route::get('/activate', 'Admin\UserController@activate');
