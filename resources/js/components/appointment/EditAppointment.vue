@@ -27,9 +27,11 @@
 
                 <div class="row">
                   
-                  <form role="form" @submit.prevent="processForm">       
-                    <!--Left column-->
-                    <div class="left-sides col-md-6">
+                  <form role="form" @submit.prevent="processForm">
+                    
+
+                      <!--Left column-->
+                      <div class="left-sides col-md-6">
 
                         <div class="form-group col-md-12"><!--Visit Type-->
                             <label for="visittype" >Visit Type<span class="text-danger">*</span></label>                           
@@ -72,6 +74,8 @@
                         <label for="prescription">Prescription</label>                
                         <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                     
                       </div>
+
+                   
                   </form>
                 </div>
 

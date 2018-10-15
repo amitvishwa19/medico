@@ -5,11 +5,17 @@
 	 	<div class="box box-warning">			
 	 		<!--Box header-->
 	 		<div class="box-header">             	
-				<form role="form" @submit.prevent="processForm">       
-                    <div class="form-group col-md-4"><!--Patient Name-->
-                    	           
-                        <input type="text" name="" class="form-control input-sm" placeholder="Appointment id or Visit type" v-model="searchQuery" id="searchbox">   
-                    </div><!--Patient Name-->
+				<form role="form" @submit.prevent="processForm">
+
+                    <div class="form-group col-md-4"><!--Visit Type-->
+                        <!--label for="visittype" >Visit Type<span class="text-danger">*</span></label-->                           
+                        <!--select class="form-control input-sm" v-model="recrd.visit_type"-->
+                        <select class="form-control input-sm" v-model="visittype">	
+                            <option value="">Select Visit type</option>
+                            <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
+                            
+                        </select>                         
+                    </div>
 
 					<div class="form-group col-md-4"><!--Patient Name-->                       
                         <div class="input-group">
@@ -130,12 +136,13 @@
 		data(){
 
 			return{
+				dropdowns:{},
 				appointments:{},
 				apntupdate:[],
 				errors:[],
-				searchQuery:'',
 				startdate:'',
 				enddate:'',
+				visittype:'',
 				date: null,
 				moment:moment,
 				user:'', 
@@ -150,8 +157,21 @@
 					//console.log(this.searchQuery)
 				}
 			},
+			visittype(){
+				if(this.visittype.length >= 0){
+					axios.get('searchappointment/'+ this.visittype)
+					.then(response =>this.appointments = response.data) //this.appointments = response.data
+					.catch(error => console.log(error))
+					//console.log(this.searchQuery)
+				}
+			},
 			startdate(){
-				console.log(this.startdate)
+				if(this.startdate.length >= 0){
+					axios.get('searchappointment/'+ this.visittype+'-'+this.startdate )
+					.then(response =>console.log(response.data)) //this.appointments = response.data
+					.catch(error => console.log(error))
+					//console.log(this.searchQuery)
+				}
 			},
 			enddate(){
 				console.log(this.enddate)
@@ -222,6 +242,12 @@
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
 			console.log(this.appointments)  //need to be commented on production
+
+			 axios.get('newappointmentdropdowns')
+      		//.then((response) => console.log(response.data))
+      		.then((response) => this.dropdowns=response.data)
+      		.catch((error) => console.log(error))
+      		console.log(this.dropdowns)
 		}
 
 	};

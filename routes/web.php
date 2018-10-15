@@ -42,7 +42,8 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Appointment vue
     Route::get('/appointment/all','Admin\AdminController@allappointment');
     Route::get('/appointment/allappointment','Admin\Appointment\AppointmentController@getAllAppointment'); //Controller for all appointment
-    Route::get('/appointment/searchappointment/{term1?}/{term2?}','Admin\Appointment\AppointmentController@getAllAppointment'); //Controller for all 
+    Route::get('/appointment/searchappointment/{term1?}-{term2?}-{term3?}','Admin\Appointment\AppointmentController@allAppointment'); //Controller for all
+    Route::get('/appointment/searchuser/{term?}','Admin\Appointment\AppointmentController@userSearch'); //Controller for all  
     Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController'); // for edit and delete appointment
     Route::get('/appointment/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');//dropdowns for all 
 

@@ -21,18 +21,26 @@ class AppointmentController extends Controller
         return 'ok';
     }
 
-    public function allAppointment($term=null){
+    public function userSearch($term=null){
+        return 'User search result';
+    }
+
+    public function allAppointment($term1=null,$term2=null,$term3=null){
         if($term1 != null){
+            //return $term2;
             $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
                                     ->orWhere('visit_type','like', '%'.$term1.'%')
                                     ->with('user','billing')
                                     ->get();
             return request()->json(200,$appointments);
+        }elseif($term1 != null && $term2 != null){
+            return 'two term';
         }
 
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
         return request()->json(200,$appointments);
-    }
+    }//not in use
+
 
     public function getAllAppointment($term1=null){
         
@@ -47,6 +55,7 @@ class AppointmentController extends Controller
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
         return request()->json(200,$appointments);
     }//need to delete after new menu works
+
 
     public function newAppointmentDropdowns(){
 
@@ -130,8 +139,7 @@ class AppointmentController extends Controller
     }
 
     
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         //return $request->all();
         $appointment = Appointment::find($id);   
         $appointment->visit_type = $request->visit_type;
@@ -147,7 +155,6 @@ class AppointmentController extends Controller
 
    
     public function destroy($id){
-
         $appointment = appointment::find($id);
         $is_deleted=$appointment->delete();
         if($is_deleted){
