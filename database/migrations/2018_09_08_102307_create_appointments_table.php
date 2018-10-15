@@ -25,7 +25,8 @@ class CreateAppointmentsTable extends Migration
             $table->string('billing_status')->default('Pending');
             $table->string('billing_paid')->nullable();
             $table->string('reffered_to')->nullable();
-            $table->date('appointment_date')->nullable();         
+            $table->date('appointment_date')->nullable();
+            $table->date('appointment_time')->nullable();        
             $table->date('next_visit_date')->nullable();
             $table->timestamps();
         });

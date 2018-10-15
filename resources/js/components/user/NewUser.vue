@@ -6,21 +6,12 @@
 	 		<!--Box header-->
 	 		<div class="box-header">
 	 			<i class="ion ion-clipboard "></i>
-                <h3 class="box-title hidden-xs" >Book Appointment</h3>
-
-                <div class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addpatient">Search User</div>				
+                <h3 class="box-title hidden-xs" >Create new Patient Profile</h3>			
 	 		</div>
 
 	 		<div class="box-body">
 				<!--Selected user-->
 				<form class="form-horizontal" style="margin-top: 20px;">
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Registration Number</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.userid">
-					    </div>
-					</div>
 
 					<div class="form-group">
 					    <label class="col-md-2 control-label">First Name</label>
@@ -49,60 +40,11 @@
 					      	<input type="text" class="form-control" v-model="selecteduser.mobile">
 					    </div>
 					</div>
-
-					<hr>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Appointment Date</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="date" class="form-control" v-model="selecteduser.apntdate">
-					    </div>
-					</div>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Appointment Time</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="time" class="form-control" v-model="selecteduser.apnttime">
-					    </div>
-					</div>
-
-					<!--Appointment-->	
-					<div class="form-group"><!--Visit Type-->
-	                    <label class="col-md-2 control-label" >Visit Type<span class="text-danger">*</span></label>              
-	                    <div class="col-md-6 col-md-offset-1">
-	                    	<select class="form-control"  v-model="selecteduser.visittype">
-	                        	<option value="">Select</option>
-	                        	<option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
-	                    	</select>                         
-	                    </div>
-	                </div>
-					
-					<!--Symptom and diagnosis-->
-	                <div class="form-group"><!--Visit Type-->
-	                    <label class="col-md-2 control-label" >Symptom<span class="text-danger">*</span></label>              
-	                    <div class="col-md-6 col-md-offset-1">
-	                    	<select class="form-control input-sm"  v-model="selecteduser.symptom">
-	                        	<option value="">Select</option>
-	                        	<option v-for="s in dropdowns.symptom" v-bind:value="s.value">{{s.value}}</option>
-	                    	</select>                  
-	                    </div>
-	                </div><!--Symptom and diagnosis-->
-
-
-	                <div class="form-group"><!--billing charge-->
-	                    <label class="col-md-2 control-label" >Billing Charge<span class="text-danger">*</span></label>              
-	                    <div class="col-md-6 col-md-offset-1">
-		                    	<select class="form-control" v-model="selecteduser.billingcharge">
-			                        <option value="">Select</option>
-			                        <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
-			                    </select>                 
-	                    </div>
-	                </div><!--billing charge-->	           
-
+                      
                 	<div class="form-group">
-					    <label class="col-md-2 control-label">Visit Comments</label>
+					    <label class="col-md-2 control-label">Address</label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<textarea type="text" class="form-control" rows="10" v-model="selecteduser.visitcomment"></textarea>
+					      	<textarea type="text" class="form-control" rows="5" v-model="selecteduser.visitcomment"></textarea>
 					    </div>
 					</div>
 

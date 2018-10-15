@@ -64,7 +64,7 @@
             			<a href="#viewModal" data-toggle="modal" @click="openShow"><i class="fa fa-user" ></i></a>
            		
 	                    <!--User details-->
-                        <span class="text" >{{app.user.firstname}},{{app.user.lastname}}</span>
+                        <span class="text">{{app.user.firstname}},{{app.user.lastname}}</span>
 
                         <small class="label label-warning">
                         	<i class="fa fa-calendar hidden-xs"></i>
@@ -72,7 +72,7 @@
                         </small>
                        
                         <div class=" pull-right">
-	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id,)">
+	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id)">
 	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>	                        	
 	                        </a>
 	                    
@@ -111,6 +111,7 @@
 	 		<!--addappointment @recordadded="refreshRecord"></addappointment-->
 	 		<!--quickapointment></quickapointment-->
 	 		<editapointment :recrd="apntupdate" @hide="closemodal"></editapointment>
+
 	 		<!--viewapointment></viewapointment-->
 	 	</div>
 	
@@ -132,7 +133,7 @@
 
 	var moment = require('moment')
 	export default{
-		
+		props:['recrd'],
 		data(){
 
 			return{
@@ -202,11 +203,10 @@
 				console.log('Eye icon clicked');
 			},
 			editRecord(id){
+							
 				axios.get('saveappointment/'+id+'/edit')
 				.then(response => this.apntupdate = response.data)
-				.catch(error => this.errors=error.response.data.errors);
-				console.log(this.apntupdate); //need to be commented on production  this.apntupdate)
-				//this.$children[3].list=this.apntupdate
+				.catch(error => this.errors=error.response.data.errors);			
 			},
 			closemodal(){
 				console.log('closemodal click')
@@ -241,13 +241,13 @@
 			axios.get('allappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			console.log(this.appointments)  //need to be commented on production
+			//console.log(this.appointments)  //need to be commented on production
 
 			 axios.get('newappointmentdropdowns')
       		//.then((response) => console.log(response.data))
       		.then((response) => this.dropdowns=response.data)
       		.catch((error) => console.log(error))
-      		console.log(this.dropdowns)
+      		//console.log(this.dropdowns)
 		}
 
 	};

@@ -29,6 +29,8 @@ const router = new VueRouter({
 //Vue.component('appointment', require('./components/Appointment.vue'));
 Vue.component('allappointment', require('./components/appointment/AllAppointment.vue'));
 Vue.component('bookappointment', require('./components/appointment/BookAppointment.vue'));
+Vue.component('searchuser', require('./components/appointment/UserSearch.vue'));
+Vue.component('newuser', require('./components/user/NewUser.vue'));
 Vue.component('billing', require('./components/billing/Billing.vue'));
 
 

@@ -24,7 +24,6 @@ class NewAppointment extends FormRequest
     public function rules()
     {
         return [
-            'userid' => 'required|numeric',
             'visittype' => 'required'
         ];
     }

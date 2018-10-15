@@ -21,6 +21,11 @@ class AppointmentController extends Controller
         return 'ok';
     }
 
+    public function allUser(){
+        $users=User::orderby('firstname','asc')->paginate(2);
+        return request()->json(200,$users);
+    }
+
     public function userSearch($term=null){
         return 'User search result';
     }
@@ -92,15 +97,24 @@ class AppointmentController extends Controller
     }
 
     public function store(NewAppointment $request){
+      
+        $user = user::find($request->userid);
         
-        //return $request->all();
-        $bill =new Billing;
-        $bill->user_id = $request->userid;
-        $bill->bill_status = $request->billingstatus;
-        $bill->bill_charge = $request->billingcharge;
-        $bill->bill_paid = $request->billingpaid;
-        //$bill->bill_pending = $request->appointment_date;
-        $bill->save();
+        // New user if not found
+        if(!$user){
+            $user = new User;
+            $user->firstname = $request->firstname;
+            $user->lastname = $request->firstname;
+            $user->email = $request->firstname;
+            $user->mobile = $request->firstname;
+            $user->save();
+
+            $this->billSave($user->id);
+        }
+        
+        $this->billSave($request->userid);
+
+        return 'billing saved';
 
         $appointment = new Appointment;
         $appointment->user_id = $request->userid;
@@ -127,7 +141,16 @@ class AppointmentController extends Controller
 
     }
 
+    private function billSave($userid){
+        $bill =new Billing;
+        $bill->user_id = $request->userid;
+        $bill->appointment_date = $request->apntdate;
+        $bill->bill_charge = $request->billingcharge;
+        $bill->save();
+        return $bill->id;
+    }
   
+   
     public function show($id){
         //
     }

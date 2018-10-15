@@ -43,9 +43,9 @@
         </li><!--Appointment-->
 
         <!--Patient-->
-        <li class="{{current_page('patient') ? 'active' : '' }} treeview">
+        <li class="{{current_page('user') ? 'active' : '' }} treeview">
 
-          <a href="{{url('/admin/billing')}}">
+          <a href="{{url('/admin/user')}}">
             <i class="fa fa-users"></i>
             <span>Patients</span>
             <span class="pull-right-container">
@@ -54,9 +54,14 @@
           </a>
 
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> All Patients</a></li>
-            <li><a href="{{url('admin/patient/new')}}"><i class="fa fa-circle-o"></i> New Patients</a></li>
+            <li class="{{current_page('user/all') ? 'active' : '' }}">
+              <a href=""><i class="fa fa-circle-o"></i> All Patients</a>
+            </li>
+            <li class="{{current_page('user/newuser') ? 'active' : '' }}">
+              <a href="{{url('admin/user/newuser')}}"><i class="fa fa-circle-o"></i> New Patients</a>
+            </li>
           </ul>
+
         </li><!--Patient-->
 
         <!--Billing-->
@@ -83,16 +88,6 @@
           </ul>
         </li><!--Options-->
 
-        <!--Vue test-->
-        <!--li class="{{current_page('veu') ? 'active' : '' }}">
-          <router-link to="example">
-          <a href="">
-            <i class="fa fa-book"></i> <span> Vue Load</span>
-          </a>
-          </router-link>
-        </li--><!--vue test-->
-
-
         <!--Appointment-->
         <li class="{{current_page('vue') ? 'active' : '' }} treeview">          
           <a href="#">
@@ -108,6 +103,7 @@
             <li class="{{current_page('vuebilling') ? 'active' : '' }}"><a href="{{url('/admin/vuebilling')}}"><i class="fa fa-circle-o"></i> Billing</a></li>           
           </ul>
         </li><!--Appointment-->
+
 
         <!--New Vue Appointment -->
         <li class="{{current_page('/appointment') ? 'active' : '' }} treeview">          
