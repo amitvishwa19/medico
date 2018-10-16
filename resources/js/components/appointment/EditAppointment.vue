@@ -70,10 +70,14 @@
                         </div>
                       </div>
 
-                      <div class="col-md-12"><!--Priscription-->
-                        <label for="prescription">Prescription</label>                
-                        <textarea class="form-control input-sm"  rows="7" v-model="recrd.prescription" ></textarea>                     
+                      <div class="left-sides col-md-12">                       
+                        <div class="form-group col-md-12"><!--VisitvComments-->
+                            <label for="visit_comment" >Prescription</label>               
+                            <textarea class="form-control input-sm"  rows="9" v-model="recrd.prescription"></textarea>
+                        </div>
                       </div>
+
+                     
 
                    
                   </form>
@@ -109,11 +113,12 @@
           .then(data=>{
             response=>console.log(response.data)
             this.success='Appointment Updated successfully'
+            this.$emit('recordupdated',data)
           }) //data=>this.$emit('recordadded',data)
 
           .catch((error) => {
             this.errors=error.response.data.errors;
-            console.log(this.errors.length)
+            //console.log(this.errors.length)
           });
           
       },
@@ -157,5 +162,8 @@
 
   .warning-text{
     color: red;
+  }
+  label,h4{
+    color: #3FBBC0 !important;
   }
 </style>

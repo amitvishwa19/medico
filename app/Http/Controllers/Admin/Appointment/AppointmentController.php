@@ -42,7 +42,7 @@ class AppointmentController extends Controller
             return 'two term';
         }
 
-        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(6);
         return request()->json(200,$appointments);
     }//not in use
 
@@ -53,11 +53,11 @@ class AppointmentController extends Controller
             $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
                                     ->orWhere('visit_type','like', '%'.$term1.'%')
                                     ->with('user','billing')
-                                    ->get();
+                                    ->paginate(5);
             return request()->json(200,$appointments);
         }
 
-        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(3);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
     }//need to delete after new menu works
 
@@ -97,59 +97,35 @@ class AppointmentController extends Controller
     }
 
     public function store(NewAppointment $request){
-      
-        $user = user::find($request->userid);
-        
-        // New user if not found
-        if(!$user){
-            $user = new User;
-            $user->firstname = $request->firstname;
-            $user->lastname = $request->firstname;
-            $user->email = $request->firstname;
-            $user->mobile = $request->firstname;
-            $user->save();
-
-            $this->billSave($user->id);
-        }
-        
-        $this->billSave($request->userid);
-
-        return 'billing saved';
-
-        $appointment = new Appointment;
-        $appointment->user_id = $request->userid;
-        $appointment->family_id =$request->familyid;
-        $appointment->billing_id = $bill->id;
-        $appointment->visit_type = $request->visittype;
-        $appointment->symptoms = $request->symptom;
-        $appointment->reffered_to = $request->reffered;
-        $appointment->prescription = $request->prescription;
-        $appointment->visit_comment = $request->visitcomment;
-        $is_saved=$appointment->save();
-        
-        if($is_saved){
-
-            $e_bill = Billing::find($bill->id);
-            $e_bill->appointment_id=$appointment->id;
-            $e_bill->save();
-
-            
-            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
-            return request()->json(200,$appointments);
-        }
-
-
-    }
-
-    private function billSave($userid){
+               
         $bill =new Billing;
         $bill->user_id = $request->userid;
         $bill->appointment_date = $request->apntdate;
         $bill->bill_charge = $request->billingcharge;
         $bill->save();
-        return $bill->id;
+
+        $appointment = new Appointment;
+        $appointment->user_id = $request->userid;
+        $appointment->billing_id = $bill->id;
+        $appointment->visit_type = $request->visittype;
+        $appointment->appointment_date = $request->apntdate;
+        $appointment->appointment_time = $request->apnttime;
+        $appointment->symptoms = $request->symptom;
+        $appointment->visit_comment = $request->visitcomment;
+        $is_saved=$appointment->save();
+        
+       
+        if($is_saved){
+            $e_bill = Billing::find($bill->id);
+            $e_bill->appointment_id=$appointment->id;
+            $e_bill->save();
+            return $appointment->id;     
+        }
+
+
     }
-  
+
+   
    
     public function show($id){
         //
@@ -173,6 +149,11 @@ class AppointmentController extends Controller
         //$appointment->appointment_date = $request->appointment_date;
         //$appointment->next_visit_date = $request->next_visit_date;
         $is_saved = $appointment->save();
+
+        if($is_saved){
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
+            return request()->json(200,$appointments);
+        }
 
     }
 

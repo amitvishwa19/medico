@@ -8,61 +8,49 @@
 	 			<i class="ion ion-clipboard "></i>
                 <h3 class="box-title hidden-xs" >Book Appointment</h3>
 
-                <div class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addpatient">Search User</div>				
+                <div class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addpatient">Search Patient</div>				
 	 		</div>
 
 	 		<div class="box-body">
-				<!--Selected user-->
+
+				<!--Success Messege-->
+                <div class="callout callout-success" v-if="success.length > 0">
+                  <h5><i class="fa fa-info"></i> New appointment saved, Appointment id- : {{appntid}} </h5>
+                </div>
+
+                <!--Error Messege-->
+                <div class="callout callout-warning" v-if="errors">
+                  <i class="fa fa-info"></i> Please verify below error'(s)
+                  <ul >
+                      <li v-if="errors.userid">  Please select a user</li>
+                      <li v-if="errors.apntdate">  Please select Appointment date</li>
+                      <li v-if="errors.apnttime">  Please select Appointment time</li>
+                      <li v-if="errors.visittype">  Please select Visit Type</li>
+                      <li v-if="errors.billingcharge">  Please select billing Charge</li>
+                  </ul>
+                </div>
+
+
 				<form class="form-horizontal" style="margin-top: 20px;">
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">Registration Number</label>
+					    <label class="col-md-2 control-label">Patient Name<span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.userid">
+					      	<input type="text" class="form-control input-sm" v-model="selecteduser.firstname" disabled="">
 					    </div>
 					</div>
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">First Name</label>
+					    <label class="col-md-2 control-label">Appointment Date<span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.firstname">
+					      	<input type="date" class="form-control input-sm" v-model="selecteduser.apntdate">
 					    </div>
 					</div>
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">Last Name</label>
+					    <label class="col-md-2 control-label">Appointment Time<span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.lastname">
-					    </div>
-					</div>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Email</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="email" class="form-control" v-model="selecteduser.email">
-					    </div>
-					</div>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Mobile</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.mobile">
-					    </div>
-					</div>
-
-					<hr>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Appointment Date</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="date" class="form-control" v-model="selecteduser.apntdate">
-					    </div>
-					</div>
-
-					<div class="form-group">
-					    <label class="col-md-2 control-label">Appointment Time</label>
-					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="time" class="form-control" v-model="selecteduser.apnttime">
+					      	<input type="time" class="form-control input-sm" v-model="selecteduser.apnttime">
 					    </div>
 					</div>
 
@@ -70,7 +58,7 @@
 					<div class="form-group"><!--Visit Type-->
 	                    <label class="col-md-2 control-label" >Visit Type<span class="text-danger">*</span></label>              
 	                    <div class="col-md-6 col-md-offset-1">
-	                    	<select class="form-control"  v-model="selecteduser.visittype">
+	                    	<select class="form-control input-sm"  v-model="selecteduser.visittype ">
 	                        	<option value="">Select</option>
 	                        	<option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
 	                    	</select>                         
@@ -92,7 +80,7 @@
 	                <div class="form-group"><!--billing charge-->
 	                    <label class="col-md-2 control-label" >Billing Charge<span class="text-danger">*</span></label>              
 	                    <div class="col-md-6 col-md-offset-1">
-		                    	<select class="form-control" v-model="selecteduser.billingcharge">
+		                    	<select class="form-control input-sm" v-model="selecteduser.billingcharge">
 			                        <option value="">Select</option>
 			                        <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
 			                    </select>                 
@@ -102,7 +90,7 @@
                 	<div class="form-group">
 					    <label class="col-md-2 control-label">Visit Comments</label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<textarea type="text" class="form-control" rows="10" v-model="selecteduser.visitcomment"></textarea>
+					      	<textarea type="text" class="form-control input-sm" rows="4" v-model="selecteduser.visitcomment"></textarea>
 					    </div>
 					</div>
 
@@ -112,7 +100,7 @@
 
 	 		<div class="box-footer">
 	 			<div class="pull-right">
-	 				<div class="btn btn-primary"  @click= "addRecord">Submit</div>
+	 				<div class="btn btn-primary"  @click= "addRecord">Book Appointment</div>
 	 			</div>
 	 		</div>
 	 	</div>
@@ -121,7 +109,6 @@
 
 	 	<div id="modal">
 	 		<searchuser @userdetail="userselect"></searchuser>
-
 	 	</div>
 
 
@@ -137,19 +124,16 @@
 			return{
 				patient:'',
 				dropdowns:{},
+				success:'',
+				errors:'',
+				appntid:'',
 				user:[],
 				selecteduser:{userid:null,firstname:'',lastname:'',email:'',mobile:'',visittype:'',symptom:'',billingcharge:'',visitcomment:'',apntdate:'',apnttime:''},
+
 			}
 		},
 		watch:{
-			patient(){
-				if(this.patient.length >= 0){
-					axios.get('searchuser/'+ this.patient)
-					.then(response => console.log(response.data))  //this.appointments = response.data
-					.catch(error => console.log(error))
-					//console.log(this.searchQuery)
-				}
-			}
+			
 		},
 		methods:{
 			userselect(value){
@@ -158,17 +142,19 @@
 				this.selecteduser.lastname=value.lastname;
 				this.selecteduser.email=value.email;
 				this.selecteduser.mobile=value.mobile;
-				console.log(this.selecteduser)
-				//this.selecteduser='';
-				//this.selecteduser=value;
-				
 			},
 			addRecord(){
 				axios.post('saveappointment',this.selecteduser)
-		          .then(response=>console.log(response.data)) // recordadded can be catched in component
+		          .then((response)=>{
+		          	this.appntid=response.data;
+		          	this.success="Appointment created";
+		          	this.selecteduser={};
+		          	this.errors='';
+		          	}) // recordadded can be catched in component
 		          .catch((error) => {
 		            this.errors=error.response.data.errors;
-		            console.log(this.errors.length)
+		            this.success='';
+		            
 		        });
 			}
 		},
@@ -177,7 +163,7 @@
       		//.then((response) => console.log(response.data))
       		.then((response) => this.dropdowns=response.data)
       		.catch((error) => console.log(error))
-      		console.log(this.dropdowns)
+      		
 		}
 
 	};
@@ -190,5 +176,8 @@
 	.form-control{
 		text-align: center;
 	}
+
+
+
 </style>
 

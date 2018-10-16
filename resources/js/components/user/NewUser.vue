@@ -10,41 +10,60 @@
 	 		</div>
 
 	 		<div class="box-body">
-				<!--Selected user-->
+			
+
+				<!--Success Messege-->
+                <div class="callout callout-success" v-if="success.length > 0">
+                  <h5><i class="fa fa-info"></i> Registration success, Registration id : {{registrationid}}</h5>
+                </div>
+
+
+				<!--Error Messege-->
+                <div class="callout callout-warning" v-if="error">
+                  <i class="fa fa-info"></i> Please verify below error'(s)
+                  <ul >
+                    
+                      <li v-if="error.firstname">  First Name is required</li>
+                      <li v-if="error.lastname">  Last Name is required</li>
+                      <li v-if="error.email">  Email is required</li>
+                  </ul>
+                </div>
+
+
 				<form class="form-horizontal" style="margin-top: 20px;">
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">First Name</label>
+					    <label class="col-md-2 control-label">First Name <span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.firstname">
+					      	<input type="text" class="form-control" v-model="user.firstname">
 					    </div>
 					</div>
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">Last Name</label>
+					    <label class="col-md-2 control-label">Last Name <span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.lastname">
+					      	<input type="text" class="form-control" v-model="user.lastname">
 					    </div>
 					</div>
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">Email</label>
+					    <label class="col-md-2 control-label">Email <span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="email" class="form-control" v-model="selecteduser.email">
+					      	<input type="email" class="form-control" v-model="user.email">
 					    </div>
 					</div>
 
 					<div class="form-group">
-					    <label class="col-md-2 control-label">Mobile</label>
+					    <label class="col-md-2 control-label">Mobile <span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<input type="text" class="form-control" v-model="selecteduser.mobile">
+					      	<input type="text" class="form-control" v-model="user.mobile">
 					    </div>
 					</div>
                       
                 	<div class="form-group">
-					    <label class="col-md-2 control-label">Address</label>
+					    <label class="col-md-2 control-label">Address <span class="text-danger">*</span></label>
 					    <div class="col-md-6 col-md-offset-1">
-					      	<textarea type="text" class="form-control" rows="5" v-model="selecteduser.visitcomment"></textarea>
+					      	<textarea type="text" class="form-control" rows="5" v-model="user.address"></textarea>
 					    </div>
 					</div>
 
@@ -59,14 +78,7 @@
 	 		</div>
 	 	</div>
 
-
-
-	 	<div id="modal">
-	 		<searchuser @userdetail="userselect"></searchuser>
-
-	 	</div>
-
-
+	
 	</section> 			
 
 </template>
@@ -79,47 +91,32 @@
 			return{
 				patient:'',
 				dropdowns:{},
-				user:[],
-				selecteduser:{userid:null,firstname:'',lastname:'',email:'',mobile:'',visittype:'',symptom:'',billingcharge:'',visitcomment:'',apntdate:'',apnttime:''},
-			}
-		},
-		watch:{
-			patient(){
-				if(this.patient.length >= 0){
-					axios.get('searchuser/'+ this.patient)
-					.then(response => console.log(response.data))  //this.appointments = response.data
-					.catch(error => console.log(error))
-					//console.log(this.searchQuery)
-				}
+				user:{firstname:'',lastname:'',email:'',mobile:'',address:''},
+				success:'',
+				registrationid:'',
+				errors:[],
+				error:''
 			}
 		},
 		methods:{
-			userselect(value){
-				this.selecteduser.userid=value.id;
-				this.selecteduser.firstname=value.firstname;
-				this.selecteduser.lastname=value.lastname;
-				this.selecteduser.email=value.email;
-				this.selecteduser.mobile=value.mobile;
-				console.log(this.selecteduser)
-				//this.selecteduser='';
-				//this.selecteduser=value;
-				
-			},
 			addRecord(){
-				axios.post('saveappointment',this.selecteduser)
-		          .then(response=>console.log(response.data)) // recordadded can be catched in component
-		          .catch((error) => {
-		            this.errors=error.response.data.errors;
-		            console.log(this.errors.length)
-		        });
+				axios.post('createuser',this.user)
+		          .then((response)=>{
+		          	this.success='User Added Successfully';
+		          	this.registrationid=response.data;
+		          	this.user={}
+		          	//console.log(response.data)
+		          }) 
+		          .catch((error) =>{
+		          	this.error=error.response.data.errors;
+		          	//this.error="Error";
+		          	console.log(this.error)
+		          });//this.errors=error.response.data
+
 			}
 		},
 		created(){
-			axios.get('newappointmentdropdowns')
-      		//.then((response) => console.log(response.data))
-      		.then((response) => this.dropdowns=response.data)
-      		.catch((error) => console.log(error))
-      		console.log(this.dropdowns)
+		
 		}
 
 	};

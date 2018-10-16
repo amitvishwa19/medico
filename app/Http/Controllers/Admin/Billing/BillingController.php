@@ -16,21 +16,15 @@ class BillingController extends Controller
 {
     
     public function index(){       
-        
-        //$clearbills=appointment::orderby('id','desc')->get();
-        //$pendingbills=appointment::orderby('id','desc')->get();
-
-        //$pendingbills = DB::table('appointments')->orderby('id','desc')
-                        //->leftjoin('users','users.id','=','appointments.user_id')
-                        //->select('appointments.*', 'users.firstname', 'users.lastname')
-                        //->simplePaginate(10);
-
-        $billing = Billing::with('user','appointment')->orderby('id','desc')->get();
-        //dd($billing);                
-        return view('admin/billing/billing',compact('billing'));
-        //return view('admin/billing',compact('pendingbills'));
+        return view('admin/billing/billing');
     }
     
+    public function allBilling(){       
+        
+        //return 'All Billing';
+        $billing =Billing::orderBy('id','desc')->with('user','appointment')->paginate(4);
+        return request()->json(200,$billing);
+    }
 
  
     public function create(){

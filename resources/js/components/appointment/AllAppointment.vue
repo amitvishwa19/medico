@@ -8,10 +8,8 @@
 				<form role="form" @submit.prevent="processForm">
 
                     <div class="form-group col-md-4"><!--Visit Type-->
-                        <!--label for="visittype" >Visit Type<span class="text-danger">*</span></label-->                           
-                        <!--select class="form-control input-sm" v-model="recrd.visit_type"-->
                         <select class="form-control input-sm" v-model="visittype">	
-                            <option value="">Select Visit type</option>
+                            <option value="">All Records</option>
                             <option v-for="v in dropdowns.visittype" v-bind:value="v.value">{{v.value}}</option>
                             
                         </select>                         
@@ -110,7 +108,7 @@
 	 	<div id="modal">
 	 		<!--addappointment @recordadded="refreshRecord"></addappointment-->
 	 		<!--quickapointment></quickapointment-->
-	 		<editapointment :recrd="apntupdate" @hide="closemodal"></editapointment>
+	 		<editapointment :recrd="apntupdate" @recordupdated="refreshRecord"></editapointment>
 
 	 		<!--viewapointment></viewapointment-->
 	 	</div>
@@ -133,13 +131,13 @@
 
 	var moment = require('moment')
 	export default{
-		props:['recrd'],
+		
 		data(){
 
 			return{
 				dropdowns:{},
 				appointments:{},
-				apntupdate:[],
+				apntupdate:{},
 				errors:[],
 				startdate:'',
 				enddate:'',
@@ -180,6 +178,7 @@
 			input(){
 				console.log('input')
 			}
+
 		},
 		methods:{
 			//Pagination
@@ -241,13 +240,11 @@
 			axios.get('allappointment')
 			.then((response) => this.appointments=response.data)
 			.catch((error) => console.log(error))
-			//console.log(this.appointments)  //need to be commented on production
-
+			
 			 axios.get('newappointmentdropdowns')
-      		//.then((response) => console.log(response.data))
       		.then((response) => this.dropdowns=response.data)
       		.catch((error) => console.log(error))
-      		//console.log(this.dropdowns)
+      		
 		}
 
 	};

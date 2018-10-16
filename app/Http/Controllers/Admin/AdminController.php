@@ -49,15 +49,10 @@ class AdminController extends Controller
         return view('admin/appointment/bookappointment');
     }
 
-    public function billing(){
-       // return 'vuebilling';
-        return view('admin/billing/vuebilling');
-
-    }
-     public function newUser(){
+   
+    public function newUser(){
        // return 'vuebilling';
         return view('admin/user/new_user');
-
     }
 
     public function delbilling(){

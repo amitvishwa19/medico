@@ -27,84 +27,7 @@
           </a>
         </li><!--Dashboard-->
 
-        <!--Appointment-->
-        <li class=" treeview">          
-          <a href="{{url('/admin/appointment/all')}}">
-            <i class="fa fa-envelope"></i> <span>App</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{current_page('appointment/create') ? 'active' : '' }}"><a href="{{url('/admin/appointment/create')}}"><i class="fa fa-circle-o"></i> New Appointment</a></li>
-            <li class="{{current_page('appointment/today') ? 'active' : '' }}"><a href="{{url('/admin/appointment/today')}}"><i class="fa fa-circle-o"></i> Today's Appointment</a></li>
-            <li class="{{current_page('appointment/all') ? 'active' : '' }}"><a href="{{url('/admin/appointment/all')}}"><i class="fa fa-circle-o"></i> All Appointments</a></li>            
-          </ul>
-        </li><!--Appointment-->
-
-        <!--Patient-->
-        <li class="{{current_page('user') ? 'active' : '' }} treeview">
-
-          <a href="{{url('/admin/user')}}">
-            <i class="fa fa-users"></i>
-            <span>Patients</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-
-          <ul class="treeview-menu">
-            <li class="{{current_page('user/all') ? 'active' : '' }}">
-              <a href=""><i class="fa fa-circle-o"></i> All Patients</a>
-            </li>
-            <li class="{{current_page('user/newuser') ? 'active' : '' }}">
-              <a href="{{url('admin/user/newuser')}}"><i class="fa fa-circle-o"></i> New Patients</a>
-            </li>
-          </ul>
-
-        </li><!--Patient-->
-
-        <!--Billing-->
-        <li class="{{current_page('billing') ? 'active' : '' }}">
-          <a href="{{url('/admin/billing')}}">
-            <i class="fa fa-book"></i> <span>Billing</span>
-          </a>
-        </li><!--Billing-->
-               
-        <!--Options-->
-        <li class="{{current_page('option') ? 'active' : '' }} treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Options</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{url('/admin/symptom')}}"><i class="fa fa-circle-o"></i> Symptoms</a></li>
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Visit Type</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Billing Charge</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Reffered</a></li>
-          </ul>
-        </li><!--Options-->
-
-        <!--Appointment-->
-        <li class="{{current_page('vue') ? 'active' : '' }} treeview">          
-          <a href="#">
-            <i class="fa fa-envelope"></i> <span>Vue Example</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{current_page('vueappointment') ? 'active' : '' }}"><a href="{{url('/admin/vueappointment')}}"><i class="fa fa-circle-o"></i> Appointment</a></li>           
-          </ul>
-          <ul class="treeview-menu">
-            <li class="{{current_page('vuebilling') ? 'active' : '' }}"><a href="{{url('/admin/vuebilling')}}"><i class="fa fa-circle-o"></i> Billing</a></li>           
-          </ul>
-        </li><!--Appointment-->
-
-
+        
         <!--New Vue Appointment -->
         <li class="{{current_page('/appointment') ? 'active' : '' }} treeview">          
           <a href="{{url('/admin/appointment/all')}}">
@@ -131,6 +54,57 @@
 
           </ul>
         </li><!--Appointment-->
+        
+        <!--Patient-->
+        <li class="{{current_page('user') ? 'active' : '' }} treeview">
+
+          <a href="{{url('/admin/user')}}">
+            <i class="fa fa-users"></i>
+            <span>Patients</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+
+          <ul class="treeview-menu">
+            <li class="{{current_page('user/all') ? 'active' : '' }}">
+              <a href=""><i class="fa fa-circle-o"></i> All Patients</a>
+            </li>
+            <li class="{{current_page('user/newuser') ? 'active' : '' }}">
+              <a href="{{url('admin/user/newuser')}}"><i class="fa fa-circle-o"></i> New Patients</a>
+            </li>
+          </ul>
+
+        </li><!--Patient-->
+
+        <!--Billing-->
+        <li class="{{current_page('billing') ? 'active' : '' }}">
+          <a href="{{url('/admin/billing/all')}}">
+            <i class="fa fa-book"></i> <span>Billing</span>
+          </a>
+        </li><!--Billing-->
+               
+        <!--Options-->
+        <li class="{{current_page('option') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Options</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{url('/admin/symptom')}}"><i class="fa fa-circle-o"></i> Symptoms</a></li>
+            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Visit Type</a></li>
+            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Billing Charge</a></li>
+            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Reffered</a></li>
+          </ul>
+        </li><!--Options-->
+
+      
+
+
+        
 
         
       </ul>
