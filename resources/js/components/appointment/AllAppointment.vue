@@ -70,6 +70,9 @@
                         </small>
                        
                         <div class=" pull-right">
+							
+
+
 	                        <a href="#editAppointment"  data-toggle="modal" @click="editRecord(app.id)">
 	                        	<i class="fa fa-pencil" aria-hidden="true" style="margin-right:10px;"></i>	                        	
 	                        </a>
@@ -148,17 +151,9 @@
 			}
 		},
 		watch:{
-			searchQuery(){				
-				if(this.searchQuery.length >= 0){
-					axios.get('searchappointment/'+ this.searchQuery)
-					.then(response => this.appointments = response.data)
-					.catch(error => console.log(error))
-					//console.log(this.searchQuery)
-				}
-			},
 			visittype(){
 				if(this.visittype.length >= 0){
-					axios.get('searchappointment/'+ this.visittype)
+					axios.get('search',{params:{visit:this.visittype,sdate:this.startdate,edate:this.enddate}})
 					.then(response =>this.appointments = response.data) //this.appointments = response.data
 					.catch(error => console.log(error))
 					//console.log(this.searchQuery)
@@ -166,14 +161,19 @@
 			},
 			startdate(){
 				if(this.startdate.length >= 0){
-					axios.get('searchappointment/'+ this.visittype+'-'+this.startdate )
-					.then(response =>console.log(response.data)) //this.appointments = response.data
+					axios.get('search',{params:{visit:this.visittype,sdate:this.startdate,edate:this.enddate}})
+					.then(response =>this.appointments = response.data) //this.appointments = response.data
 					.catch(error => console.log(error))
 					//console.log(this.searchQuery)
 				}
 			},
 			enddate(){
-				console.log(this.enddate)
+				if(this.enddate.length >= 0){
+					axios.get('search',{params:{visit:this.visittype,sdate:this.startdate,edate:this.enddate}})
+					.then(response =>this.appointments = response.data) //this.appointments = response.data
+					.catch(error => console.log(error))
+					//console.log(this.searchQuery)
+				}
 			},
 			input(){
 				console.log('input')
@@ -238,7 +238,7 @@
 		},
 		created(){
 			axios.get('allappointment')
-			.then((response) => this.appointments=response.data)
+			.then((response) => this.appointments=response.data)//this.appointments=response.data
 			.catch((error) => console.log(error))
 			
 			 axios.get('newappointmentdropdowns')
@@ -302,6 +302,10 @@
 	}
 	.modal-content{
 		border-radius: 0px !important;
+	}
+
+	.dtmoment{
+		margin-right: 10px;
 	}
 
 </style>

@@ -28,7 +28,8 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     //Appointment vue
     Route::get('/appointment/all','Admin\AdminController@allappointment');
     Route::get('/appointment/allappointment','Admin\Appointment\AppointmentController@AllAppointment'); //Controller for all appointment
-    Route::get('/appointment/searchappointment/{term1?}-{term2?}-{term3?}','Admin\Appointment\AppointmentController@allAppointment'); //Controller for all
+    Route::get('/appointment/searchappointment/{term1?}/{term2?}/{term3?}','Admin\Appointment\AppointmentController@allAppointment'); //Controller for all
+    Route::get('/appointment/search','Admin\Appointment\AppointmentController@allSearch'); //Controller 
     Route::get('/appointment/alluser','Admin\Appointment\AppointmentController@allUser'); //Controller for all  
     Route::get('/appointment/searchuser/{term?}','Admin\Appointment\AppointmentController@userSearch'); //Controller for all  
     Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController'); // for edit and delete appointment
@@ -42,12 +43,14 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
 
     Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
-    Route::get('/searchappointment/{term1?}','Admin\Appointment\AppointmentController@getAllAppointment');
+    Route::get('/searchappointment/{term1?}/{term2?}/{term3?}','Admin\Appointment\AppointmentController@getAllAppointment');
     Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
 
     //Billing vue
     Route::resource('/billing/all','Admin\Billing\BillingController');
     Route::get('/billing/getallbilling','Admin\Billing\BillingController@allBilling');
+    Route::get('/billing/search','Admin\Billing\BillingController@billSearch'); //Controller 
+    
 
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');

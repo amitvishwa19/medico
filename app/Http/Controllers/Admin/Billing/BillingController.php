@@ -22,8 +22,46 @@ class BillingController extends Controller
     public function allBilling(){       
         
         //return 'All Billing';
-        $billing =Billing::orderBy('id','desc')->with('user','appointment')->paginate(4);
-        return request()->json(200,$billing);
+        $billing =Billing::orderBy('id','desc')
+                            ->with('user','appointment')
+                            ->paginate(4);
+        return request()-> json(200,$billing);//json( 200,["billing"=>$billing]);//json(200,$billing);
+    }
+
+
+    public function billSearch(Request $request){       
+     
+        if( $request->sdate == !null && $request->edate == !null ){
+
+            $billing['data'] =Billing::where('appointment_date','>=', $request->sdate)
+                                ->Where('appointment_date','<=', $request->edate)
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else if( $request->sdate == !null && $request->edate == null ){
+
+            $billing['data'] =Billing::where('appointment_date','<=', $request->sdate)                           
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else if( $request->sdate == null && $request->edate == !null ){
+
+            $billing['data'] =Billing::Where('appointment_date','>=', $request->edate)
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else {
+
+            $billing =Billing::orderBy('id','desc')
+                            ->with('user','appointment')
+                            ->paginate(4);
+            return request()-> json(200,$billing);//json( 200,["billing"=>$billing]);//json(200,$billing);
+        }
+
+        
     }
 
  

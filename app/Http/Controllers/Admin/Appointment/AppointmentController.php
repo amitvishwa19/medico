@@ -30,22 +30,42 @@ class AppointmentController extends Controller
         return 'User search result';
     }
 
-    public function allAppointment($term1=null,$term2=null,$term3=null){
-        if($term1 != null){
-            //return $term2;
-            $appointments['data'] =Appointment::where('id','like', '%'.$term1.'%')
-                                    ->orWhere('visit_type','like', '%'.$term1.'%')
-                                    ->with('user','billing')
-                                    ->get();
-            return request()->json(200,$appointments);
-        }elseif($term1 != null && $term2 != null){
-            return 'two term';
-        }
-
+    public function allAppointment(){
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(6);
         return request()->json(200,$appointments);
-    }//not in use
+    }
 
+    public function allSearch(Request $request){
+
+        if(  $request->visit == !null && $request->sdate == null && $request->edate == null ){
+             $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
+                                ->with('user','billing')
+                                ->get();
+            return request()->json(200,$appointments);
+
+        }else if(  $request->visit == null && $request->sdate == null && $request->edate == null ){
+
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(6);
+            return request()->json(200,$appointments);
+
+        }else if(  $request->visit == !null && $request->sdate == !null && $request->edate == !null ){
+
+            $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
+                                ->Where('appointment_date','>=', $request->sdate)
+                                ->Where('appointment_date','<=', $request->edate)
+                                ->with('user','billing')
+                                ->get();
+            return request()->json(200,$appointments);
+
+        }else if(  $request->visit == null && $request->sdate == !null && $request->edate == !null ){
+            
+            $appointments['data'] =Appointment::Where('appointment_date','>=', $request->sdate)
+                                ->Where('appointment_date','<=', $request->edate)
+                                ->with('user','billing')
+                                ->get();
+            return request()->json(200,$appointments);
+        }
+    }
 
     public function getAllAppointment($term1=null){
         
@@ -92,8 +112,6 @@ class AppointmentController extends Controller
    
     public function create(){
         //
-
-
     }
 
     public function store(NewAppointment $request){
@@ -122,10 +140,8 @@ class AppointmentController extends Controller
             return $appointment->id;     
         }
 
-
     }
 
-   
    
     public function show($id){
         //

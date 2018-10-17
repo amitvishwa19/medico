@@ -78,11 +78,33 @@
         </li><!--Patient-->
 
         <!--Billing-->
-        <li class="{{current_page('billing') ? 'active' : '' }}">
+        <!--li class="{{current_page('billing') ? 'active' : '' }}">
           <a href="{{url('/admin/billing/all')}}">
             <i class="fa fa-book"></i> <span>Billing</span>
           </a>
-        </li><!--Billing-->
+        </li--><!--Billing-->
+
+        <!--Patient-->
+        <li class="{{current_page('billing') ? 'active' : '' }} treeview">
+
+          <a href="{{url('/admin/user')}}">
+            <i class="fa fa-book"></i>
+            <span>Billing</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+
+          <ul class="treeview-menu">
+            <li class="{{current_page('billing/all') ? 'active' : '' }}">
+              <a href="{{url('/admin/billing/all')}}"><i class="fa fa-circle-o"></i> All Billing</a>
+            </li>
+            <li class="{{current_page('billing/new') ? 'active' : '' }}">
+              <a href=""><i class="fa fa-circle-o"></i> New Billing</a>
+            </li>
+          </ul>
+
+        </li><!--Patient-->
                
         <!--Options-->
         <li class="{{current_page('option') ? 'active' : '' }} treeview">
