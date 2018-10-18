@@ -307,5 +307,11 @@
 	.dtmoment{
 		margin-right: 10px;
 	}
-
+	
+	.box-header{
+		margin-bottom: 0px;
+	}
+	.box-footer{
+		padding: 0;
+	}
 </style>

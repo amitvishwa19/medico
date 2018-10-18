@@ -22,7 +22,7 @@ class AppointmentController extends Controller
     }
 
     public function allUser(){
-        $users=User::orderby('firstname','asc')->paginate(2);
+        $users=User::orderby('firstname','asc')->paginate(10);
         return request()->json(200,$users);
     }
 
@@ -31,7 +31,7 @@ class AppointmentController extends Controller
     }
 
     public function allAppointment(){
-        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(6);
+        $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
         return request()->json(200,$appointments);
     }
 
@@ -45,7 +45,7 @@ class AppointmentController extends Controller
 
         }else if(  $request->visit == null && $request->sdate == null && $request->edate == null ){
 
-            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(6);
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
 
         }else if(  $request->visit == !null && $request->sdate == !null && $request->edate == !null ){
@@ -119,6 +119,7 @@ class AppointmentController extends Controller
         $bill =new Billing;
         $bill->user_id = $request->userid;
         $bill->appointment_date = $request->apntdate;
+        $bill->billing_date = $request->apntdate;
         $bill->bill_charge = $request->billingcharge;
         $bill->save();
 

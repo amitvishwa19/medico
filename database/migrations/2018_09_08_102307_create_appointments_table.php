@@ -18,6 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('family_id')->nullable();
             $table->integer('billing_id')->unsigned();
+            $table->integer('doctor_id')->nullable();
             $table->string('visit_type')->nullable();   
             $table->string('symptoms')->nullable();
             $table->text('visit_comment')->nullable();
@@ -25,6 +26,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('billing_status')->default('Pending');
             $table->string('billing_paid')->nullable();
             $table->string('reffered_to')->nullable();
+            $table->date('billing_date')->nullable();
             $table->date('appointment_date')->nullable();
             $table->date('appointment_time')->nullable();        
             $table->date('next_visit_date')->nullable();

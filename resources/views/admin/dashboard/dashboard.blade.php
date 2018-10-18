@@ -30,7 +30,7 @@
                 <div class="icon">
                   <i class="ion-android-calendar"></i>
                 </div>
-                <a href="{{url('/admin/appointment/today')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{url('/admin/appointment/all')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->

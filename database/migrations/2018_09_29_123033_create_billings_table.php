@@ -21,7 +21,8 @@ class CreateBillingsTable extends Migration
             $table->string('bill_status')->nullable()->default('pending');
             $table->string('bill_charge')->nullable(); 
             $table->string('bill_paid')->nullable();
-            $table->string('bill_pending')->nullable();    
+            $table->string('bill_pending')->nullable();
+            $table->text('comment')->nullable();     
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@
 	 			<i class="ion ion-clipboard "></i>
                 <h3 class="box-title hidden-xs" >Book Appointment</h3>
 
-                <div class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#addpatient">Search Patient</div>				
+                <div class="btn btn-sm btn-info btn-flat pull-right" data-toggle="modal" data-target="#addpatient">Search Patient</div>				
 	 		</div>
 
 	 		<div class="box-body">
@@ -100,7 +100,7 @@
 
 	 		<div class="box-footer">
 	 			<div class="pull-right">
-	 				<div class="btn btn-primary"  @click= "addRecord">Book Appointment</div>
+	 				<div class="btn btn-sm btn-info btn-flat pull-right"  @click= "addRecord">Book Appointment</div>
 	 			</div>
 	 		</div>
 	 	</div>

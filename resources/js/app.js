@@ -32,7 +32,8 @@ Vue.component('bookappointment', require('./components/appointment/BookAppointme
 Vue.component('searchuser', require('./components/appointment/UserSearch.vue'));
 Vue.component('newuser', require('./components/user/NewUser.vue'));
 Vue.component('billing', require('./components/billing/Billing.vue'));
-
+Vue.component('newbilling', require('./components/billing/NewBilling.vue'));
+Vue.component('searchuserbill', require('./components/billing/UserSearch.vue'));
 
 const app = new Vue({
     el: '#app',

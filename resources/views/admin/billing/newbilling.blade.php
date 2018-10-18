@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', ' | Billing ')
+@section('title', ' | New Billing ')
 
 @section('content')
 
@@ -8,15 +8,17 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Billing
-            <small>Billing Details</small>
+            New Billing
+            <small>Add new Bill</small>
         </h1>   
     </section>
 
 
      <!-- Main content -->
-     <billing></billing>
-        
+     <newbilling></newbilling>
+    
+
+    
 
 </div>
 

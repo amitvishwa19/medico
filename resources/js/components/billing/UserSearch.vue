@@ -11,7 +11,7 @@
                 <!--Patient-->
                 <div class="modal-body">
 	                
-					<div class="box">
+					<div class="box box-info">
 			            <div class="box-header">
 			              	<input class="form-control" id="usersearch" type="text" placeholder="Search user" v-model="searchquery">
 			            </div>
@@ -100,6 +100,16 @@
 				this.$emit('userdetail',this.user)
 			}
 			
+		},
+		watch:{
+			searchquery(){
+				if(this.searchquery.length >= 0){
+					axios.get('searchuser',{params:{string:this.searchquery}})
+					.then(response =>this.users = response.data) //this.appointments = response.data //this.billing = response.data
+					//.catch(error => console.log(error))
+					//console.log(this.searchQuery)
+				}
+			}
 		},
 		created(){	
 			axios.get('alluser')

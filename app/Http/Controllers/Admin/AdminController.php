@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Option;
+use App\Models\User;
 use DB;
 
 class AdminController extends Controller
@@ -35,6 +37,33 @@ class AdminController extends Controller
     }
 
 
+    public function allDropdowns(){
+
+        $users=User::get();
+
+        $symptoms=option::where('type','=','Dropdown')
+                            -> where('name','=','symptom')
+                            ->orderby('id','desc')->get();
+
+        $visittypes = option::where('type','=','Dropdown')
+                              -> where('name','=','visit_type')
+                              ->orderby('id','desc')->get();
+
+        $billingstatus = option::where('type','=','Dropdown')
+                        -> where('name','=','billing_status')
+                        ->orderby('id','desc')->get();
+
+        $billingcharge = option::where('type','=','Dropdown')
+                        ->where('name','=','billing_charge')
+                        ->orderby('id','desc')->get();
+
+        $reffered = option::where('type','=','Dropdown')
+                    ->where('name','=','reffered_to')
+                    ->orderby('id','desc')->get();
+
+
+        return request()->json(200,['symptom'=>$symptoms,'user'=>$users,'visittype'=>$visittypes,'billingstatus'=>$billingstatus,'reffered'=>$reffered,'billingcharge'=>$billingcharge]);
+    }
     //Appointments
 
     public function appointment(){
@@ -45,6 +74,7 @@ class AdminController extends Controller
         //return 'VueAppointment';
         return view('admin/appointment/appointment_all');
     }
+
     public function bookAppointment(){
         return view('admin/appointment/bookappointment');
     }

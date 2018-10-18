@@ -11,12 +11,17 @@ use App\Models\Billing;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Http\Requests\Billing\NewBilling;
 
 class BillingController extends Controller
 {
     
     public function index(){       
         return view('admin/billing/billing');
+    }
+
+     public function newBilling(){  
+        return view('admin/billing/newbilling');
     }
     
     public function allBilling(){       
@@ -70,8 +75,21 @@ class BillingController extends Controller
     }
 
   
-    public function store(Request $request){
-        //
+    public function store(NewBilling $request){
+        //return $request->all();
+
+        $bill =new Billing;
+        $bill->user_id = $request->userid;  
+        $bill->billing_date = $request->billdate;
+        $bill->bill_charge = $request->billcharge;
+        $bill->bill_paid = $request->billpaid;
+        $is_saved = $bill->save();
+
+         if($is_saved){
+            return $bill->id;     
+        }
+
+
     }
 
     

@@ -37,7 +37,6 @@
             </span>
           </a>
           <ul class="treeview-menu">
-
             <li class="{{current_page('appointment/all') ? 'active' : '' }}">
               <a href="{{url('/admin/appointment/all')}}"><i class="fa fa-circle-o"></i> All Appointments</a>
             </li> 
@@ -49,15 +48,11 @@
             <li class="{{current_page('appointment/create') ? 'active' : '' }}">
               <a href="{{url('/admin/appointment/create')}}"><i class="fa fa-circle-o"></i> Doctor Schedule</a>
             </li>
-
-
-
           </ul>
         </li><!--Appointment-->
         
         <!--Patient-->
         <li class="{{current_page('user') ? 'active' : '' }} treeview">
-
           <a href="{{url('/admin/user')}}">
             <i class="fa fa-users"></i>
             <span>Patients</span>
@@ -74,19 +69,11 @@
               <a href="{{url('admin/user/newuser')}}"><i class="fa fa-circle-o"></i> New Patients</a>
             </li>
           </ul>
-
         </li><!--Patient-->
 
+
         <!--Billing-->
-        <!--li class="{{current_page('billing') ? 'active' : '' }}">
-          <a href="{{url('/admin/billing/all')}}">
-            <i class="fa fa-book"></i> <span>Billing</span>
-          </a>
-        </li--><!--Billing-->
-
-        <!--Patient-->
         <li class="{{current_page('billing') ? 'active' : '' }} treeview">
-
           <a href="{{url('/admin/user')}}">
             <i class="fa fa-book"></i>
             <span>Billing</span>
@@ -100,11 +87,10 @@
               <a href="{{url('/admin/billing/all')}}"><i class="fa fa-circle-o"></i> All Billing</a>
             </li>
             <li class="{{current_page('billing/new') ? 'active' : '' }}">
-              <a href=""><i class="fa fa-circle-o"></i> New Billing</a>
+              <a href="{{url('/admin/billing/new')}}"><i class="fa fa-circle-o"></i> New Billing</a>
             </li>
           </ul>
-
-        </li><!--Patient-->
+        </li><!--Billing-->
                
         <!--Options-->
         <li class="{{current_page('option') ? 'active' : '' }} treeview">
@@ -123,7 +109,19 @@
           </ul>
         </li><!--Options-->
 
-      
+        <!--Dashboard-->
+        <li class="{{current_page('profile') ? 'active' : '' }}">
+          <a href="{{url('/admin/profile')}}">
+            <i class="fa fa-user"></i> <span>Profile</span>
+          </a>
+        </li><!--Dashboard-->
+
+        <!--Dashboard-->
+        <li class="{{current_page('setting') ? 'active' : '' }}">
+          <a href="{{url('/admin/setting')}}">
+            <i class="fa fa-cogs"></i> <span>Settings</span>
+          </a>
+        </li><!--Dashboard-->
 
 
         
