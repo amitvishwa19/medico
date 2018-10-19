@@ -11,7 +11,7 @@
                 <!--Patient-->
                 <div class="modal-body">
 	                
-					<div class="box">
+					<div class="box box-info">
 			            <div class="box-header">
 			              	<input class="form-control" id="usersearch" type="text" placeholder="Search user" v-model="searchquery">
 			            </div>
@@ -80,6 +80,16 @@
 				users:{},
 				searchquery:''
 			}
+		},
+		watch:{
+			searchquery(){
+				if(this.searchquery.length >= 0){
+					axios.get('searchuser',{params:{string:this.searchquery}})
+					.then(response =>this.users = response.data)
+					.catch(error => console.log(error))
+					
+				}
+			},
 		},
 		methods:{
 			//Pagination

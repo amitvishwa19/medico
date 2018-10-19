@@ -31,9 +31,18 @@ Vue.component('allappointment', require('./components/appointment/AllAppointment
 Vue.component('bookappointment', require('./components/appointment/BookAppointment.vue'));
 Vue.component('searchuser', require('./components/appointment/UserSearch.vue'));
 Vue.component('newuser', require('./components/user/NewUser.vue'));
+
+
+//Billing
 Vue.component('billing', require('./components/billing/Billing.vue'));
 Vue.component('newbilling', require('./components/billing/NewBilling.vue'));
 Vue.component('searchuserbill', require('./components/billing/UserSearch.vue'));
+
+//Profille
+Vue.component('userprofile', require('./components/user/profile.vue'));
+
+//Settings
+Vue.component('settings', require('./components/setting/settings.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -31,7 +31,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/appointment/searchappointment/{term1?}/{term2?}/{term3?}','Admin\Appointment\AppointmentController@allAppointment'); //Controller for all
     Route::get('/appointment/search','Admin\Appointment\AppointmentController@allSearch'); //Controller 
     Route::get('/appointment/alluser','Admin\Appointment\AppointmentController@allUser'); //Controller for all  
-    Route::get('/appointment/searchuser/{term?}','Admin\Appointment\AppointmentController@userSearch'); // may be delete  
+    Route::get('/appointment/searchuser', 'Admin\patient\PatientController@searchPatient');
     Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController'); // for edit and delete appointment
     Route::get('/appointment/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');//dropdowns for all 
     Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController');
@@ -41,10 +41,10 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/appointment/booknew','Admin\AdminController@bookAppointment');
 
 
-    Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
-    Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
-    Route::get('/searchappointment/{term1?}/{term2?}/{term3?}','Admin\Appointment\AppointmentController@getAllAppointment');
-    Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
+    //Route::get('/getallappointment','Admin\Appointment\AppointmentController@getAllAppointment');
+    //Route::get('/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');
+    //Route::get('/searchappointment/{term1?}/{term2?}/{term3?}','Admin\Appointment\AppointmentController@getAllAppointment');
+    //Route::resource('/saveappointment','Admin\Appointment\AppointmentController');
 
     //Billing vue
     Route::resource('/billing/all','Admin\Billing\BillingController');
@@ -55,6 +55,10 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/billing/alluser/{term?}','Admin\Appointment\AppointmentController@allUser'); //
     Route::resource('/billing/savebill','Admin\Billing\BillingController');//Save Bill 
     Route::get('/billing/searchuser', 'Admin\patient\PatientController@searchPatient');
+    Route::get('/billing/patientbill', 'Admin\patient\PatientController@patientBill');
+
+
+
 
     //Patient
     Route::get('/patient', 'Admin\PatientController@index');
@@ -63,9 +67,14 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
 
 
     //Symptoms
-    Route::resource('/symptom','Admin\Symptom\SymptomController');
+    
 
-   
+
+    //User
+    Route::resource('/profile','User\UserController');
+
+    //Settings
+    Route::resource('/setting','Setting\SettingController');
 
     Route::group(['prefix' => 'user'],function(){
         Route::get('/activate', 'Admin\UserController@activate');

@@ -29,53 +29,61 @@
 
 				<form class="form-horizontal" style="margin-top: 20px;">
 					
-						<div class="form-group">
-						    <label class="col-md-2 control-label">Patient Name<span class="text-danger">*</span></label>
-						    <div class="col-md-6 col-md-offset-1">
-						      	<input type="text" class="form-control input-sm"  disabled="" v-model="selecteduser.firstname">
-						    </div>
+					<div class="col-md-6">
+						<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Patient Name</label>               
+	                            <input type="text" class="form-control input-sm" disabled="" v-model="selecteduser.firstname" data-toggle="modal" data-target="#addpatient">
+	                        </div>
+                      	</div>
 
-						</div>
-								
-						<!--billing charge-->
-						<div class="form-group">
-		                    <label class="col-md-2 control-label" >Billing Charge<span class="text-danger">*</span></label>              
-		                    <div class="col-md-6 col-md-offset-1">
-			                    	<select class="form-control input-sm" v-model="selecteduser.billcharge">
-				                        <option value="">Select</option>
-				                        <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
-				                    </select>                 
-		                    </div>
-		                </div><!--billing charge-->
+                      	<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Total Billing</label>               
+	                            <input type="text" class="form-control input-sm" disabled="" v-model="selecteduser.billcharge">
+	                        </div>
+                      	</div>
 
-		                <!--div class="form-group">
-						    <label class="col-md-2 control-label">Previous due<span class="text-danger">*</span></label>
-						    <div class="col-md-6 col-md-offset-1">
-						      	<input type="text" class="form-control input-sm"  disabled="" >
-						    </div>
+                      	<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Paid Billing</label>               
+	                            <input type="text" class="form-control input-sm" disabled="" v-model="selecteduser.billpaid">
+	                        </div>
+                      	</div>
 
-						</div-->	  
+                      	<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Outstanding Billing</label>               
+	                            <input type="text" class="form-control input-sm" disabled="" v-model="selecteduser.outstanding">
+	                        </div>
+                      	</div>
+						
+					</div>
 
-						<div class="form-group">
-						    <label class="col-md-2 control-label">Bill Paid<span class="text-danger">*</span></label>
-						    <div class="col-md-6 col-md-offset-1">
-						      	<input type="text" class="form-control input-sm" v-model="selecteduser.billpaid" >
-						    </div>
-						</div>
+					<div class="col-md-6">
+						<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Bill Date</label>               
+	                            <input type="date" class="form-control input-sm" v-model="selecteduser.billdate">
+	                        </div>
+                      	</div>
 
-						<div class="form-group">
-						    <label class="col-md-2 control-label">Bill Date<span class="text-danger">*</span></label>
-						    <div class="col-md-6 col-md-offset-1">
-						      	<input type="date" class="form-control input-sm" v-model="selecteduser.billdate">
-						    </div>
-						</div>
+						<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Payment Amount</label>               
+	                            <input type="text" class="form-control input-sm" v-model="selecteduser.currentpaid">
+	                        </div>
+                      	</div>
 
-	                	<div class="form-group">
-						    <label class="col-md-2 control-label">Comments</label>
-						    <div class="col-md-6 col-md-offset-1">
-						      	<textarea type="text" class="form-control input-sm" rows="4" v-model="selecteduser.comment"></textarea>
-						    </div>
-						</div>
+						<div class="left-sides col-md-12">                       
+	                        <div class="form-group col-md-12"><!--VisitvComments-->
+	                            <label for="visit_comment" >Comments</label>               
+	                            <textarea type="text" class="form-control input-sm" rows="5" v-model="selecteduser.comment"></textarea>
+	                        </div>
+                      	</div>
+
+					</div>
+
 
 				</form><!--Selected user-->
 			</div>
@@ -98,13 +106,24 @@
 		data(){
 			return{
 				dropdowns:{},
-				selecteduser:{userid:'',firstname:'',lastname:'',billcharge:'',billpaid:'',billdate:'',comment:''},
+				selecteduser:{
+					userid:'',
+					firstname:'Select Patient',
+					lastname:'',
+					billcharge:'0',
+					billpaid:'0',
+					currentpaid:'0',
+					outstanding:'0',
+					billdate:'',
+					comment:''
+				},
 				success:'',
 				errors:'',
 				billpaidid:''
 			}
 		},
-		watch:{
+		computed: {
+
 
 		},
 		methods:{
@@ -114,6 +133,9 @@
 				this.selecteduser.lastname=value.lastname;
 				this.selecteduser.email=value.email;
 				this.selecteduser.mobile=value.mobile;
+				this.selecteduser.billcharge=value.totalbill;
+				this.selecteduser.billpaid=value.paidbill;
+				this.selecteduser.outstanding=value.outstanding
 			},
 			addBill(){
 				axios.post('savebill',this.selecteduser)
@@ -129,6 +151,9 @@
 		            this.success='';
 		            
 		        });
+			},
+			paid(){
+				console.log('okkkkkkkkkk')
 			}
 		},
 		created(){

@@ -33,7 +33,7 @@
 			                  <td>{{usr.mobile}}</td>		                    
 			                  <td>{{usr.address}}</td>
 			                  <td>
-			                  	<button class="btn btn-success btn-xs pull-right" @click="adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
+			                  	<button class="btn btn-success btn-xs pull-right" @click="billingdetails,adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
 	                        	<i class="fa fa-plus" aria-hidden="true"></i>
 	                    		</button> 
 			                  </td>
@@ -43,12 +43,6 @@
 			            </div>
 			            <!-- /.box-body -->
 			          </div>
-
-
-
-
-
-
 
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
                 </div>
@@ -78,7 +72,9 @@
 				dropdowns:{},
 				user:{},//'firstname':'Jaideep','lastname':'Singh','email':'Jaysvishwa@gmasil.com','mobile':'9723280115'
 				users:{},
-				searchquery:''
+				searchquery:'',
+				userid:'',
+				errors:''
 			}
 		},
 		methods:{
@@ -92,23 +88,39 @@
 					.catch(error => this.errors=error.response.data.errors);
 			},
 			adddetails(id,firstname,lastname,email,mobile){
+
+
 				this.user.id=id
+				this.userid=id
 				this.user.firstname=firstname
 				this.user.lastname=lastname
 				this.user.email=email
 				this.user.mobile=mobile
-				this.$emit('userdetail',this.user)
+				
+			},
+			billingdetails(){
+
 			}
-			
 		},
 		watch:{
 			searchquery(){
 				if(this.searchquery.length >= 0){
 					axios.get('searchuser',{params:{string:this.searchquery}})
-					.then(response =>this.users = response.data) //this.appointments = response.data //this.billing = response.data
-					//.catch(error => console.log(error))
-					//console.log(this.searchQuery)
+					.then(response =>this.users = response.data)
+					.catch(error => console.log(error))
+					
 				}
+			},
+			userid(){
+				//console.log('user id updated')
+				axios.get('patientbill',{params:{string:this.userid}})
+				.then(response =>{
+					this.user.totalbill=response.data[0]
+					this.user.paidbill=response.data[1]
+					this.user.outstanding=response.data[0]-response.data[1]
+					this.$emit('userdetail',this.user)
+				})
+				.catch(error => this.errors=error.response.data); 
 			}
 		},
 		created(){	

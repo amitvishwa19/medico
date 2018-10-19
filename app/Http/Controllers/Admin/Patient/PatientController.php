@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-
+use App\Models\Billing;
+use DB;
 class PatientController extends Controller
 {
    
@@ -29,6 +30,24 @@ class PatientController extends Controller
         }
 
        
+    }
+
+    public function patientBill(Request $request){
+       
+        $totalbill = DB::table('billings')
+                            ->where('user_id', $request->string)
+                            ->sum('bill_charge');
+
+        $paidbill = DB::table('billings')
+                            ->where('user_id', $request->string)
+                            ->sum('bill_paid');
+        //$outstanding=  $totalbill - $paidbill                 
+
+        return request()->json(200,array($totalbill,$paidbill));                    
+        return array($totalbill,$paidbill);                    
+        //$result['totalbill':$totalbill,'paidbill':$paidbill]                    
+        
+        //return $result;//request()->json(200,$result);
     }
    
     public function create()
