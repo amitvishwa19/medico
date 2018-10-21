@@ -140,7 +140,7 @@
 			addBill(){
 				axios.post('savebill',this.selecteduser)
 		          .then((response)=>{
-		          	console.log(response.data)
+		          	//console.log(response.data)
 		          	this.billpaidid=response.data;
 		          	this.success="Bill Saved";
 		          	this.selecteduser={};

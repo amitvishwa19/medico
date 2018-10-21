@@ -1,7 +1,7 @@
 <template>
 	<section class="content">
 	 	
-	 	<div class="box box-warning">
+	 	<div class="box box-info">
 
 	 		<!--Box header-->
 	 		<div class="box-header">
@@ -100,7 +100,7 @@
 
 	 		<div class="box-footer">
 	 			<div class="pull-right">
-	 				<div class="btn btn-sm btn-info btn-flat pull-right"  @click= "addRecord">Book Appointment</div>
+	 				<div class="btn btn-sm btn-info btn-flat pull-right"  @click= "insertrecord">Book Appointment</div>
 	 			</div>
 	 		</div>
 	 	</div>
@@ -128,8 +128,19 @@
 				errors:'',
 				appntid:'',
 				user:[],
-				selecteduser:{userid:null,firstname:'',lastname:'',email:'',mobile:'',visittype:'',symptom:'',billingcharge:'',visitcomment:'',apntdate:'',apnttime:''},
-
+				selecteduser:{
+					userid:'',
+					firstname:'',
+					lastname:'',
+					email:'',
+					mobile:'',
+					visittype:'',
+					symptom:'',
+					billingcharge:'',
+					visitcomment:'',
+					apntdate:'',
+					apnttime:''
+				},
 			}
 		},
 		watch:{
@@ -143,19 +154,15 @@
 				this.selecteduser.email=value.email;
 				this.selecteduser.mobile=value.mobile;
 			},
-			addRecord(){
+			insertrecord(){
 				axios.post('saveappointment',this.selecteduser)
-		          .then((response)=>{
-		          	this.appntid=response.data;
-		          	this.success="Appointment created";
-		          	this.selecteduser={};
+				.then((response)=>{console .log(response.data);
+					this.appntid=response.data;
+					this.success="Appointment created";
+					this.selecteduser={};
 		          	this.errors='';
-		          	}) // recordadded can be catched in component
-		          .catch((error) => {
-		            this.errors=error.response.data.errors;
-		            this.success='';
-		            
-		        });
+				})
+				.catch((error) => {this.errors=error.response.data.errors;this.success='';});
 			}
 		},
 		created(){

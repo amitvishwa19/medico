@@ -30,8 +30,11 @@ const router = new VueRouter({
 Vue.component('allappointment', require('./components/appointment/AllAppointment.vue'));
 Vue.component('bookappointment', require('./components/appointment/BookAppointment.vue'));
 Vue.component('searchuser', require('./components/appointment/UserSearch.vue'));
-Vue.component('newuser', require('./components/user/NewUser.vue'));
 
+
+//Patient
+Vue.component('allpatient', require('./components/patient/AllPatient.vue'));
+Vue.component('newpatient', require('./components/patient/NewPatient.vue'));
 
 //Billing
 Vue.component('billing', require('./components/billing/Billing.vue'));
@@ -39,7 +42,7 @@ Vue.component('newbilling', require('./components/billing/NewBilling.vue'));
 Vue.component('searchuserbill', require('./components/billing/UserSearch.vue'));
 
 //Profille
-Vue.component('userprofile', require('./components/user/profile.vue'));
+Vue.component('userprofile', require('./components/patient/profile.vue'));
 
 //Settings
 Vue.component('settings', require('./components/setting/settings.vue'));

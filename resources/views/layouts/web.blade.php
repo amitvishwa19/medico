@@ -74,30 +74,26 @@
                     </li>
                 @else
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstname}},{{ Auth::user()->lastname}} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                       
-                        <li><a href="{{url('/profile')}}">My Profile</a></li>
-                        
-                        <!--Contributer-->
-                        <?php if(auth()->user()->admin ==1){ ?>
-                            <li><a href="{{url('/medi')}}">Hospital Management</a></li>
-                        <?php  } ?>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstname}},{{ Auth::user()->lastname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                           
+                            <li><a href="{{url('/profile')}}">My Profile</a></li>
+                            
 
-                        <!--Admin role-->
-                        <?php if(auth()->user()->admin ==1){ ?>
-                            <li><a href="{{url('/admin/dashboard')}}">Dashboard</a></li>
-                        <?php  } ?>
-                                      
-                        <li>
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li> 
-                    </ul>
+                            <!--Admin role-->
+                            <?php if(auth()->user()->admin ==1){ ?>
+                                <li><a href="{{url('/admin/dashboard')}}">Dashboard</a></li>
+                            <?php  } ?>
+                                          
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li> 
+                        </ul>
                     </li>
 
                 @endguest

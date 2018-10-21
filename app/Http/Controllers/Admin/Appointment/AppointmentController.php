@@ -22,13 +22,10 @@ class AppointmentController extends Controller
     }
 
     public function allUser(){
-        $users=User::orderby('firstname','asc')->paginate(10);
+        $users=User::orderby('firstname','asc')->paginate(5);
         return request()->json(200,$users);
     }
 
-    public function userSearch($term=null){
-        return 'User search result';
-    }
 
     public function allAppointment(){
         $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
@@ -37,36 +34,44 @@ class AppointmentController extends Controller
 
     public function allSearch(Request $request){
 
-        if(  $request->visit == !null && $request->sdate == null && $request->edate == null ){
-             $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
-                                ->with('user','billing')
-                                ->get();
+        if( $request->visit == !null && $request->sdate == null && $request->edate == null ){
+            $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
+                                ->with('user','billing')->get();
             return request()->json(200,$appointments);
 
-        }else if(  $request->visit == null && $request->sdate == null && $request->edate == null ){
-
-            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
-            return request()->json(200,$appointments);
-
-        }else if(  $request->visit == !null && $request->sdate == !null && $request->edate == !null ){
+        }else if( $request->visit == !null && $request->sdate == !null && $request->edate == null ){
 
             $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
                                 ->Where('appointment_date','>=', $request->sdate)
-                                ->Where('appointment_date','<=', $request->edate)
-                                ->with('user','billing')
-                                ->get();
+                                ->with('user','billing')->get();
             return request()->json(200,$appointments);
 
-        }else if(  $request->visit == null && $request->sdate == !null && $request->edate == !null ){
-            
+        }else if( $request->visit == !null && $request->sdate == null && $request->edate == !null ){
+
+            $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
+                                ->Where('appointment_date','<=', $request->sdate)
+                                ->with('user','billing')->get();
+            return request()->json(200,$appointments);
+
+        }else if( $request->visit == !null && $request->sdate == !null && $request->edate == !null ){
+            $appointments['data'] =Appointment::where('visit_type','like', '%'.$request->visit.'%')
+                                ->Where('appointment_date','>=', $request->sdate)
+                                ->Where('appointment_date','<=', $request->edate)
+                                ->with('user','billing')->get();
+            return request()->json(200,$appointments);
+
+        }else if( $request->visit == null && $request->sdate == !null && $request->edate == !null ){
             $appointments['data'] =Appointment::Where('appointment_date','>=', $request->sdate)
                                 ->Where('appointment_date','<=', $request->edate)
-                                ->with('user','billing')
-                                ->get();
+                                ->with('user','billing')->get();
+            return request()->json(200,$appointments);
+        }else{
+            $appointments =Appointment::orderBy('id','desc')->with('user','billing')->paginate(5);
             return request()->json(200,$appointments);
         }
     }
 
+  
     public function getAllAppointment($term1=null){
         
         if($term1 != null){
@@ -114,12 +119,14 @@ class AppointmentController extends Controller
         //
     }
 
-    public function store(NewAppointment $request){
-               
+    public function store(Request $request){
+        //NewAppointment
+        //return $request->all();
+
         $bill =new Billing;
         $bill->user_id = $request->userid;
         $bill->appointment_date = $request->apntdate;
-        $bill->billing_date = $request->apntdate;
+        $bill->bill_date = $request->apntdate;
         $bill->bill_charge = $request->billingcharge;
         $bill->save();
 
@@ -132,7 +139,7 @@ class AppointmentController extends Controller
         $appointment->symptoms = $request->symptom;
         $appointment->visit_comment = $request->visitcomment;
         $is_saved=$appointment->save();
-        
+         return $appointment->id;
        
         if($is_saved){
             $e_bill = Billing::find($bill->id);

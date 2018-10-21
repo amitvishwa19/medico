@@ -2,7 +2,7 @@
 	
 	<section class="content">
 	 	
-	 	<div class="box box-warning">			
+	 	<div class="box box-info">			
 	 		<!--Box header-->
 	 		<div class="box-header">             	
 				<form role="form" @submit.prevent="processForm">
@@ -51,7 +51,7 @@
             			<a href="#viewModal"  v-if="app.visit_type == 'Fresh Case'" data-toggle="modal" @click="openShow">
             				<i class="fa fa-plus-circle" ></i>
             			</a>
-            			<a href="#viewModal"  v-if="app.visit_type == 'Follow up'" data-toggle="modal" @click="openShow">
+            			<a href="#viewModal"  v-if="app.visit_type == 'Follow Up'" data-toggle="modal" @click="openShow">
             				<i class="fa fa-repeat" ></i>
             			</a>
 

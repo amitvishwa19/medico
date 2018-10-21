@@ -7,11 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Billing;
 use DB;
+use App\Http\Requests\Patient\NewPatient;
+
 class PatientController extends Controller
 {
    
     public function index(){
-        //
+        return view('admin/patient/allpatient');
+    }
+
+    public function newPatient(){
+        return view('admin/patient/newpatient');
     }
 
     public function searchPatient(Request $request){
@@ -56,9 +62,22 @@ class PatientController extends Controller
     }
 
    
-    public function store(Request $request)
-    {
-        //
+    public function store(NewPatient $request) {
+
+         //NewUser
+
+        $user = new User;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->mobile=$request->mobile;
+        $user->address=$request->address;
+        $is_save = $user->save();
+
+        if($is_save){
+            return $user->id;
+        }
+
     }
 
    

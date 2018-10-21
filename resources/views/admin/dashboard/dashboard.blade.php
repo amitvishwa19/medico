@@ -23,7 +23,7 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3><?php echo $fresh_count; ?></h3>
+                  <h3><?php echo $total_count; ?></h3>
 
                   <p>Today's Appointment</p>
                 </div>
@@ -38,7 +38,7 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>12</h3>
+                  <h3><?php echo $fresh_count; ?></h3>
 
                   <p>New Cases</p>
                 </div>
@@ -53,7 +53,7 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>6</h3>
+                  <h3><?php echo $followup_count; ?></h3>
 
                   <p>Follow up's</p>
                 </div>
@@ -68,7 +68,7 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>5</h3>
+                  <h3><?php echo $emergency_count; ?></h3>
 
                   <p>Emergency Csases</p>
                 </div>

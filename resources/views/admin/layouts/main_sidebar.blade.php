@@ -52,7 +52,7 @@
         </li><!--Appointment-->
         
         <!--Patient-->
-        <li class="{{current_page('user') ? 'active' : '' }} treeview">
+        <li class="{{current_page('patient') ? 'active' : '' }} treeview">
           <a href="{{url('/admin/user')}}">
             <i class="fa fa-users"></i>
             <span>Patients</span>
@@ -62,11 +62,11 @@
           </a>
 
           <ul class="treeview-menu">
-            <li class="{{current_page('user/all') ? 'active' : '' }}">
-              <a href=""><i class="fa fa-circle-o"></i> All Patients</a>
+            <li class="{{current_page('patient/all') ? 'active' : '' }}">
+              <a href="{{url('admin/patient/all')}}"><i class="fa fa-circle-o"></i> All Patients</a>
             </li>
-            <li class="{{current_page('user/newuser') ? 'active' : '' }}">
-              <a href="{{url('admin/user/newuser')}}"><i class="fa fa-circle-o"></i> New Patients</a>
+            <li class="{{current_page('patient/new') ? 'active' : '' }}">
+              <a href="{{url('admin/patient/new')}}"><i class="fa fa-circle-o"></i> New Patients</a>
             </li>
           </ul>
         </li><!--Patient-->

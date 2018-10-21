@@ -27,13 +27,26 @@ class AdminController extends Controller
 
     public function dashboard(){
 
-        $fresh_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))->get();
+        $total_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))->get();
+        $total_count= $total_appointment->count();
+
+        $fresh_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))
+                                    ->where('visit_type','=','Fresh Case')
+                                    ->get();
         $fresh_count= $fresh_appointment->count();
 
-        //$fresh_appointment=Appointment::where('visit_type','=','Fresh Case')->where('appointment_date','=',date("Y/m/d"))->get();
-        //$fresh_count= $fresh_appointment->count();
+        $followup_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))
+                                    ->where('visit_type','=','Follow Up')
+                                    ->get();
+        $followup_count= $followup_appointment->count();
 
-        return view('admin/dashboard/dashboard',compact('fresh_count'));
+        $emergency_appointment=Appointment::where('appointment_date','=',date("Y/m/d"))
+                                    ->where('visit_type','=','Emergency')
+                                    ->get();
+        $emergency_count= $emergency_appointment->count();
+
+       
+        return view('admin/dashboard/dashboard',compact('total_count','fresh_count','followup_count','emergency_count'));
     }
 
 
@@ -79,12 +92,7 @@ class AdminController extends Controller
         return view('admin/appointment/bookappointment');
     }
 
-   
-    public function newUser(){
-       // return 'vuebilling';
-        return view('admin/user/new_user');
-    }
-
+  
     public function delbilling(){
 
         return 'Billing';

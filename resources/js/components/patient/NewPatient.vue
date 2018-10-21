@@ -100,11 +100,13 @@
 		},
 		methods:{
 			addRecord(){
-				axios.post('createuser',this.user)
+				axios.post('newpatient',this.user)
 		          .then((response)=>{
+		          	console.log(response.data)
 		          	this.success='User Added Successfully';
 		          	this.registrationid=response.data;
-		          	this.user={}
+		          	this.user={};
+		          	this.error=''
 		          	//console.log(response.data)
 		          }) 
 		          .catch((error) =>{

@@ -76,13 +76,13 @@ class BillingController extends Controller
 
   
     public function store(NewBilling $request){
-        //return $request->all();
-
+        //NewBilling
+        
         $pending=$request->outstanding - $request->currentpaid;
 
         $bill =new Billing;
         $bill->user_id = $request->userid;  
-        $bill->billing_date = $request->billdate;
+        $bill->bill_date = $request->billdate;
         //$bill->bill_charge = $pending;
         $bill->bill_paid = $request->currentpaid;
         $is_saved = $bill->save();

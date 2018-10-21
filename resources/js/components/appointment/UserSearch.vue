@@ -44,12 +44,6 @@
 			            <!-- /.box-body -->
 			          </div>
 
-
-
-
-
-
-
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
                 </div>
 
