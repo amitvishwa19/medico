@@ -122,6 +122,7 @@
       addRecord(){
         axios.post('saveappointment',this.list)
           .then(data=>{
+            console.log(response.data)
             this.$emit('recordadded',data),
             this.success='Appointment added successfully'
             this.list={}

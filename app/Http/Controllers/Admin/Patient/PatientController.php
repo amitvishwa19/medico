@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Billing;
+use App\Models\Appointment;
 use DB;
 use App\Http\Requests\Patient\NewPatient;
 
@@ -15,6 +16,15 @@ class PatientController extends Controller
     public function index(){
         return view('admin/patient/allpatient');
     }
+
+    public function allPatients(){
+
+        $patients=User::orderBy('firstname','asc')->with('appointment','billing')->paginate(5);
+        return request()->json(200,$patients);
+
+    }
+
+
 
     public function newPatient(){
         return view('admin/patient/newpatient');
@@ -56,16 +66,14 @@ class PatientController extends Controller
         //return $result;//request()->json(200,$result);
     }
    
-    public function create()
-    {
+    public function create() {
         //
     }
 
    
     public function store(NewPatient $request) {
 
-         //NewUser
-
+        //NewUser
         $user = new User;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
@@ -81,25 +89,21 @@ class PatientController extends Controller
     }
 
    
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
    
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
  
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
 }

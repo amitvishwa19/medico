@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/billing/getallbilling','Admin\Billing\BillingController@allBilling');
     Route::get('/billing/search','Admin\Billing\BillingController@billSearch'); //Controller 
     Route::get('/billing/alldropdowns','Admin\AdminController@allDropdowns');//dropdowns for all 
-    //Route::get('/billing/alluser/{term?}','Admin\Appointment\AppointmentController@allUser'); //
+    Route::get('/billing/alluser','Admin\Appointment\AppointmentController@allUser'); //
     Route::resource('/billing/savebill','Admin\Billing\BillingController');//Save Bill 
     Route::get('/billing/searchuser', 'Admin\patient\PatientController@searchPatient');
     Route::get('/billing/patientbill', 'Admin\patient\PatientController@patientBill');
@@ -62,8 +62,11 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
 
     //Patient
     Route::get('/patient/all', 'Admin\Patient\PatientController@index');
+    Route::get('/patient/allpatients', 'Admin\Patient\PatientController@allPatients');
+    Route::get('/patient/searchpatient', 'Admin\Patient\PatientController@searchPatient');
     Route::get('/patient/new', 'Admin\Patient\PatientController@newPatient');
     Route::resource('/patient/newpatient','Admin\Patient\PatientController'); // to save new ptient
+
 
 
     //Symptoms
