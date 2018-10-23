@@ -4,8 +4,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header ">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">All Patients</h4>
+                    <button type="button" class="close" data-dismiss="modal" @click="cleardata">&times;</button>
+                    <h4 class="modal-title">Patient Search</h4>
                 </div>
                 
                 <!--Patient-->
@@ -50,7 +50,7 @@
                 <div class="modal-footer">
                 	<div class="col-md-12">
                 		
-                    	<button type="button" class="btn bg-orange btn-flat margin" data-dismiss="modal">
+                    	<button type="button" class="btn bg-orange btn-flat margin" data-dismiss="modal" @click="cleardata">
                     		Close
                     	</button>
                 	</div>
@@ -100,6 +100,9 @@
 			},
 			billingdetails(){
 
+			},
+			cleardata(){
+				this.searchquery=''
 			}
 		},
 		watch:{

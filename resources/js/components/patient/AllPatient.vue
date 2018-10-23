@@ -26,12 +26,12 @@
 	                 
 	                  <!-- todo text -->
 	                  <span class="text">{{patient.firstname}},{{patient.lastname}}</span>
-	                  <!-- Emphasis label -->
-	                  <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+	                  
 	                  <!-- General tools such as edit or delete-->
 	                 <div class="pull-right">
-	                 	<a href=""><i class="faright fa fa-id-card"></i></a>
-	                    <a href=""><i class="faright fa fa-trash-o"></i></a>
+	                 	<a href=""><i class="faright fa fa-eye"></i></a>
+	                 	<a href=""><i class="faright fa fa-handshake-o"></i></a>
+	                    <a href=""><i class="faright fa fa-money"></i></a>
 	                    
 	                 </div> 
 	                </li>

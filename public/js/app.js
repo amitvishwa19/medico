@@ -90777,9 +90777,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(1, true),
-              _vm._v(" "),
-              _vm._m(2, true)
+              _vm._m(1, true)
             ])
           })
         )
@@ -90814,22 +90812,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "label label-danger" }, [
-      _c("i", { staticClass: "fa fa-clock-o" }),
-      _vm._v(" 2 mins")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "pull-right" }, [
       _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "faright fa fa-id-card" })
+        _c("i", { staticClass: "faright fa fa-eye" })
       ]),
       _vm._v(" "),
       _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "faright fa fa-trash-o" })
+        _c("i", { staticClass: "faright fa fa-handshake-o" })
+      ]),
+      _vm._v(" "),
+      _c("a", { attrs: { href: "" } }, [
+        _c("i", { staticClass: "faright fa fa-money" })
       ])
     ])
   }
@@ -92719,7 +92712,10 @@ Vue.component('pagination', __webpack_require__(6));
 			this.user.email = email;
 			this.user.mobile = mobile;
 		},
-		billingdetails: function billingdetails() {}
+		billingdetails: function billingdetails() {},
+		cleardata: function cleardata() {
+			this.searchquery = '';
+		}
 	},
 	watch: {
 		searchquery: function searchquery() {
@@ -92776,7 +92772,19 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header " }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: { click: _vm.cleardata }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("h4", { staticClass: "modal-title" }, [_vm._v("Patient Search")])
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -92816,7 +92824,7 @@ var render = function() {
                     _c(
                       "tbody",
                       [
-                        _vm._m(1),
+                        _vm._m(0),
                         _vm._v(" "),
                         _vm._l(_vm.users.data, function(usr) {
                           return _c("tr", [
@@ -92881,30 +92889,29 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm._m(2)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn bg-orange btn-flat margin",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: { click: _vm.cleardata }
+                },
+                [
+                  _vm._v(
+                    "\n                    \t\tClose\n                    \t"
+                  )
+                ]
+              )
+            ])
+          ])
         ])
       ])
     ]
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header " }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("All Patients")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -92921,23 +92928,6 @@ var staticRenderFns = [
       _c("th", [_vm._v("Address")]),
       _vm._v(" "),
       _c("th", { staticStyle: { width: "40px" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn bg-orange btn-flat margin",
-            attrs: { type: "button", "data-dismiss": "modal" }
-          },
-          [_vm._v("\n                    \t\tClose\n                    \t")]
-        )
-      ])
     ])
   }
 ]

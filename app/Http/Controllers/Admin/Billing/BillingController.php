@@ -33,6 +33,28 @@ class BillingController extends Controller
         return request()-> json(200,$billing);//json( 200,["billing"=>$billing]);//json(200,$billing);
     }
 
+    public function allUser(){
+        $users=User::orderby('firstname','asc')->paginate(5);
+        return request()->json(200,$users);
+    }
+    
+    public function searchPatient(Request $request){
+        
+        if( $request->string == !null ){
+            $user['data'] =User::where('firstname','like', '%'.$request->string.'%')
+                                ->orWhere('lastname','like', '%'.$request->string.'%')
+                                ->orWhere('email','like', '%'.$request->string.'%')
+                                ->orWhere('mobile','like', '%'.$request->string.'%')
+                                ->orWhere('address','like', '%'.$request->string.'%')
+                                ->get();
+            return request()->json(200,$user);
+        }else{
+            $user =User::orderBy('firstname','asc')->paginate(5);
+            return request()->json(200,$user);
+        }
+
+       
+    }
 
     public function billSearch(Request $request){       
      
