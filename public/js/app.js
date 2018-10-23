@@ -30035,6 +30035,7 @@ __webpack_require__(141);
 
 
 
+
 //import 'vuetify/dist/vuetify.min.css'
 
 window.Vue = __webpack_require__(8);

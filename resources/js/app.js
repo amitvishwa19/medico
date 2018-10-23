@@ -3,6 +3,7 @@ require('./bootstrap');
 import moment from 'moment'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+
 //import 'vuetify/dist/vuetify.min.css'
 
 window.Vue = require('vue');
