@@ -11,26 +11,85 @@ use App\Models\Billing;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Http\Requests\Billing\NewBilling;
 
 class BillingController extends Controller
 {
     
     public function index(){       
-        
-        //$clearbills=appointment::orderby('id','desc')->get();
-        //$pendingbills=appointment::orderby('id','desc')->get();
+        return view('admin/billing/billing');
+    }
 
-        //$pendingbills = DB::table('appointments')->orderby('id','desc')
-                        //->leftjoin('users','users.id','=','appointments.user_id')
-                        //->select('appointments.*', 'users.firstname', 'users.lastname')
-                        //->simplePaginate(10);
-
-        $billing = Billing::with('user','appointment')->orderby('id','desc')->get();
-        //dd($billing);                
-        return view('admin/billing/billing',compact('billing'));
-        //return view('admin/billing',compact('pendingbills'));
+     public function newBilling(){  
+        return view('admin/billing/newbilling');
     }
     
+    public function allBilling(){       
+        
+        //return 'All Billing';
+        $billing =Billing::orderBy('id','desc')
+                            ->with('user','appointment')
+                            ->paginate(4);
+        return request()-> json(200,$billing);//json( 200,["billing"=>$billing]);//json(200,$billing);
+    }
+
+    public function allUser(){
+        $users=User::orderby('firstname','asc')->paginate(5);
+        return request()->json(200,$users);
+    }
+    
+    public function searchPatient(Request $request){
+        
+        if( $request->string == !null ){
+            $user['data'] =User::where('firstname','like', '%'.$request->string.'%')
+                                ->orWhere('lastname','like', '%'.$request->string.'%')
+                                ->orWhere('email','like', '%'.$request->string.'%')
+                                ->orWhere('mobile','like', '%'.$request->string.'%')
+                                ->orWhere('address','like', '%'.$request->string.'%')
+                                ->get();
+            return request()->json(200,$user);
+        }else{
+            $user =User::orderBy('firstname','asc')->paginate(5);
+            return request()->json(200,$user);
+        }
+
+       
+    }
+
+    public function billSearch(Request $request){       
+     
+        if( $request->sdate == !null && $request->edate == !null ){
+
+            $billing['data'] =Billing::where('appointment_date','>=', $request->sdate)
+                                ->Where('appointment_date','<=', $request->edate)
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else if( $request->sdate == !null && $request->edate == null ){
+
+            $billing['data'] =Billing::where('appointment_date','<=', $request->sdate)                           
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else if( $request->sdate == null && $request->edate == !null ){
+
+            $billing['data'] =Billing::Where('appointment_date','>=', $request->edate)
+                                ->with('user','appointment')
+                                ->get();
+            return request()->json(200,$billing);
+
+        }else {
+
+            $billing =Billing::orderBy('id','desc')
+                            ->with('user','appointment')
+                            ->paginate(4);
+            return request()-> json(200,$billing);//json( 200,["billing"=>$billing]);//json(200,$billing);
+        }
+
+        
+    }
 
  
     public function create(){
@@ -38,8 +97,23 @@ class BillingController extends Controller
     }
 
   
-    public function store(Request $request){
-        //
+    public function store(NewBilling $request){
+        //NewBilling
+        
+        $pending=$request->outstanding - $request->currentpaid;
+
+        $bill =new Billing;
+        $bill->user_id = $request->userid;  
+        $bill->bill_date = $request->billdate;
+        //$bill->bill_charge = $pending;
+        $bill->bill_paid = $request->currentpaid;
+        $is_saved = $bill->save();
+
+         if($is_saved){
+            return $bill->id;     
+        }
+
+
     }
 
     

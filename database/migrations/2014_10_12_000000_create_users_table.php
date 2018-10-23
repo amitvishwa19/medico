@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->boolean('status')->default(0);
             $table->string('user_image')->nullable();
             $table->string('user_uri')->nullable();
+            $table->text('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

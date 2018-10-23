@@ -23,14 +23,14 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3><?php echo $fresh_count; ?></h3>
+                  <h3><?php echo $total_count; ?></h3>
 
                   <p>Today's Appointment</p>
                 </div>
                 <div class="icon">
                   <i class="ion-android-calendar"></i>
                 </div>
-                <a href="{{url('/admin/appointment/today')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{url('/admin/appointment/all')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -38,7 +38,7 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>12</h3>
+                  <h3><?php echo $fresh_count; ?></h3>
 
                   <p>New Cases</p>
                 </div>
@@ -53,7 +53,7 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>6</h3>
+                  <h3><?php echo $followup_count; ?></h3>
 
                   <p>Follow up's</p>
                 </div>
@@ -68,7 +68,7 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>5</h3>
+                  <h3><?php echo $emergency_count; ?></h3>
 
                   <p>Emergency Csases</p>
                 </div>
@@ -85,6 +85,6 @@
     </section>
     <!-- /.content -->
 
-
+      <router-view></router-view>
 </div>
 @endsection

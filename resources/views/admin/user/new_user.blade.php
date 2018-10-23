@@ -4,36 +4,28 @@
 
 @section('content')
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        New Patient
-        <small>Add new Patient</small>
-    </h1>   
-</section>
+<div class="content-wrapper" id="appointment">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            New Patient Registration
+            <small>register new patient</small>
+        </h1>   
+    </section>
 
 
-<!-- Main content -->
-<section class="content">
-        <!-- Small boxes (Stat box) -->
-        
-        
-        <div class="row">
+     <!-- Main content -->
+     <newuser></newuser>
+    
 
-            <!--Content-->
-            <div class="col-md-12">
+    
 
-               
+</div>
 
-               
-            </div><!--Content-->
-          
-                
-        </div><!-- /.row -->   
-        
-</section>
-<!-- /.content -->
 
+@section('FooterSection')
+    
+@endsection
 
 
 @endsection    
