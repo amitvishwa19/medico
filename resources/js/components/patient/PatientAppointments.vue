@@ -143,6 +143,6 @@
 	}
 
 	.modal-content{
-		border-radius: 0 !important;
+		border-radius: 2px !important;
 	}
 </style>

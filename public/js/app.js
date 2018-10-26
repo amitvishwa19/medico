@@ -88051,7 +88051,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\ntable th[data-v-71124f59]{\n\ttext-align: center;\n}\ntable td[data-v-71124f59]{\n\ttext-align: center;\n}\n.form-control[data-v-71124f59]{\n\tborder-radius: 2px;\n}\n.fa[data-v-71124f59]{\n\tmargin-right: 5px;\n}\n.group-buttons[data-v-71124f59]{\n\tmargin-left: -15px;\n}\n.fa-trash[data-v-71124f59]{\n\tcolor: #dd4b39 !important;\n}\n.fa-pencil[data-v-71124f59]{\n\tcolor:#f39c12 !important;\n}\n.body[data-v-71124f59]{\n\tfont-size: 12px !important;\n}\n.todo-list li[data-v-71124f59]{\n\tborder-left: 2px solid $site_primary_color;\n\tborder-right: 2px solid $site_primary_color;\n}\n.emergency .fa-repeat[data-v-71124f59]{\n\tdisplay: none;\n}\n.fa-plus-circle[data-v-71124f59]{\n\tcolor: green;\n}\n.fa-bullhorn[data-v-71124f59]{\n\tcolor: #dd4b39;\n}\n.infoicon[data-v-71124f59]{\n\tmargin-right: 10px;\n}\n.modal-content[data-v-71124f59]{\n\tborder-radius: 0px !important;\n}\n.dtmoment[data-v-71124f59]{\n\tmargin-right: 10px;\n}\n.box-header[data-v-71124f59]{\n\tmargin-bottom: 0px;\n}\n.box-footer[data-v-71124f59]{\n\tpadding: 0;\n}\n", ""]);
+exports.push([module.i, "\ntable th[data-v-71124f59]{\n\ttext-align: center;\n}\ntable td[data-v-71124f59]{\n\ttext-align: center;\n}\n.form-control[data-v-71124f59]{\n\tborder-radius: 2px;\n}\n.fa[data-v-71124f59]{\n\tmargin-right: 5px;\n}\n.group-buttons[data-v-71124f59]{\n\tmargin-left: -15px;\n}\n.fa-trash[data-v-71124f59]{\n\tcolor: #dd4b39 !important;\n}\n.fa-pencil[data-v-71124f59]{\n\tcolor:#f39c12 !important;\n}\n.body[data-v-71124f59]{\n\tfont-size: 12px !important;\n}\n.todo-list li[data-v-71124f59]{\n\tborder-left: 2px solid $site_primary_color;\n\tborder-right: 2px solid $site_primary_color;\n}\n.emergency .fa-repeat[data-v-71124f59]{\n\tdisplay: none;\n}\n.fa-plus-circle[data-v-71124f59]{\n\tcolor: green;\n}\n.fa-bullhorn[data-v-71124f59]{\n\tcolor: #dd4b39;\n}\n.infoicon[data-v-71124f59]{\n\tmargin-right: 10px;\n}\n.modal-content[data-v-71124f59]{\n\tborder-radius: 0px !important;\n}\n.dtmoment[data-v-71124f59]{\n\tmargin-right: 10px;\n}\n.box-header[data-v-71124f59]{\n\tmargin-bottom: 0px;\n}\n.box-footer[data-v-71124f59]{\n\tpadding: 0;\n}\n.todo-list li[data-v-71124f59]{\n\tbackground-color: #ECF0F5 !important;\n\tborder-left: 2px solid #00C0EF;\n}\n\n", ""]);
 
 // exports
 
@@ -94510,7 +94510,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\nul{\n\tmargin-bottom: 20px;\n}\n.modal-content{\n\tbackground-color: #ECF0F5;\n}\n.modal-content{\n\tborder-radius: 0 !important;\n}\n", ""]);
+exports.push([module.i, "\nul{\n\tmargin-bottom: 20px;\n}\n.modal-content{\n\tbackground-color: #ECF0F5;\n}\n.modal-content{\n\tborder-radius: 2px !important;\n}\n", ""]);
 
 // exports
 

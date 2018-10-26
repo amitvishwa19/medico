@@ -314,4 +314,10 @@
 	.box-footer{
 		padding: 0;
 	}
+
+	.todo-list li{
+		background-color: #ECF0F5 !important;
+		border-left: 2px solid #00C0EF;
+	}
+
 </style>
