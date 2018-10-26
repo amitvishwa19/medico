@@ -81,6 +81,7 @@
 
 		            <div class="box-footer">
 		            	<pagination :data="billing" @pagination-change-page="getResults"></pagination>
+		            	
 		            </div>
 		            <!-- /.box-body -->
 		          </div>

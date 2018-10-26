@@ -31,10 +31,10 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/appointment/searchappointment','Admin\Appointment\AppointmentController@allAppointment'); //Controller for all
     Route::get('/appointment/search','Admin\Appointment\AppointmentController@allSearch'); //Controller 
     Route::get('/appointment/alluser','Admin\Appointment\AppointmentController@allUser'); //Controller for all  
-    Route::get('/appointment/searchuser', 'Admin\patient\PatientController@searchPatient');
+    Route::get('/appointment/searchuser', 'Admin\Appointment\AppointmentController@searchPatient');
     Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController'); // for edit and delete appointment
     Route::get('/appointment/newappointmentdropdowns','Admin\Appointment\AppointmentController@newAppointmentDropdowns');//dropdowns for all 
-    Route::resource('/appointment/saveappointment','Admin\Appointment\AppointmentController');
+    
 
 
 
@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/patient/searchpatient', 'Admin\Patient\PatientController@searchPatient');
     Route::get('/patient/new', 'Admin\Patient\PatientController@newPatient');
     Route::resource('/patient/newpatient','Admin\Patient\PatientController'); // to save new ptient
-
+    Route::get('/patient/patientallappointment', 'Admin\Patient\PatientController@patientAllAppointment');
 
 
     //Symptoms

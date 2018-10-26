@@ -23,10 +23,10 @@ class CreateAppointmentsTable extends Migration
             $table->string('symptoms')->nullable();
             $table->text('visit_comment')->nullable();
             $table->text('prescription')->nullable();           
-            $table->string('billing_status')->default('Pending');
-            $table->string('billing_paid')->nullable();
+            //$table->string('billing_status')->default('Pending');
+            //$table->string('billing_paid')->nullable();
             $table->string('reffered_to')->nullable();
-            $table->date('billing_date')->nullable();
+            //$table->date('billing_date')->nullable();
             $table->date('appointment_date')->nullable();
             $table->time('appointment_time')->nullable();        
             $table->date('next_visit_date')->nullable();

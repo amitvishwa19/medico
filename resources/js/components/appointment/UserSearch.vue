@@ -16,30 +16,34 @@
 			              	<input class="form-control" id="usersearch" type="text" placeholder="Search user" v-model="searchquery">
 			            </div>
 			            <!-- /.box-header -->
-			            <div class="box-body no-padding">
-			              <table class="table table-condensed">
-			                <tbody><tr>
-			                  <th style="width: 10px">#</th>
-			                  <th>Name</th>
-			                  <th>Email</th>
-			                  <th>Mobile</th>
-			                  <th>Address</th>
-			                  <th style="width: 40px"></th>
-			                </tr>
-			                <tr  v-for="usr in users.data">
-			                  <td>{{usr.id}}.</td>
-			                  <td>{{usr.firstname}},{{usr.lastname}}</td>
-			                  <td>{{usr.email}}</td>
-			                  <td>{{usr.mobile}}</td>		                    
-			                  <td>{{usr.address}}</td>
-			                  <td>
-			                  	<button class="btn btn-success btn-xs pull-right" @click="adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
-	                        	<i class="fa fa-plus" aria-hidden="true"></i>
-	                    		</button> 
-			                  </td>
-			                </tr>
-			          
-			              </tbody></table>
+			            <div class="box-body table-responsive no-padding">
+
+			              	<table class="table table-hover">
+				                <tbody><tr>
+				                  <th style="width: 10px">#</th>
+				                  <th>Name</th>
+				                  <th>Email</th>
+				                  <th>Mobile</th>
+				                  <th>Address</th>
+				                  <th style="width: 40px"></th>
+				                </tr>
+				                <tr  v-for="usr in users.data">
+				                  <td>{{usr.id}}.</td>
+				                  <td>{{usr.firstname}},{{usr.lastname}}</td>
+				                  <td>{{usr.email}}</td>
+				                  <td>{{usr.mobile}}</td>		                    
+				                  <td>{{usr.address}}</td>
+				                  <td>
+				                  	<button class="btn btn-sm btn-info btn-flat btn-xs pull-right" @click="adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
+		                        	<i class="fa fa-plus" aria-hidden="true"></i>
+		                    		</button> 
+				                  </td>
+				                </tr>
+				          
+				              	</tbody>
+			          		</table>
+
+						
 			            </div>
 			            <!-- /.box-body -->
 			          </div>

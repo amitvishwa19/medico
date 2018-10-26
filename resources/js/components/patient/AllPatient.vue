@@ -30,7 +30,7 @@
 	                  <!-- General tools such as edit or delete-->
 	                 <div class="pull-right">
 	                 	<a href=""><i class="faright fa fa-eye"></i></a>
-	                 	<a href=""><i class="faright fa fa-handshake-o"></i></a>
+	                 	<a href="#patientAppnt" data-toggle="modal" @click="apnttimeline(patient.id)"><i class="faright fa fa-handshake-o"></i></a>
 	                    <a href=""><i class="faright fa fa-money"></i></a>
 	                    
 	                 </div> 
@@ -40,11 +40,22 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix no-border">
-            	<pagination :data="patients" @pagination-change-page="getResults"></pagination>     
+            	<div class="col-md-12">	
+            		<pagination :data="patients" @pagination-change-page="getResults"></pagination>
+            	</div>
+
+            	<div class="col-md-12">	
+	        		<small class="infoicon"><i class="faleft fa fa-eye" ></i> Details</small>
+	        		<small class="infoicon"><i class="faleft fa fa-handshake-o" ></i> Appoinments</small>	
+	        		<small class="infoicon"><i class="faleft fa fa fa-money" ></i> Billing</small>	        		
+	            </div>
+
             </div>
           </div>
 
-		
+		<div id="modal">
+	 		<patientapptnt :recrd="appointdata" ></patientapptnt>
+	 	</div>
 
 	</section>
 </template>
@@ -54,8 +65,10 @@
 	export default{
 		data(){
 			return{
+				appointdata:{},
 				patients:{},
 				searchquery:'',
+				errors:''
 			}
 		},
 		watch:{
@@ -79,7 +92,12 @@
 			},
 			clearstartdate(){
 				this.searchquery='';
-			}
+			},
+			apnttimeline(id){				
+				axios.get('patientallappointment',{params:{string:id}})
+				.then(response => this.appointdata=response.data)//this.apntupdate = response.data
+				.catch(error => this.errors=error.response.data.errors);			
+			},
 		
 		},
 		created(){
@@ -94,6 +112,13 @@
 <style type="text/css" Scoped>
 	.faright{
 		margin-right: 10px;
+	}
+	.faleft{
+		margin-left: 10px;
+	}
+
+	.todo-list li{
+		background-color: #ECF0F5 !important;
 	}
 
 </style>

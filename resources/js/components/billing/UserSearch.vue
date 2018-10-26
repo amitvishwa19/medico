@@ -16,8 +16,8 @@
 			              	<input class="form-control" id="usersearch" type="text" placeholder="Search user" v-model="searchquery">
 			            </div>
 			            <!-- /.box-header -->
-			            <div class="box-body no-padding">
-			              <table class="table table-condensed">
+			            <div class="box-body table-responsive no-padding">
+			              <table class="table table-hover">
 			                <tbody><tr>
 			                  <th style="width: 10px">#</th>
 			                  <th>Name</th>
@@ -33,7 +33,7 @@
 			                  <td>{{usr.mobile}}</td>		                    
 			                  <td>{{usr.address}}</td>
 			                  <td>
-			                  	<button class="btn btn-success btn-xs pull-right" @click="billingdetails,adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
+			                  	<button class="btn btn-sm btn-info btn-flat btn-xs pull-right" @click="billingdetails,adddetails(usr.id,usr.firstname,usr.lastname,usr.email,usr.mobile)" data-dismiss="modal">
 	                        	<i class="fa fa-plus" aria-hidden="true"></i>
 	                    		</button> 
 			                  </td>

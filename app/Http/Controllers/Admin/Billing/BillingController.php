@@ -51,9 +51,7 @@ class BillingController extends Controller
         }else{
             $user =User::orderBy('firstname','asc')->paginate(5);
             return request()->json(200,$user);
-        }
-
-       
+        } 
     }
 
     public function billSearch(Request $request){       

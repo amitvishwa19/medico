@@ -66,6 +66,12 @@ class PatientController extends Controller
         //return $result;//request()->json(200,$result);
     }
    
+    public function patientAllAppointment(Request $request){
+        //return  $request->all();
+        $appointments =Appointment::where('user_id','=', $request->string)->orderBy('created_at','desc')->get();
+            return request()->json(200,$appointments);
+    }
+
     public function create() {
         //
     }

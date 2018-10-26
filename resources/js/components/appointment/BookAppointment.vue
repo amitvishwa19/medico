@@ -75,17 +75,7 @@
 	                    	</select>                  
 	                    </div>
 	                </div><!--Symptom and diagnosis-->
-
-
-	                <div class="form-group"><!--billing charge-->
-	                    <label class="col-md-2 control-label" >Billing Charge<span class="text-danger">*</span></label>              
-	                    <div class="col-md-6 col-md-offset-1">
-		                    	<select class="form-control input-sm" v-model="selecteduser.billingcharge">
-			                        <option value="">Select</option>
-			                        <option v-for="bc in dropdowns.billingcharge" v-bind:value="bc.value">{{bc.value}}</option>
-			                    </select>                 
-	                    </div>
-	                </div><!--billing charge-->	           
+	               
 
                 	<div class="form-group">
 					    <label class="col-md-2 control-label">Visit Comments</label>
@@ -136,7 +126,6 @@
 					mobile:'',
 					visittype:'',
 					symptom:'',
-					billingcharge:'',
 					visitcomment:'',
 					apntdate:'',
 					apnttime:''

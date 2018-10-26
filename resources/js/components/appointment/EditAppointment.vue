@@ -60,20 +60,29 @@
                             </select>
                         </div>
 
+                        <div class="form-group col-md-12"><!--Billing Charger-->
+                            <label for="reffered_to">Billing Charge<span class="text-danger">*</span></label>
+                            <select class="form-control input-sm" v-model="recrd.billing_charge">
+                                <option value="">Select</option>
+                                <option v-for="bil in dropdowns.billingcharge" v-bind:value="bil.value">{{bil.value}}</option>
+                                <option  >{{recrd.billing_charge}}</option>
+                            </select>
+                        </div>
+
                       </div><!--Left column-->
 
                       <!--Left column-->
                       <div class="left-sides col-md-6">                       
                         <div class="form-group col-md-12"><!--VisitvComments-->
                             <label for="visit_comment" >Visit Comments</label>               
-                            <textarea class="form-control input-sm"  rows="9" v-model="recrd.visit_comment"></textarea>
+                            <textarea class="form-control input-sm"  rows="13" v-model="recrd.visit_comment"></textarea>
                         </div>
                       </div>
 
                       <div class="left-sides col-md-12">                       
                         <div class="form-group col-md-12"><!--VisitvComments-->
                             <label for="visit_comment" >Prescription</label>               
-                            <textarea class="form-control input-sm"  rows="9" v-model="recrd.prescription"></textarea>
+                            <textarea class="form-control input-sm"  rows="4" v-model="recrd.prescription"></textarea>
                         </div>
                       </div>
 
@@ -84,10 +93,12 @@
                 </div>
 
               </div>
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" @click= "updateRecord">Update Appointment</button>
               </div>
+              
             </div>
             <!-- /.modal-content -->
           </div>

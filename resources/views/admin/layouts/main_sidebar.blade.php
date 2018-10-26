@@ -31,7 +31,7 @@
         <!--New Vue Appointment -->
         <li class="{{current_page('/appointment') ? 'active' : '' }} treeview">          
           <a href="{{url('/admin/appointment/all')}}">
-            <i class="fa fa-envelope"></i> <span>Appointment</span>
+            <i class="fa fa-handshake-o"></i> <span>Appointment</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -75,7 +75,7 @@
         <!--Billing-->
         <li class="{{current_page('billing') ? 'active' : '' }} treeview">
           <a href="{{url('/admin/user')}}">
-            <i class="fa fa-book"></i>
+            <i class="fa fa-money"></i>
             <span>Billing</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
