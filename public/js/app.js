@@ -30014,7 +30014,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(140);
-module.exports = __webpack_require__(238);
+module.exports = __webpack_require__(243);
 
 
 /***/ }),
@@ -30061,18 +30061,19 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('searchuser', __webpack_re
 //Patient
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('allpatient', __webpack_require__(203));
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('newpatient', __webpack_require__(208));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('patientapptnt', __webpack_require__(242));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('patientapptnt', __webpack_require__(213));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('patientview', __webpack_require__(247));
 
 //Billing
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('billing', __webpack_require__(213));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('newbilling', __webpack_require__(218));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('searchuserbill', __webpack_require__(223));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('billing', __webpack_require__(218));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('newbilling', __webpack_require__(223));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('searchuserbill', __webpack_require__(228));
 
 //Profille
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('userprofile', __webpack_require__(228));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('userprofile', __webpack_require__(233));
 
 //Settings
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('settings', __webpack_require__(233));
+__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('settings', __webpack_require__(238));
 
 var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
 	el: '#app',
@@ -90600,7 +90601,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.faright{\n\tmargin-right: 10px;\n}\n.faleft{\n\tmargin-left: 10px;\n}\n.todo-list li{\n\tbackground-color: #ECF0F5 !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.faright{\n\tmargin-right: 10px;\n}\n.faleft{\n\tmargin-left: 10px;\n}\n.todo-list li{\n\tbackground-color: #ECF0F5 !important;\n\tborder-left: 2px solid #00C0EF !important;\n}\n\n", ""]);
 
 // exports
 
@@ -90673,12 +90674,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 Vue.component('pagination', __webpack_require__(6));
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
 			appointdata: {},
+			userdetail: '',
 			patients: {},
 			searchquery: '',
 			errors: ''
@@ -90725,13 +90729,23 @@ Vue.component('pagination', __webpack_require__(6));
 			.catch(function (error) {
 				return _this3.errors = error.response.data.errors;
 			});
+		},
+		userdata: function userdata(id) {
+			var _this4 = this;
+
+			axios.get('patientDetails', { params: { string: id } }).then(function (response) {
+				return _this4.userdetail = response.data;
+			}) //this.apntupdate = response.data
+			.catch(function (error) {
+				return _this4.errors = error.response.data.errors;
+			});
 		}
 	},
 	created: function created() {
-		var _this4 = this;
+		var _this5 = this;
 
 		axios.get('allpatients').then(function (response) {
-			return _this4.patients = response.data;
+			return _this5.patients = response.data;
 		}) //this.appointments=response.data
 		.catch(function (error) {
 			return console.log(error);
@@ -90816,8 +90830,6 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "pull-right" }, [
-                _vm._m(1, true),
-                _vm._v(" "),
                 _c(
                   "a",
                   {
@@ -90831,7 +90843,18 @@ var render = function() {
                   [_c("i", { staticClass: "faright fa fa-handshake-o" })]
                 ),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#patientview", "data-toggle": "modal" },
+                    on: {
+                      click: function($event) {
+                        _vm.userdata(patient.id)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "faright fa fa-eye" })]
+                )
               ])
             ])
           })
@@ -90851,14 +90874,18 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(1)
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
       { attrs: { id: "modal" } },
-      [_c("patientapptnt", { attrs: { recrd: _vm.appointdata } })],
+      [
+        _c("patientapptnt", { attrs: { recrd: _vm.appointdata } }),
+        _vm._v(" "),
+        _c("patientview", { attrs: { recrd: _vm.userdetail } })
+      ],
       1
     )
   ])
@@ -90872,22 +90899,6 @@ var staticRenderFns = [
       _c("i", { staticClass: "fa fa-ellipsis-v" }),
       _vm._v(" "),
       _c("i", { staticClass: "fa fa-ellipsis-v" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("i", { staticClass: "faright fa fa-eye" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "" } }, [
-      _c("i", { staticClass: "faright fa fa-money" })
     ])
   },
   function() {
@@ -91444,6 +91455,335 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/js/components/patient/PatientAppointments.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fd572898", Component.options)
+  } else {
+    hotAPI.reload("data-v-fd572898", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 214 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(215);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("3e37c360", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fd572898\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientAppointments.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fd572898\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientAppointments.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 215 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nul{\n\tmargin-bottom: 20px;\n}\n.modal-content{\n\tbackground-color: #ECF0F5;\n}\n.modal-content{\n\tborder-radius: 2px !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 216 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['recrd'],
+	data: function data() {
+		return {};
+	},
+
+	watch: {},
+	methods: {},
+	created: function created() {}
+});
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: { id: "patientAppnt", role: "dialog", "data-backdrop": "false" }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-md" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal-body",
+              staticStyle: { margin: "0", padding: "0" }
+            },
+            [
+              _c("section", { staticClass: "content" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-12" },
+                    _vm._l(_vm.recrd, function(appointment) {
+                      return _c("div", { staticClass: "box box-solid" }, [
+                        _c("div", { staticClass: "box-header with-border" }, [
+                          _c("i", { staticClass: "fa fa-calendar" }),
+                          _vm._v(" "),
+                          _c("h3", { staticClass: "box-title" }, [
+                            _vm._v(_vm._s(appointment.appointment_date))
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "time pull-right" }, [
+                            _c("i", { staticClass: "fa fa-clock-o" }),
+                            _vm._v(" " + _vm._s(appointment.appointment_time))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "box-body" }, [
+                          _c("dl", [
+                            _c("dt", [_vm._v("Visit Type")]),
+                            _vm._v(" "),
+                            _c("dd", [_vm._v(_vm._s(appointment.visit_type))]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("dt", [_vm._v("Symptom")]),
+                            _vm._v(" "),
+                            _c("dd", [_vm._v(_vm._s(appointment.symptoms))]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("dt", [_vm._v("Visit Comments")]),
+                            _vm._v(" "),
+                            _c("dd", [
+                              _vm._v(_vm._s(appointment.visit_comment))
+                            ]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("dt", [_vm._v("Visit Prescription")]),
+                            _vm._v(" "),
+                            _c("dd", [
+                              _vm._v(_vm._s(appointment.prescription))
+                            ]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("dt", [
+                              _vm._v("Billing Charge: "),
+                              _c("small", [
+                                _vm._v(_vm._s(appointment.billing.bill_charge))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("dt", [
+                              _vm._v("Paid Amount: "),
+                              _c("small", [
+                                _vm._v(_vm._s(appointment.billing.bill_paid))
+                              ])
+                            ])
+                          ])
+                        ])
+                      ])
+                    })
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header " }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [
+        _vm._v("Appointments Timeline")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn bg-orange btn-flat margin",
+            attrs: { type: "button", "data-dismiss": "modal" }
+          },
+          [_vm._v("\n                    \t\tClose\n                    \t")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fd572898", module.exports)
+  }
+}
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(219)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(221)
+/* template */
+var __vue_template__ = __webpack_require__(222)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/js/components/billing/Billing.vue"
 
 /* hot reload */
@@ -91466,13 +91806,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 214 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(215);
+var content = __webpack_require__(220);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -91492,7 +91832,7 @@ if(false) {
 }
 
 /***/ }),
-/* 215 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -91506,7 +91846,7 @@ exports.push([module.i, "\nth{\n\ttext-align: center;\n}\ntr{\n\ttext-align: cen
 
 
 /***/ }),
-/* 216 */
+/* 221 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91720,7 +92060,7 @@ var moment = __webpack_require__(0);
 });
 
 /***/ }),
-/* 217 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -91974,19 +92314,19 @@ if (false) {
 }
 
 /***/ }),
-/* 218 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(219)
+  __webpack_require__(224)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(221)
+var __vue_script__ = __webpack_require__(226)
 /* template */
-var __vue_template__ = __webpack_require__(222)
+var __vue_template__ = __webpack_require__(227)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92025,13 +92365,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 219 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(220);
+var content = __webpack_require__(225);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -92051,7 +92391,7 @@ if(false) {
 }
 
 /***/ }),
-/* 220 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -92065,7 +92405,7 @@ exports.push([module.i, "\n.form-control{\n\ttext-align: center;\n}\nselect{\n\t
 
 
 /***/ }),
-/* 221 */
+/* 226 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92240,7 +92580,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 222 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -92599,19 +92939,19 @@ if (false) {
 }
 
 /***/ }),
-/* 223 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(224)
+  __webpack_require__(229)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(226)
+var __vue_script__ = __webpack_require__(231)
 /* template */
-var __vue_template__ = __webpack_require__(227)
+var __vue_template__ = __webpack_require__(232)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92650,13 +92990,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 224 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(225);
+var content = __webpack_require__(230);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -92676,7 +93016,7 @@ if(false) {
 }
 
 /***/ }),
-/* 225 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -92690,7 +93030,7 @@ exports.push([module.i, "\nspan{\n\tmargin-left: 5px;\n\tmargin-right: 10px;\n}\
 
 
 /***/ }),
-/* 226 */
+/* 231 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92842,7 +93182,7 @@ Vue.component('pagination', __webpack_require__(6));
 });
 
 /***/ }),
-/* 227 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -93031,19 +93371,19 @@ if (false) {
 }
 
 /***/ }),
-/* 228 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(229)
+  __webpack_require__(234)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(231)
+var __vue_script__ = __webpack_require__(236)
 /* template */
-var __vue_template__ = __webpack_require__(232)
+var __vue_template__ = __webpack_require__(237)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -93082,13 +93422,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 229 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(230);
+var content = __webpack_require__(235);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -93108,7 +93448,7 @@ if(false) {
 }
 
 /***/ }),
-/* 230 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -93122,7 +93462,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 231 */
+/* 236 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93495,7 +93835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 232 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94280,19 +94620,19 @@ if (false) {
 }
 
 /***/ }),
-/* 233 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(234)
+  __webpack_require__(239)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(236)
+var __vue_script__ = __webpack_require__(241)
 /* template */
-var __vue_template__ = __webpack_require__(237)
+var __vue_template__ = __webpack_require__(242)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -94331,13 +94671,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 234 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(235);
+var content = __webpack_require__(240);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -94357,7 +94697,7 @@ if(false) {
 }
 
 /***/ }),
-/* 235 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -94371,7 +94711,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 236 */
+/* 241 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -94396,7 +94736,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 237 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94416,28 +94756,28 @@ if (false) {
 }
 
 /***/ }),
-/* 238 */
+/* 243 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(243)
+  __webpack_require__(248)
 }
 var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(245)
+var __vue_script__ = __webpack_require__(250)
 /* template */
-var __vue_template__ = __webpack_require__(246)
+var __vue_template__ = __webpack_require__(251)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -94454,7 +94794,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/patient/PatientAppointments.vue"
+Component.options.__file = "resources/js/components/patient/PatientView.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -94463,9 +94803,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fd572898", Component.options)
+    hotAPI.createRecord("data-v-68161525", Component.options)
   } else {
-    hotAPI.reload("data-v-fd572898", Component.options)
+    hotAPI.reload("data-v-68161525", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -94476,23 +94816,23 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 243 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(244);
+var content = __webpack_require__(249);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3e37c360", content, false, {});
+var update = __webpack_require__(3)("394e3c89", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fd572898\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientAppointments.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fd572898\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientAppointments.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-68161525\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientView.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-68161525\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PatientView.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -94502,7 +94842,7 @@ if(false) {
 }
 
 /***/ }),
-/* 244 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -94516,76 +94856,11 @@ exports.push([module.i, "\nul{\n\tmargin-bottom: 20px;\n}\n.modal-content{\n\tba
 
 
 /***/ }),
-/* 245 */
+/* 250 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -94646,7 +94921,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 246 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -94657,168 +94932,94 @@ var render = function() {
     "div",
     {
       staticClass: "modal fade",
-      attrs: { id: "patientAppnt", role: "dialog", "data-backdrop": "false" }
+      attrs: { id: "patientview", role: "dialog", "data-backdrop": "false" }
     },
     [
       _c("div", { staticClass: "modal-dialog modal-md" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("section", { staticClass: "content" }, [
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  { staticClass: "col-md-12" },
-                  _vm._l(_vm.recrd, function(appointment) {
-                    return _c("ul", { staticClass: "timeline" }, [
-                      _c("li", { staticClass: "time-label" }, [
-                        _c("span", { staticClass: "bg-red" }, [
-                          _vm._v(
-                            "\n\t\t\t\t                    " +
-                              _vm._s(appointment.appointment_date) +
-                              "\n\t\t\t\t                  "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("i", { staticClass: "fa fa-envelope bg-blue" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "timeline-item" }, [
-                          _c("span", { staticClass: "time" }, [
-                            _c("i", { staticClass: "fa fa-clock-o" }),
-                            _vm._v(" " + _vm._s(appointment.appointment_time))
-                          ]),
-                          _vm._v(" "),
-                          _c("h3", { staticClass: "timeline-header" }, [
-                            _c("a", { attrs: { href: "#" } }, [
-                              _vm._v("Visit Type: ")
-                            ]),
-                            _vm._v(" " + _vm._s(appointment.visit_type))
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("i", { staticClass: "fa fa-user bg-aqua" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "timeline-item" }, [
-                          _c(
-                            "h3",
-                            { staticClass: "timeline-header no-border" },
-                            [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Symptom: ")
-                              ]),
-                              _vm._v(" " + _vm._s(appointment.symptoms))
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("i", { staticClass: "fa fa-comments bg-yellow" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "timeline-item" }, [
-                          _vm._m(1, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "timeline-body" }, [
-                            _vm._v(
-                              "\n\t\t\t\t                  " +
-                                _vm._s(appointment.visit_comment) +
-                                "\n\t\t\t\t                "
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("i", { staticClass: "fa fa-comments bg-yellow" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "timeline-item" }, [
-                          _vm._m(2, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "timeline-body" }, [
-                            _vm._v(
-                              "\n\t\t\t\t                  " +
-                                _vm._s(appointment.Prescription) +
-                                "\n\t\t\t\t                "
-                            )
-                          ])
-                        ])
-                      ])
+          _c(
+            "div",
+            {
+              staticClass: "modal-body",
+              staticStyle: { margin: "0", padding: "0" }
+            },
+            [
+              _c("section", {}, [
+                _c("div", { staticClass: "box box-widget widget-user-2" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      staticStyle: {
+                        "margin-right": "10px",
+                        "margin-top": "5px"
+                      },
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "widget-user-header bg-yellow" }, [
+                    _c("h3", { staticClass: "widget-user-username" }, [
+                      _vm._v(
+                        _vm._s(_vm.recrd.firstname) +
+                          "," +
+                          _vm._s(_vm.recrd.lastname)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "widget-user-desc" }, [
+                      _vm._v(_vm._s(_vm.recrd.lastname))
                     ])
-                  })
-                )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "box-footer no-padding" }, [
+                    _c("div", { staticClass: "container" }, [
+                      _c("h4", [
+                        _vm._v("Email : "),
+                        _c("small", [_vm._v(_vm._s(_vm.recrd.email))])
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", [
+                        _vm._v("Mobile : "),
+                        _c("small", [_vm._v(_vm._s(_vm.recrd.mobile))])
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", [
+                        _vm._v("Address : "),
+                        _c("small", [_vm._v(_vm._s(_vm.recrd.address))])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn bg-orange btn-flat margin pull-right",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    \t\t\t\tClose\n                    \t\t\t"
+                        )
+                      ]
+                    )
+                  ])
+                ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(3)
+            ]
+          )
         ])
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header " }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Appointment Timeline")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "timeline-header" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Visit Comments")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "timeline-header" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Visit Prescription")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn bg-orange btn-flat margin",
-            attrs: { type: "button", "data-dismiss": "modal" }
-          },
-          [_vm._v("\n                    \t\tClose\n                    \t")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fd572898", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-68161525", module.exports)
   }
 }
 

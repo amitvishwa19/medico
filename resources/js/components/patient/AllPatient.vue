@@ -29,9 +29,10 @@
 	                  
 	                  <!-- General tools such as edit or delete-->
 	                 <div class="pull-right">
-	                 	<a href=""><i class="faright fa fa-eye"></i></a>
+	                 	
 	                 	<a href="#patientAppnt" data-toggle="modal" @click="apnttimeline(patient.id)"><i class="faright fa fa-handshake-o"></i></a>
-	                    <a href=""><i class="faright fa fa-money"></i></a>
+	                 	<a href="#patientview" data-toggle="modal" @click="userdata(patient.id)"><i class="faright fa fa-eye"></i></a>
+	                    <!--a href=""><i class="faright fa fa-money"></i></a-->
 	                    
 	                 </div> 
 	                </li>
@@ -55,6 +56,7 @@
 
 		<div id="modal">
 	 		<patientapptnt :recrd="appointdata" ></patientapptnt>
+	 		<patientview :recrd="userdetail" ></patientview>
 	 	</div>
 
 	</section>
@@ -66,6 +68,7 @@
 		data(){
 			return{
 				appointdata:{},
+				userdetail:'',
 				patients:{},
 				searchquery:'',
 				errors:''
@@ -98,6 +101,11 @@
 				.then(response => this.appointdata=response.data)//this.apntupdate = response.data
 				.catch(error => this.errors=error.response.data.errors);			
 			},
+			userdata(id){
+				axios.get('patientDetails',{params:{string:id}})
+				.then(response => this.userdetail=response.data)//this.apntupdate = response.data
+				.catch(error => this.errors=error.response.data.errors);			
+			}
 		
 		},
 		created(){
@@ -119,6 +127,7 @@
 
 	.todo-list li{
 		background-color: #ECF0F5 !important;
+		border-left: 2px solid #00C0EF !important;
 	}
 
 </style>

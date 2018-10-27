@@ -38,6 +38,7 @@ Vue.component('searchuser', require('./components/appointment/UserSearch.vue'));
 Vue.component('allpatient', require('./components/patient/AllPatient.vue'));
 Vue.component('newpatient', require('./components/patient/NewPatient.vue'));
 Vue.component('patientapptnt', require('./components/patient/PatientAppointments.vue'));
+Vue.component('patientview', require('./components/patient/PatientView.vue'));
 
 //Billing
 Vue.component('billing', require('./components/billing/Billing.vue'));

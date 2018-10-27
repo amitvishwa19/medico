@@ -62,7 +62,7 @@
                     <li class="{{current_page('news') ? 'active' : '' }}"><a href="#">News</a></li>
                     <li class="{{current_page('contact') ? 'active' : '' }}"><a href="#">Contact</a></li>
                 @guest
-                
+                    
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guest <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -73,18 +73,20 @@
                     </ul>
                     </li>
                 @else
+                    <!--Admin role-->
+                    <?php if(auth()->user()->admin ==1){ ?>
+                        <li><a href="{{url('/admin/dashboard')}}">Dashboard</a></li>
+                    <?php  } ?>
+
+                    
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->firstname}},{{ Auth::user()->lastname}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                            
-                            <li><a href="{{url('/profile')}}">My Profile</a></li>
+                           
                             
 
-                            <!--Admin role-->
-                            <?php if(auth()->user()->admin ==1){ ?>
-                                <li><a href="{{url('/admin/dashboard')}}">Dashboard</a></li>
-                            <?php  } ?>
-                                          
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

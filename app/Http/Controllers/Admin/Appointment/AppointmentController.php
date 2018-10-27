@@ -172,7 +172,6 @@ class AppointmentController extends Controller
    
     public function edit($id){
         return $appointment = appointment::with('user','billing')->find($id);
-        return 'edit called';
     }
 
     

@@ -4,94 +4,54 @@
             <div class="modal-content">
                 <div class="modal-header ">
                     <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                    <h4 class="modal-title">Appointment Timeline</h4>
+                    <h4 class="modal-title">Appointments Timeline</h4>
                 </div>
                 
                 <!--Patient-->
-                <div class="modal-body">
+                <div class="modal-body" style="margin:0;padding:0;">
 	                
 					<section class="content">
 
-			      <!-- row -->
-			      <div class="row">
-			        <div class="col-md-12">
-			          <!-- The time line -->
-			          	<ul class="timeline" v-for="appointment in recrd">
-			            	
-			            	<!--Date-->
-				            <li class="time-label">
-				                  <span class="bg-red">
-				                    {{appointment.appointment_date}}
-				                  </span>
-				            </li>
+					      <!-- row -->
+					    <div class="row">
+					        <div class="col-md-12">
+					     
 
-				           	<!--Visit type-->
-				            <li>
-				              <i class="fa fa-envelope bg-blue"></i>
+					          	<div class="box box-solid" v-for="appointment in recrd">
+						            <div class="box-header with-border">
+						              <i class="fa fa-calendar"></i>
 
-				              <div class="timeline-item">
-				                <span class="time"><i class="fa fa-clock-o"></i> {{appointment.appointment_time}}</span>
+						              <h3 class="box-title">{{appointment.appointment_date}}</h3>
+						              <span class="time pull-right"><i class="fa fa-clock-o"></i> {{appointment.appointment_time}}</span>
+						            </div>
+						            <!-- /.box-header -->
+						            <div class="box-body">
+						              <dl>
+						                <dt>Visit Type</dt>
+						                <dd>{{appointment.visit_type}}</dd><br>
+						                <dt>Symptom</dt>
+						                <dd>{{appointment.symptoms}}</dd><br>
+						                <dt>Visit Comments</dt>
+						                <dd>{{appointment.visit_comment}}</dd><br>
+						                <dt>Visit Prescription</dt>
+						                <dd>{{appointment.prescription}}</dd><br>
+						                <dt>Billing Charge: <small>{{appointment.billing.bill_charge}}</small></dt>				            
+						                <dt>Paid Amount: <small>{{appointment.billing.bill_paid}}</small></dt>				               
+						              </dl>
+						            </div>
+						            <!-- /.box-body -->
+						        </div>
 
-				                <h3 class="timeline-header"><a href="#">Visit Type: </a> {{appointment.visit_type}}</h3>
-
-				                
-				              </div>
-				            </li>
-
-				           	<!--Symptom-->
-				            <li>
-				              <i class="fa fa-user bg-aqua"></i>
-
-				              <div class="timeline-item">
-				                
-
-				                <h3 class="timeline-header no-border"><a href="#">Symptom: </a> {{appointment.symptoms}}</h3>
-				              </div>
-				            </li>
-				          	
-				          	<!--Comment-->
-				            <li>
-				              <i class="fa fa-comments bg-yellow"></i>
-
-				              <div class="timeline-item">
-				               
-
-				                <h3 class="timeline-header"><a href="#">Visit Comments</a> </h3>
-
-				                <div class="timeline-body">
-				                  {{appointment.visit_comment}}
-				                </div>
-				                
-				              </div>
-				            </li>
-				            
-				            <!--priscription-->
-				            <li>
-				              <i class="fa fa-comments bg-yellow"></i>
-
-				              <div class="timeline-item">
-				               
-
-				                <h3 class="timeline-header"><a href="#">Visit Prescription</a> </h3>
-
-				                <div class="timeline-body">
-				                  {{appointment.Prescription}}
-				                </div>
-				                
-				              </div>
-				            </li>
-
-				            
-				           
-			          	</ul>
-			        </div>
-			        <!-- /.col -->
-			      </div>
-			      <!-- /.row -->
+								
+								
+					        </div>
+					        <!-- /.col -->
+					    </div>
+					      <!-- /.row -->
 
 			     
 
-    			</section>
+    				</section>
                 </div>
 
                 <div class="modal-footer">

@@ -16,7 +16,7 @@ class Appointment extends Model
 
 	public function billing()
     {
-    	return $this->hasOne('App\Models\Billing');
+    	return $this->belongsTo('App\Models\Billing');
     }
 
 }

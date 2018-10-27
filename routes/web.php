@@ -67,6 +67,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/patient/new', 'Admin\Patient\PatientController@newPatient');
     Route::resource('/patient/newpatient','Admin\Patient\PatientController'); // to save new ptient
     Route::get('/patient/patientallappointment', 'Admin\Patient\PatientController@patientAllAppointment');
+    Route::get('/patient/patientDetails', 'Admin\Patient\PatientController@patientDetails');
 
 
     //Symptoms
