@@ -56,7 +56,7 @@
                             <select class="form-control input-sm" v-model="recrd.reffered_to">
                                 <option value="">Select</option>
                                 <option v-for="r in dropdowns.reffered" v-bind:value="r.value">{{r.value}}</option>
-                                <option  >{{recrd.reffered_to}}</option>
+                                <option>{{recrd.reffered_to}}</option>
                             </select>
                         </div>
 
