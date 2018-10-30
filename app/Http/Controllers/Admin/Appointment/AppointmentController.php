@@ -141,6 +141,7 @@ class AppointmentController extends Controller
         $bill =new Billing;
         $bill->user_id = $request->userid;
         $bill->appointment_date = $request->apntdate;
+        $bill_charge = $request->billing_charge;
         $bill->bill_date = $request->apntdate;
         $bill->save();
 

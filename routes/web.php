@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin','middleware'=>['auth','admin']],function(){
     Route::get('/billing/alluser','Admin\Billing\BillingController@allUser'); //
     Route::resource('/billing/savebill','Admin\Billing\BillingController');//Save Bill 
     Route::get('/billing/searchuser', 'Admin\Billing\BillingController@searchPatient');
-    //Route::get('/billing/patientbill', 'Admin\patient\PatientController@patientBill');
+    Route::get('/billing/patientbill', 'Admin\Patient\PatientController@patientBill');
 
 
 

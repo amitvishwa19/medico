@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -69,7 +70,11 @@ class RegisterController extends Controller
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+<<<<<<< HEAD
             'verifytoken' => str_random(50),
+=======
+            'verifyToken' => Str::random(40)
+>>>>>>> b94384fd6ee8c7b81176dbfe0004954effa6a16f
         ]);
     }
 }

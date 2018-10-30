@@ -68,7 +68,7 @@ class PatientController extends Controller
    
     public function patientAllAppointment(Request $request){
 
-        $appointments =Appointment::where('user_id','=', $request->string)->orderBy('created_at','desc')->with('user','billing')->get();
+        $appointments =Appointment::where('user_id','=', $request->string)->orderBy('appointment_date','desc')->with('user','billing')->get();
             return request()->json(200,$appointments);
     }
 
